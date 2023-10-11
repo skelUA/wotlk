@@ -390,7 +390,7 @@ struct npc_dark_iron_attack_generator : public ScriptedAI
                         if (Creature* cr = me->SummonCreature(NPC_MOLE_MACHINE_TRIGGER, x, y, 398.11f, 0.0f))
                             cr->CastSpell(cr, SPELL_SPAWN_MOLE_MACHINE, true);
                     }
-                    events.RepeatEvent(3000);
+                    events.RepeatEvent(15000);
                     break;
                 }
             case EVENT_PRE_FINISH_ATTACK:
@@ -580,23 +580,25 @@ struct npc_dark_iron_attack_mole_machine : public ScriptedAI
             {
                 goTimer = 0;
                 summonTimer++;
-                if (GameObject* drill = me->SummonGameObject(GO_MOLE_MACHINE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), M_PI / 4, 0.0f, 0.0f, 0.0f, 0.0f, 8))
+                if (GameObject* drill = me->SummonGameObject(GO_MOLE_MACHINE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), M_PI / 4, 0.0f, 0.0f, 0.0f, 0.0f, 10))
                 {
                     //drill->SetGoAnimProgress(0);
-                    drill->SetLootState(GO_READY);
-                    drill->UseDoorOrButton(8);
+                    //drill->SetLootState(GO_READY);
+                    //drill->UseDoorOrButton(8);
+                    drill->SetGoState(GO_STATE_ACTIVE);
+                    drill->SetGoAnimProgress(0);
                 }
             }
         }
         if (summonTimer)
         {
             summonTimer += diff;
-            if (summonTimer >= 2000 && summonTimer < 10000)
+            if (summonTimer >= 2000 && summonTimer < 4000)
             {
                 me->SummonCreature(NPC_DARK_IRON_GUZZLER, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0.0f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 6000);
-                summonTimer = 10000;
+                summonTimer = 4000;
             }
-            if (summonTimer >= 13000 && summonTimer < 20000)
+            if (summonTimer >= 7000 && summonTimer < 10000)
             {
                 me->SummonCreature(NPC_DARK_IRON_GUZZLER, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0.0f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 6000);
                 summonTimer = 0;
