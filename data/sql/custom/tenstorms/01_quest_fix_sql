@@ -1,0 +1,351 @@
+-- https://www.wowhead.com/wotlk/quest=9686/the-second-trial
+-- .gobject set phase 23106 1
+update gameobject set phaseMask=1 where id=182052;
+
+-- https://www.wowhead.com/wotlk/quest=2359/klavens-tower
+-- fix quest level
+UPDATE  quest_template SET `QuestLevel` = '20' WHERE (`ID` = '2359');
+
+
+-- https://www.wowhead.com/wotlk/quest=12214/fresh-remounts
+-- remove  aura 48290 when cast 48297
+INSERT INTO  `spell_linked_spell` (`spell_trigger`, `spell_effect`, `type`, `comment`) VALUES ('48297', '-48290', '0', 'For Fresh Remounts quest');
+
+
+---
+--- https://www.wowhead.com/wotlk/quest=13673/a-blade-fit-for-a-champion
+--- Fix gossip_menu_option
+DELETE FROM `gossip_menu_option` WHERE (`MenuID` = 10316);
+INSERT INTO `gossip_menu_option` (`MenuID`, `OptionID`, `OptionIcon`, `OptionText`, `OptionBroadcastTextID`, `OptionType`, `OptionNpcFlag`, `ActionMenuID`, `ActionPoiID`, `BoxCoded`, `BoxMoney`, `BoxText`, `BoxBroadcastTextID`, `VerifiedBuild`) VALUES
+(10316, 0, 0, 'Glad to help, my lady. I\'m told you were once the guardian of a fabled sword. Do you know where I might find it?', 33363, 1, 1, 10315, 0, 0, 0, '', 0, 0);
+
+
+---
+---  https://www.wowhead.com/wotlk/quest=12981/hot-and-cold
+---  fix phasemask (may be wrong) but quest works now
+update creature set phasemask=15 where id1=30169;
+
+---
+--- https://www.wowhead.com/wotlk/quest=12453/eyes-above
+--- Rise up on 500m
+UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = 26369;
+DELETE FROM `smart_scripts` WHERE (`source_type` = 0 AND `entryorguid` = 26369);
+INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_type`, `event_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `event_param5`, `event_param6`, `action_type`, `action_param1`, `action_param2`, `action_param3`, `action_param4`, `action_param5`, `action_param6`, `target_type`, `target_param1`, `target_param2`, `target_param3`, `target_param4`, `target_x`, `target_y`, `target_z`, `target_o`, `comment`) VALUES
+(26369, 0, 0, 0, 0, 0, 100, 0, 3000, 7000, 5000, 9000, 0, 0, 11, 55079, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 'Imperial Eagle - In Combat - Cast \'Swoop\' (Phase 1)'),
+(26369, 0, 1, 0, 8, 0, 100, 0, 49546, 0, 0, 0, 0, '0', 114, 500, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Imperial Eagle - On Spellhit \'Eagle Eyes\' - Rise up 500m');
+
+
+---
+--- https://www.wowhead.com/wotlk/quest=13809/threat-from-above
+--- FIX POI
+DELETE FROM  `quest_poi_points`  WHERE (`QuestID` = 13809 AND `Idx1` = 1);
+DELETE FROM  `quest_poi`  WHERE (`QuestID` = 13809 AND `Id` = 1);
+INSERT INTO  `quest_poi_points` (`QuestID`, `Idx1`, `Idx2`, `X`, `Y`, `VerifiedBuild`) VALUES ('13809', '1', '0', '8026', '2686', '0');
+INSERT INTO  `quest_poi` (`QuestID`, `id`, `ObjectiveIndex`, `MapID`, `WorldMapAreaId`, `Floor`, `Priority`, `Flags`, `VerifiedBuild`) VALUES ('13809', '1', '1', '571', '210', '0', '0', '1', '0');
+
+
+--
+-- https://www.wowhead.com/wotlk/quest=12218/spread-the-good-word
+-- fix XP count
+DELETE FROM `creature` WHERE (`id1` = 26523) AND (`guid` IN (150213, 150214, 150215, 150216, 150217));
+INSERT INTO `creature` (`guid`, `id1`, `id2`, `id3`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `wander_distance`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`, `ScriptName`, `VerifiedBuild`) VALUES
+(150213, 26523, 0, 0, 571, 65, 4186, 1, 1, 0, 3276.47, -735.589, 168.92, 3.89208, 120, 0, 0, 8982, 0, 0, 0, 0, 0, '', 0),
+(150214, 26523, 0, 0, 571, 65, 4186, 1, 1, 0, 3282.07, -740.141, 169.102, 4.01426, 120, 0, 0, 8982, 0, 0, 0, 0, 0, '', 0),
+(150215, 26523, 0, 0, 571, 65, 4186, 1, 1, 0, 3287.59, -744.934, 169.402, 4.10152, 120, 0, 0, 8982, 0, 0, 0, 0, 0, '', 0),
+(150216, 26523, 0, 0, 571, 65, 4186, 1, 1, 0, 3293.81, -749.658, 169.788, 4.17134, 120, 0, 0, 8982, 0, 0, 0, 0, 0, '', 0),
+(150217, 26523, 0, 0, 571, 65, 4186, 1, 1, 0, 3299.85, -753.186, 170.579, 4.2586, 120, 0, 0, 8982, 0, 0, 0, 0, 0, '', 0);
+
+
+---
+--- https://www.wowhead.com/wotlk/ru/quest=11280/
+---
+UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = 24170;
+DELETE FROM `smart_scripts` WHERE (`source_type` = 0 AND `entryorguid` = 24170);
+INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_type`, `event_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `event_param5`, `event_param6`, `action_type`, `action_param1`, `action_param2`, `action_param3`, `action_param4`, `action_param5`, `action_param6`, `target_type`, `target_param1`, `target_param2`, `target_param3`, `target_param4`, `target_x`, `target_y`, `target_z`, `target_o`, `comment`) VALUES
+(24170, 0, 0, 0, 54, 0, 100, 0, 0, 0, 0, 0, 0, 0, 50, 186598, 60, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Draconis Gastritis Bunny - On Just Summoned - Summon Gameobject \'Tillinghast\'s Plagued Meat\' (Phase 1) (No Repeat)'),
+(24170, 0, 1, 0, 6, 0, 100, 0, 0, 0, 0, 0, 0, 0, 86, 43174, 2, 18, 35, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Draconis Gastritis Bunny - On Just Died - Cast \'Draconis Gastritis: Kill Credit\' (Phase 1) (No Repeat)'),
+(24170, 0, 2, 0, 54, 0, 100, 0, 0, 0, 0, 0, 0, 0, 47, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Draconis Gastritis Bunny - On Just Summoned - Set Visibility Off (Phase 1) (No Repeat)'),
+(24170, 0, 3, 0, 6, 0, 100, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 15, 186598, 5, 0, 0, 0, 0, 0, 0, 'Draconis Gastritis Bunny - On Just Died - Despawn Instant (Phase 1) (No Repeat)');
+
+
+UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = 23689;
+DELETE FROM `smart_scripts` WHERE (`source_type` = 0 AND `entryorguid` = 23689);
+INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_type`, `event_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `event_param5`, `event_param6`, `action_type`, `action_param1`, `action_param2`, `action_param3`, `action_param4`, `action_param5`, `action_param6`, `target_type`, `target_param1`, `target_param2`, `target_param3`, `target_param4`, `target_x`, `target_y`, `target_z`, `target_o`, `comment`) VALUES
+(23689, 0, 1, 2, 65, 0, 100, 0, 0, 0, 0, 0, 0, 0, 11, 36809, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Proto-Drake - On Follow Complete - Cast \'Overpowering Sickness\''),
+(23689, 0, 2, 7, 61, 0, 100, 0, 0, 0, 0, 0, 0, 0, 86, 43174, 2, 18, 35, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Proto-Drake - On Follow Complete - Cast \'Draconis Gastritis: Kill Credit\''),
+(23689, 0, 3, 5, 1, 0, 100, 0, 10000, 10000, 10000, 10000, 0, 0, 29, 0, 0, 24170, 1, 1, 0, 19, 24170, 100, 0, 0, 0, 0, 0, 0, 'Proto-Drake - Out of Combat - Start Follow Closest Creature \'Draconis Gastritis Bunny\''),
+(23689, 0, 4, 0, 65, 0, 100, 0, 0, 0, 0, 0, 0, 0, 51, 0, 0, 0, 0, 0, 0, 19, 24170, 5, 0, 0, 0, 0, 0, 0, 'Proto-Drake - On Follow Complete - Kill Target'),
+(23689, 0, 5, 0, 61, 0, 100, 0, 0, 0, 0, 0, 0, 0, 22, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Proto-Drake - Out of Combat - Set Event Phase 1'),
+(23689, 0, 6, 0, 1, 1, 100, 0, 45000, 45000, 45000, 45000, 0, 0, 41, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Proto-Drake - Out of Combat - Despawn Instant'),
+(23689, 0, 7, 0, 61, 0, 100, 0, 0, 0, 0, 0, 0, 0, 134, 43174, 1, 0, 0, 0, 0, 18, 35, 0, 0, 0, 0, 0, 0, 0, 'Proto-Drake - On Death - Cast Draconis Gastritis: Kill Credit'),
+(23689, 0, 8, 0, 8, 0, 100, 0, 40969, 0, 120000, 120000, 0, 0, 69, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Proto-Drake - On Spellhit - Move to Position'),
+(23689, 0, 9, 0, 9, 0, 100, 1, 0, 0, 0, 0, 0, 20, 101, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Proto-Drake - On Range - Set Home Position'),
+(23689, 0, 10, 0, 9, 0, 100, 0, 0, 0, 2000, 3500, 0, 5, 11, 51219, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Proto-Drake - On Range - Cast Flame Breath'),
+(23689, 0, 11, 0, 0, 0, 100, 0, 3000, 9000, 30000, 45000, 0, 0, 11, 42362, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 'Proto-Drake - IC - Cast Flames of Birth'),
+(23689, 0, 12, 0, 9, 0, 100, 0, 0, 0, 10000, 15000, 0, 20, 11, 41572, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Proto-Drake - On Range - Cast Wing Buffet');
+
+UPDATE `waypoint_data` SET `position_z` = '204.33' WHERE (`id` = '1081510') and (`point` = '1');
+UPDATE  `waypoint_data` SET `position_z` = '203.646' WHERE (`id` = '1081510') and (`point` = '2');
+UPDATE  `waypoint_data` SET `position_z` = '196.785' WHERE (`id` = '1081510') and (`point` = '3');
+UPDATE  `waypoint_data` SET `position_z` = '186.118' WHERE (`id` = '1081510') and (`point` = '4');
+UPDATE  `waypoint_data` SET `position_z` = '186.368' WHERE (`id` = '1081510') and (`point` = '5');
+UPDATE  `waypoint_data` SET `position_z` = '189.757' WHERE (`id` = '1081510') and (`point` = '6');
+UPDATE  `waypoint_data` SET `position_z` = '189.479' WHERE (`id` = '1081510') and (`point` = '7');
+UPDATE  `waypoint_data` SET `position_z` = '190.118' WHERE (`id` = '1081510') and (`point` = '8');
+UPDATE  `waypoint_data` SET `position_z` = '186.951' WHERE (`id` = '1081510') and (`point` = '9');
+UPDATE  `waypoint_data` SET `position_z` = '188.09' WHERE (`id` = '1081510') and (`point` = '10');
+UPDATE  `waypoint_data` SET `position_z` = '193.007' WHERE (`id` = '1081510') and (`point` = '11');
+UPDATE  `waypoint_data` SET `position_z` = '193.757' WHERE (`id` = '1081510') and (`point` = '12');
+UPDATE  `waypoint_data` SET `position_z` = '200.701' WHERE (`id` = '1081510') and (`point` = '13');
+UPDATE  `waypoint_data` SET `position_z` = '203.646' WHERE (`id` = '1081510') and (`point` = '14');
+UPDATE  `waypoint_data` SET `position_z` = '203.646' WHERE (`id` = '1081510') and (`point` = '15');
+
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081550') and (`point` = '1');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081550') and (`point` = '2');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081550') and (`point` = '3');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081550') and (`point` = '4');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081550') and (`point` = '5');
+UPDATE `waypoint_data` SET `position_z` = '203.059' WHERE (`id` = '1081550') and (`point` = '6');
+UPDATE `waypoint_data` SET `position_z` = '218.725' WHERE (`id` = '1081550') and (`point` = '7');
+UPDATE `waypoint_data` SET `position_z` = '218.122' WHERE (`id` = '1081550') and (`point` = '8');
+UPDATE `waypoint_data` SET `position_z` = '214.928' WHERE (`id` = '1081550') and (`point` = '9');
+UPDATE `waypoint_data` SET `position_z` = '201.566' WHERE (`id` = '1081550') and (`point` = '10');
+UPDATE `waypoint_data` SET `position_z` = '197.316' WHERE (`id` = '1081550') and (`point` = '11');
+UPDATE `waypoint_data` SET `position_z` = '198.483' WHERE (`id` = '1081550') and (`point` = '12');
+UPDATE `waypoint_data` SET `position_z` = '196.15' WHERE (`id` = '1081550') and (`point` = '13');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081550') and (`point` = '14');
+UPDATE `waypoint_data` SET `position_z` = '185.948' WHERE (`id` = '1081550') and (`point` = '15');
+UPDATE `waypoint_data` SET `position_z` = '184.059' WHERE (`id` = '1081550') and (`point` = '16');
+UPDATE `waypoint_data` SET `position_z` = '183.281' WHERE (`id` = '1081550') and (`point` = '17');
+UPDATE `waypoint_data` SET `position_z` = '185.781' WHERE (`id` = '1081550') and (`point` = '18');
+UPDATE `waypoint_data` SET `position_z` = '185.892' WHERE (`id` = '1081550') and (`point` = '19');
+UPDATE `waypoint_data` SET `position_z` = '187.642' WHERE (`id` = '1081550') and (`point` = '20');
+UPDATE `waypoint_data` SET `position_z` = '190.587' WHERE (`id` = '1081550') and (`point` = '21');
+UPDATE `waypoint_data` SET `position_z` = '182.725' WHERE (`id` = '1081550') and (`point` = '22');
+UPDATE `waypoint_data` SET `position_z` = '196.448' WHERE (`id` = '1081550') and (`point` = '23');
+UPDATE `waypoint_data` SET `position_z` = '203.448' WHERE (`id` = '1081550') and (`point` = '24');
+UPDATE `waypoint_data` SET `position_z` = '206.448' WHERE (`id` = '1081550') and (`point` = '25');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081550') and (`point` = '26');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081550') and (`point` = '27');
+
+
+UPDATE `waypoint_data` SET `position_z` = '189.833' WHERE (`id` = '1081560') and (`point` = '1');
+UPDATE `waypoint_data` SET `position_z` = '192.055' WHERE (`id` = '1081560') and (`point` = '2');
+UPDATE `waypoint_data` SET `position_z` = '196.694' WHERE (`id` = '1081560') and (`point` = '3');
+UPDATE `waypoint_data` SET `position_z` = '199.083' WHERE (`id` = '1081560') and (`point` = '4');
+UPDATE `waypoint_data` SET `position_z` = '195.638' WHERE (`id` = '1081560') and (`point` = '5');
+UPDATE `waypoint_data` SET `position_z` = '198.444' WHERE (`id` = '1081560') and (`point` = '6');
+UPDATE `waypoint_data` SET `position_z` = '200.666' WHERE (`id` = '1081560') and (`point` = '7');
+UPDATE `waypoint_data` SET `position_z` = '208.527' WHERE (`id` = '1081560') and (`point` = '8');
+UPDATE `waypoint_data` SET `position_z` = '216.611' WHERE (`id` = '1081560') and (`point` = '9');
+UPDATE `waypoint_data` SET `position_z` = '216.611' WHERE (`id` = '1081560') and (`point` = '10');
+UPDATE `waypoint_data` SET `position_z` = '216.611' WHERE (`id` = '1081560') and (`point` = '11');
+UPDATE `waypoint_data` SET `position_z` = '213.749' WHERE (`id` = '1081560') and (`point` = '12');
+UPDATE `waypoint_data` SET `position_z` = '212.777' WHERE (`id` = '1081560') and (`point` = '13');
+UPDATE `waypoint_data` SET `position_z` = '209.777' WHERE (`id` = '1081560') and (`point` = '14');
+UPDATE `waypoint_data` SET `position_z` = '203.277' WHERE (`id` = '1081560') and (`point` = '15');
+UPDATE `waypoint_data` SET `position_z` = '205.555' WHERE (`id` = '1081560') and (`point` = '16');
+UPDATE `waypoint_data` SET `position_z` = '201.138' WHERE (`id` = '1081560') and (`point` = '17');
+UPDATE `waypoint_data` SET `position_z` = '196.888' WHERE (`id` = '1081560') and (`point` = '18');
+UPDATE `waypoint_data` SET `position_z` = '194.249' WHERE (`id` = '1081560') and (`point` = '19');
+UPDATE `waypoint_data` SET `position_z` = '189.999' WHERE (`id` = '1081560') and (`point` = '20');
+UPDATE `waypoint_data` SET `position_z` = '190.305' WHERE (`id` = '1081560') and (`point` = '21');
+
+
+UPDATE `waypoint_data` SET `position_z` = '199.579' WHERE (`id` = '1081500') and (`point` = '1');
+UPDATE `waypoint_data` SET `position_z` = '207.356' WHERE (`id` = '1081500') and (`point` = '2');
+UPDATE `waypoint_data` SET `position_z` = '207.356' WHERE (`id` = '1081500') and (`point` = '3');
+UPDATE `waypoint_data` SET `position_z` = '207.356' WHERE (`id` = '1081500') and (`point` = '4');
+UPDATE `waypoint_data` SET `position_z` = '207.356' WHERE (`id` = '1081500') and (`point` = '5');
+UPDATE `waypoint_data` SET `position_z` = '207.356' WHERE (`id` = '1081500') and (`point` = '6');
+UPDATE `waypoint_data` SET `position_z` = '201.301' WHERE (`id` = '1081500') and (`point` = '7');
+UPDATE `waypoint_data` SET `position_z` = '196.995' WHERE (`id` = '1081500') and (`point` = '8');
+UPDATE `waypoint_data` SET `position_z` = '188.301' WHERE (`id` = '1081500') and (`point` = '9');
+UPDATE `waypoint_data` SET `position_z` = '186.44' WHERE (`id` = '1081500') and (`point` = '10');
+UPDATE `waypoint_data` SET `position_z` = '183.412' WHERE (`id` = '1081500') and (`point` = '11');
+UPDATE `waypoint_data` SET `position_z` = '188.829' WHERE (`id` = '1081500') and (`point` = '12');
+UPDATE `waypoint_data` SET `position_z` = '186.44' WHERE (`id` = '1081500') and (`point` = '13');
+UPDATE `waypoint_data` SET `position_z` = '190.579' WHERE (`id` = '1081500') and (`point` = '14');
+UPDATE `waypoint_data` SET `position_z` = '193.635' WHERE (`id` = '1081500') and (`point` = '15');
+UPDATE `waypoint_data` SET `position_z` = '198.857' WHERE (`id` = '1081500') and (`point` = '16');
+
+UPDATE `waypoint_data` SET `position_z` = '184.059' WHERE (`id` = '1081520') and (`point` = '1');
+UPDATE `waypoint_data` SET `position_z` = '183.281' WHERE (`id` = '1081520') and (`point` = '2');
+UPDATE `waypoint_data` SET `position_z` = '185.781' WHERE (`id` = '1081520') and (`point` = '3');
+UPDATE `waypoint_data` SET `position_z` = '185.892' WHERE (`id` = '1081520') and (`point` = '4');
+UPDATE `waypoint_data` SET `position_z` = '187.642' WHERE (`id` = '1081520') and (`point` = '5');
+UPDATE `waypoint_data` SET `position_z` = '190.587' WHERE (`id` = '1081520') and (`point` = '6');
+UPDATE `waypoint_data` SET `position_z` = '182.725' WHERE (`id` = '1081520') and (`point` = '7');
+UPDATE `waypoint_data` SET `position_z` = '196.448' WHERE (`id` = '1081520') and (`point` = '8');
+UPDATE `waypoint_data` SET `position_z` = '203.448' WHERE (`id` = '1081520') and (`point` = '9');
+UPDATE `waypoint_data` SET `position_z` = '206.448' WHERE (`id` = '1081520') and (`point` = '10');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081520') and (`point` = '11');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081520') and (`point` = '12');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081520') and (`point` = '13');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081520') and (`point` = '14');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081520') and (`point` = '15');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081520') and (`point` = '16');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081520') and (`point` = '17');
+UPDATE `waypoint_data` SET `position_z` = '203.059' WHERE (`id` = '1081520') and (`point` = '18');
+UPDATE `waypoint_data` SET `position_z` = '218.725' WHERE (`id` = '1081520') and (`point` = '19');
+UPDATE `waypoint_data` SET `position_z` = '218.122' WHERE (`id` = '1081520') and (`point` = '20');
+UPDATE `waypoint_data` SET `position_z` = '214.928' WHERE (`id` = '1081520') and (`point` = '21');
+UPDATE `waypoint_data` SET `position_z` = '201.566' WHERE (`id` = '1081520') and (`point` = '22');
+UPDATE `waypoint_data` SET `position_z` = '197.316' WHERE (`id` = '1081520') and (`point` = '23');
+UPDATE `waypoint_data` SET `position_z` = '198.483' WHERE (`id` = '1081520') and (`point` = '24');
+UPDATE `waypoint_data` SET `position_z` = '196.15' WHERE (`id` = '1081520') and (`point` = '25');
+UPDATE `waypoint_data` SET `position_z` = '195.809' WHERE (`id` = '1081520') and (`point` = '26');
+UPDATE `waypoint_data` SET `position_z` = '185.948' WHERE (`id` = '1081520') and (`point` = '27');
+
+UPDATE `waypoint_data` SET `position_z` = '198.636' WHERE (`id` = '1081580') and (`point` = '1');
+UPDATE `waypoint_data` SET `position_z` = '207.303' WHERE (`id` = '1081580') and (`point` = '2');
+UPDATE `waypoint_data` SET `position_z` = '196.941' WHERE (`id` = '1081580') and (`point` = '3');
+UPDATE `waypoint_data` SET `position_z` = '196.247' WHERE (`id` = '1081580') and (`point` = '4');
+UPDATE `waypoint_data` SET `position_z` = '195.747' WHERE (`id` = '1081580') and (`point` = '5');
+UPDATE `waypoint_data` SET `position_z` = '195.58' WHERE (`id` = '1081580') and (`point` = '6');
+UPDATE `waypoint_data` SET `position_z` = '190.553' WHERE (`id` = '1081580') and (`point` = '7');
+UPDATE `waypoint_data` SET `position_z` = '195.275' WHERE (`id` = '1081580') and (`point` = '8');
+UPDATE `waypoint_data` SET `position_z` = '194.719' WHERE (`id` = '1081580') and (`point` = '9');
+UPDATE `waypoint_data` SET `position_z` = '195.775' WHERE (`id` = '1081580') and (`point` = '10');
+UPDATE `waypoint_data` SET `position_z` = '195.33' WHERE (`id` = '1081580') and (`point` = '11');
+UPDATE `waypoint_data` SET `position_z` = '201.08' WHERE (`id` = '1081580') and (`point` = '12');
+UPDATE `waypoint_data` SET `position_z` = '197.191' WHERE (`id` = '1081580') and (`point` = '13');
+UPDATE `waypoint_data` SET `position_z` = '194.886' WHERE (`id` = '1081580') and (`point` = '14');
+UPDATE `waypoint_data` SET `position_z` = '197.386' WHERE (`id` = '1081580') and (`point` = '15');
+UPDATE `waypoint_data` SET `position_z` = '192.719' WHERE (`id` = '1081580') and (`point` = '16');
+UPDATE `waypoint_data` SET `position_z` = '194.525' WHERE (`id` = '1081580') and (`point` = '17');
+UPDATE `waypoint_data` SET `position_z` = '187.275' WHERE (`id` = '1081580') and (`point` = '18');
+UPDATE `waypoint_data` SET `position_z` = '191.191' WHERE (`id` = '1081580') and (`point` = '19');
+
+
+
+
+-- Fix POI for quest "Soothing Turtle Bisque" (Horde)
+UPDATE `quest_poi` SET `WorldMapAreaId` = 24 WHERE `QuestID` = 7321;
+
+DELETE FROM `quest_poi_points` WHERE `QuestID` = 7321;
+INSERT INTO `quest_poi_points` (`QuestID`, `Idx1`, `Idx2`, `X`, `Y`, `VerifiedBuild`)
+VALUES
+(7321,0,0,-662,-755,0),
+(7321,0,1,-646,-742,0),
+(7321,0,2,-657,-731,0),
+(7321,0,3,-672,-723,0),
+(7321,0,4,-688,-718,0),
+(7321,0,5,-714,-710,0),
+(7321,0,6,-901,-658,0),
+(7321,0,7,-919,-668,0),
+(7321,0,8,-917,-676,0),
+(7321,0,9,-904,-689,0),
+(7321,0,10,-875,-716,0),
+(7321,0,11,-854,-726,0),
+(7321,1,0,-480,-989,0),
+(7321,1,1,-475,-963,0),
+(7321,1,2,-480,-936,0),
+(7321,1,3,-543,-781,0),
+(7321,1,4,-557,-763,0),
+(7321,1,5,-575,-742,0),
+(7321,1,6,-596,-747,0),
+(7321,1,7,-614,-784,0),
+(7321,1,8,-609,-797,0),
+(7321,1,9,-549,-926,0),
+(7321,1,10,-528,-965,0),
+(7321,1,11,-512,-984,0),
+(7321,2,0,-238,-1121,0),
+(7321,2,1,-254,-1107,0),
+(7321,2,2,-380,-1010,0),
+(7321,2,3,-415,-986,0),
+(7321,2,4,-428,-981,0),
+(7321,2,5,-438,-1021,0),
+(7321,2,6,-423,-1042,0),
+(7321,2,7,-373,-1084,0),
+(7321,2,8,-349,-1099,0),
+(7321,2,9,-296,-1128,0),
+(7321,2,10,-286,-1131,0),
+(7321,2,11,-249,-1142,0),
+(7321,3,0,-6,-927,0);
+
+
+
+--
+-- Fix quest 11879 "Kaw the Mammoth Destroyer"
+--
+DELETE FROM `areatrigger_scripts` WHERE `entry` = 4896;
+INSERT INTO `areatrigger_scripts` (`entry` , `ScriptName`) VALUES
+(4896, 'SmartTrigger');
+
+-- Wooly Mammoth Bull SAI
+UPDATE `creature_template` SET `npcflag`= 16777216 WHERE  `entry`= 25743;
+DELETE FROM `smart_scripts` WHERE `entryorguid`= 25743 AND `source_type`= 0 AND `id` IN (2,3);
+INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES
+(25743,0,2,0,27,0,100,0,0,0,0,0,8,0,0,0,0,0,0,1,0,0,0,0,0,0,0,'Wooly Mammoth Bull - On Passenger board - Set react state passive'),
+(25743,0,3,0,28,0,100,0,0,0,0,0,41,1000,0,0,0,0,0,1,0,0,0,0,0,0,0,'Wooly Mammoth Bull - On Passenger remove - Despawn');
+
+-- Wooly Mammoth Bull Vehicle condition
+DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId`= 16 AND `SourceEntry`= 25743;
+INSERT INTO `conditions` (`SourceTypeOrReferenceId`,`SourceGroup`,`SourceEntry`,`SourceId`,`ElseGroup`,`ConditionTypeOrReference`,`ConditionTarget`,`ConditionValue1`,`ConditionValue2`,`ConditionValue3`,`NegativeCondition`,`ErrorTextId`,`ScriptName`,`Comment`) VALUES
+(16,0,25743,0,0,9,0,11879,0,0,0,0,'','Vehicle Wooly Mammoth Bull requires quest 11879');
+
+-- Apply rep aura on quest accept
+DELETE FROM `spell_area` WHERE `spell`= 46234;
+INSERT INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_end`, `aura_spell`, `racemask`, `gender`, `autocast`, `quest_start_status`, `quest_end_status`) VALUES
+(46234, 3537, 11879, 0, 0, 0, 2, 1, 74, 11);
+
+-- Kaw speach on event start
+DELETE FROM `creature_text` WHERE `CreatureID`= 25802;
+INSERT INTO `creature_text` (`CreatureID`, `GroupID`, `ID`, `Text`, `Type`, `Language`, `Probability`, `Emote`, `Duration`, `Sound`, `BroadcastTextId`, `TextRange`, `comment`) VALUES
+(25802, 0, 0, 'You challenge Kaw, destroyer of mammoths? Then face me and feel my thunder!', 14, 0, 100, 0, 0, 0, 25071, 0, 'Kaw the Mammoth Destroyer');
+
+-- Kaw SAI
+DELETE FROM `smart_scripts` WHERE (`source_type` = 0 AND `entryorguid` = 25802);
+INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_type`, `event_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `event_param5`, `action_type`, `action_param1`, `action_param2`, `action_param3`, `action_param4`, `action_param5`, `action_param6`, `target_type`, `target_param1`, `target_param2`, `target_param3`, `target_param4`, `target_x`, `target_y`, `target_z`, `target_o`, `comment`) VALUES
+(25802, 0, 0, 0, 1, 0, 100, 1, 0, 0, 0, 0, 0, 18, 33024, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Kaw the Mammoth Destroyer - Out of Combat - Set Flags Immune To Players (No Repeat)'),
+(25802, 0, 1, 0, 101, 0, 100, 1, 1, 20, 0, 0, 0, 80, 2580200, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Kaw the Mammoth Destroyer - On Min Players in Range - Run Script (No Repeat)'),
+(25802, 0, 2, 0, 6, 0, 100, 0, 0, 0, 0, 0, 0, 11, 46310, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Kaw the Mammoth Destroyer - On Just Died - Cast \'Drop War Halberd\'');
+
+-- Kaw events
+DELETE FROM `smart_scripts` WHERE (`source_type` = 9 AND `entryorguid` = 2580200);
+INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_type`, `event_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `event_param5`, `event_param6`, `action_type`, `action_param1`, `action_param2`, `action_param3`, `action_param4`, `action_param5`, `action_param6`, `target_type`, `target_param1`, `target_param2`, `target_param3`, `target_param4`, `target_x`, `target_y`, `target_z`, `target_o`, `comment`) VALUES
+(2580200, 9, 0, 0, 0, 0, 100, 1, 0, 0, 0, 0, 0, 0, 1, 0, 2000, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Kaw - Timed - Yell'),
+(2580200, 9, 1, 0, 0, 0, 100, 1, 0, 0, 0, 0, 0, 0, 59, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Kaw - Timed - Enable Running'),
+(2580200, 9, 2, 0, 0, 0, 100, 1, 3000, 3000, 0, 0, 0, 0, 69, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 3974.17, 5476.31, 35.602, 5.564, 'Kaw - Timed - Move to Moria'),
+(2580200, 9, 3, 0, 0, 0, 100, 1, 2500, 2500, 0, 0, 0, 0, 11, 46260, 2, 0, 0, 0, 0, 19, 25881, 100, 0, 0, 0, 0, 0, 0, 'Kaw - Timed - Mount to Moria'),
+(2580200, 9, 4, 0, 0, 0, 100, 1, 0, 0, 0, 0, 0, 0, 19, 2, 0, 0, 0, 0, 0, 19, 25881, 100, 0, 0, 0, 0, 0, 0, 'Kaw - Remove Moria Flags Immune To Players');
+
+-- Moria SAI
+-- Make her NON_ATTACKABLE until the event starts
+UPDATE `creature_template` SET `unit_flags` = 2 WHERE (`entry` = 25881);
+
+DELETE FROM `smart_scripts` WHERE `entryorguid`= 25881;
+INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_type`, `event_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `event_param5`, `action_type`, `action_param1`, `action_param2`, `action_param3`, `action_param4`, `action_param5`, `action_param6`, `target_type`, `target_param1`, `target_param2`, `target_param3`, `target_param4`, `target_x`, `target_y`, `target_z`, `target_o`, `comment`) VALUES
+(25881, 0, 0, 0, 101, 0, 100, 1, 1, 10, 0, 0, 0, 80, 2588100, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Moria - On Min Players in Range - Run Script (No Repeat)'),
+(25881, 0, 1, 0, 6, 0, 100, 1, 0, 0, 0, 0, 0, 19, 33024, 0, 0, 0, 0, 0, 19, 25802, 100, 0, 0, 0, 0, 0, 0, 'Moria - On Just Died - Remove Flags Immune To Players (No Repeat)'),
+(25881, 0, 2, 0, 1, 0, 100, 1, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Moria - Out of Combat - Set Reactstate Passive (No Repeat)'),
+(25881, 0, 3, 0, 1, 0, 100, 1, 0, 0, 0, 0, 0, 28, 46260, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Moria - Out of Combat - Remove Aura \'Riding Wooly Mammoth Bull\' (No Repeat)');
+
+DELETE FROM `smart_scripts` WHERE `entryorguid`= 2588100;
+INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES
+(2588100,9,0,0,0,0,100,1,0,0,0,0,45,1,1,0,0,0,0,19,25802,100,0,0,0,0,0,'Moria - Timed - Set Data 1 1 on Kaw'),
+(2588100,9,1,0,0,0,100,1,5500,5500,0,0,8,2,0,0,0,0,0,1,0,0,0,0,0,0,0,'Moria - Timed - Set aggresive');
+
+
+
+--
+-- https://www.wowhead.com/wotlk/quest=11390/ive-got-a-flying-machine
+--
+DELETE FROM `creature_template_movement` WHERE (`CreatureId` = 24418);
+INSERT INTO `creature_template_movement` (`CreatureId`, `Ground`, `Swim`, `Flight`, `Rooted`, `Chase`, `Random`, `InteractionPauseTimer`) VALUES
+(24418, 1, 0, 2, 0, 0, 0, NULL);
+
+
+--
+-- https://www.wowhead.com/wotlk/ru/quest=12994
+--
+UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = 30219;
+
+DELETE FROM `smart_scripts` WHERE (`source_type` = 0 AND `entryorguid` = 30219);
+INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_type`, `event_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `event_param5`, `event_param6`, `action_type`, `action_param1`, `action_param2`, `action_param3`, `action_param4`, `action_param5`, `action_param6`, `target_type`, `target_param1`, `target_param2`, `target_param3`, `target_param4`, `target_x`, `target_y`, `target_z`, `target_o`, `comment`) VALUES
+(30219, 0, 0, 0, 54, 0, 100, 0, 0, 0, 0, 0, 0, 0, 87, 3021900, 3021901, 3021902, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Move random on spawn'),
+(30219, 0, 1, 0, 82, 0, 100, 0, 30222, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, '');
+
+
+
