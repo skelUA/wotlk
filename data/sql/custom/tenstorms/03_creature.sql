@@ -26,4 +26,5 @@ UPDATE `creature_template` SET `flags_extra` = `flags_extra` &~ 2147483648 WHERE
 --
 -- https://www.wowhead.com/wotlk/ru/quest=12726
 --
-DELETE FROM beta_world.creature_template_spell WHERE (`CreatureID` = 28999) AND (`Index` IN (3));
+DELETE FROM creature_template_spell WHERE (`CreatureID` = 28999) AND (`Index` IN (3));
+DELETE FROM creature_template_spell WHERE (`CreatureID` = 28985) AND (`Index` IN (3));
