@@ -21,3 +21,9 @@ INSERT INTO `creature` (`guid`, `id1`, `id2`, `id3`, `map`, `zoneId`, `areaId`, 
 -- https://www.wowhead.com/wotlk/npc=36658/scourgelord-tyrannus
 --
 UPDATE `creature_template` SET `flags_extra` = `flags_extra` &~ 2147483648 WHERE `entry` IN (36658);
+
+
+--
+-- https://www.wowhead.com/wotlk/ru/quest=12726
+--
+DELETE FROM beta_world.creature_template_spell WHERE (`CreatureID` = 28999) AND (`Index` IN (3));
