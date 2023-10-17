@@ -638,7 +638,7 @@ void ObjectMgr::LoadCreatureTemplates()
     LOG_INFO("server.loading", " ");
 }
 
-void ObjectMgr::LoadCreatureTemplate(Field* fields)
+void ObjectMgr::LoadCreatureTemplate(Field* fields, uint32 creatureId)
 {
     uint32 entry = fields[0].Get<uint32>();
 
@@ -702,9 +702,20 @@ void ObjectMgr::LoadCreatureTemplate(Field* fields)
         creatureTemplate.resistance[i] = 0;
     }
 
-    for (uint8 i = 0; i < MAX_CREATURE_SPELLS; ++i)
+    if (creatureId != 0)
     {
-        creatureTemplate.spells[i] = 0;
+        for (uint8 i = 0; i < MAX_CREATURE_SPELLS; ++i)
+        {
+            creatureTemplate.spells[i] = 0;
+        }
+        LoadCreatureTemplateSpell(creatureId);
+    }
+    else
+    {
+        for (uint8 i = 0; i < MAX_CREATURE_SPELLS; ++i)
+        {
+            creatureTemplate.spells[i] = 0;
+        }
     }
 
     creatureTemplate.PetSpellDataId = fields[46].Get<uint32>();
@@ -750,6 +761,52 @@ void ObjectMgr::LoadCreatureTemplate(Field* fields)
     creatureTemplate.SpellSchoolImmuneMask = fields[68].Get<uint8>();
     creatureTemplate.flags_extra           = fields[69].Get<uint32>();
     creatureTemplate.ScriptID              = GetScriptId(fields[70].Get<std::string>());
+}
+
+void ObjectMgr::LoadCreatureTemplateSpell(uint32 creatureId)
+{
+    uint32 oldMSTime = getMSTime();
+
+    //                                                  0       1
+    QueryResult result = WorldDatabase.Query("SELECT `Index`, Spell FROM creature_template_spell WHERE CreatureId = {}", creatureId);
+
+    if (!result)
+    {
+        LOG_WARN("server.loading", ">> Loaded 0 creature template spell definitions. DB table `creature_template_spell` is empty.");
+        LOG_INFO("server.loading", " ");
+        return;
+    }
+
+    uint32 count = 0;
+
+    do
+    {
+        Field* fields = result->Fetch();
+        uint8 index = fields[0].Get<uint8>();
+        LOG_WARN("server.loading", "index: {}", index);
+
+        if (index >= MAX_CREATURE_SPELLS)
+        {
+            LOG_ERROR("sql.sql", "creature_template_spell has spell definitions for creature {} with a incorrect index {}", creatureId, index);
+            continue;
+        }
+
+        CreatureTemplateContainer::iterator itr = _creatureTemplateStore.find(creatureId);
+        if (itr == _creatureTemplateStore.end())
+        {
+            LOG_ERROR("sql.sql", "creature_template_spell has spell definitions for creature {} but this creature doesn't exist", creatureId);
+            continue;
+        }
+
+        CreatureTemplate& creatureTemplate = itr->second;
+        creatureTemplate.spells[index] = fields[1].Get<uint32>();
+        LOG_WARN("server.loading", "Spell id: {}", fields[1].Get<uint32>());
+
+        ++count;
+    } while (result->NextRow());
+
+    LOG_INFO("server.loading", ">> Loaded {} Creature Template Spells in {} ms", count, GetMSTimeDiffToNow(oldMSTime));
+    LOG_INFO("server.loading", " ");
 }
 
 void ObjectMgr::LoadCreatureTemplateResistances()

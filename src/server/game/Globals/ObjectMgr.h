@@ -1020,7 +1020,8 @@ public:
     void LoadCreatureClassLevelStats();
     void LoadCreatureLocales();
     void LoadCreatureTemplates();
-    void LoadCreatureTemplate(Field* fields);
+    void LoadCreatureTemplate(Field* fields, uint32 creatureId = 0);
+    void LoadCreatureTemplateSpell(uint32 creatureId);
     void LoadCreatureTemplateAddons();
     void LoadCreatureTemplateResistances();
     void LoadCreatureTemplateSpells();
