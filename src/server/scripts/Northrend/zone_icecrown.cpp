@@ -1209,11 +1209,8 @@ public:
                         {
                             GetCaster()->CastSpell(banner, SPELL_EXTINGUISH_FIRE, true);
                             extinguished = true;
-                            if (urand(0, 2))
-                            {
-                                banner->RemoveAurasDueToSpell(SPELL_COSMETIC_FIRE);
-                                continue;
-                            }
+                            banner->RemoveAurasDueToSpell(SPELL_COSMETIC_FIRE);
+                            continue;
                         }
                         fireCount++;
                     }
@@ -1286,10 +1283,10 @@ public:
             if (!summoner)
                 return;
 
-            if (summoner->GetTypeId() != TYPEID_UNIT)
-            {
-                return;
-            }
+            //if (summoner->GetTypeId() != TYPEID_UNIT)
+            //{
+            //    return;
+            //}
 
             summoner->ToUnit()->CastSpell(summoner->ToUnit(), SPELL_WAITING_FOR_A_BOMBER, true);
             summoner->ToUnit()->CastSpell(summoner->ToUnit(), SPELL_FLIGHT_ORDERS, true);
@@ -1304,7 +1301,7 @@ public:
         void DamageTaken(Unit* who, uint32&, DamageEffectType, SpellSchoolMask) override
         {
             if (who != me)
-                if (me->HealthBelowPct(80) && urand(0, 1))
+                if (me->HealthBelowPct(50) && !urand(0,5))
                     SpreadFire(true);
         }
 
@@ -1344,6 +1341,7 @@ public:
                                 me->SetSpeed(MOVE_FLIGHT, 1.2f);
                                 owner->RemoveAurasDueToSpell(SPELL_WAITING_FOR_A_BOMBER);
                                 turret->HandleSpellClick(owner, 0);
+                                owner->AddAura(66656, owner);
                                 return;
                             }
                     me->DespawnOrUnsummon(1);
@@ -1367,7 +1365,6 @@ public:
                             WayPoint* wp = itr->second;
                             pathPoints.push_back(G3D::Vector3(wp->x, wp->y, wp->z));
                         }
-
                         me->GetMotionMaster()->MoveSplinePath(&pathPoints);
                         events.ScheduleEvent(EVENT_CHECK_PATH_REGEN_HEALTH_BURN_DAMAGE, 1min);
                         events.ScheduleEvent(EVENT_SYNCHRONIZE_SHIELDS, 5s);
@@ -1391,9 +1388,9 @@ public:
                                         fireCount++;
 
                         if (fireCount)
-                            Unit::DealDamage(me, me, 3000 * fireCount, nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_FIRE);
+                            Unit::DealDamage(me, me, 100 * fireCount, nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_FIRE);
                         else // Heal
-                            me->ModifyHealth(2000);
+                            me->ModifyHealth(4000);
 
                         events.ScheduleEvent(EVENT_CHECK_PATH_REGEN_HEALTH_BURN_DAMAGE, 4s);
                         break;
@@ -1407,10 +1404,13 @@ public:
                         for (uint8 i = SEAT_BOMBER; i <= SEAT_ENGINEERING; ++i)
                             if (Unit* station = kit->GetPassenger(i))
                             {
-                                if (Vehicle* stationKit = station->GetVehicleKit())
-                                    if (stationKit->GetPassenger(0))
-                                        playerPresent = true;
 
+                            if (Vehicle* stationKit = station->GetVehicleKit())
+                                        if (stationKit->GetPassenger(0))
+                                        {
+                                            playerPresent = true;
+                                            station->SetHealth(station->GetMaxHealth() * me->GetHealthPct() / 100.0f);
+                                        }
                                 if (stackAmount)
                                     station->SetAuraStack(SPELL_INFRA_GREEN_SHIELD, station, stackAmount);
                                 else
