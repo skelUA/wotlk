@@ -28,3 +28,10 @@ UPDATE `creature_template` SET `flags_extra` = `flags_extra` &~ 2147483648 WHERE
 --
 DELETE FROM creature_template_spell WHERE (`CreatureID` = 28999) AND (`Index` IN (3));
 DELETE FROM creature_template_spell WHERE (`CreatureID` = 28985) AND (`Index` IN (3));
+
+--
+--https://www.wowhead.com/wotlk/ru/quest=12856
+--
+DELETE FROM `creature_template_movement` WHERE (`CreatureId` = 29709);
+INSERT INTO `creature_template_movement` (`CreatureId`, `Ground`, `Swim`, `Flight`, `Rooted`, `Chase`, `Random`, `InteractionPauseTimer`) VALUES
+(29709, 0, 0, 2, 0, 0, 0, NULL);
