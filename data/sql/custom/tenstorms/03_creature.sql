@@ -35,3 +35,17 @@ DELETE FROM creature_template_spell WHERE (`CreatureID` = 28985) AND (`Index` IN
 DELETE FROM `creature_template_movement` WHERE (`CreatureId` = 29709);
 INSERT INTO `creature_template_movement` (`CreatureId`, `Ground`, `Swim`, `Flight`, `Rooted`, `Chase`, `Random`, `InteractionPauseTimer`) VALUES
 (29709, 0, 0, 2, 0, 0, 0, NULL);
+
+--
+-- https://www.wowhead.com/wotlk/ru/quest=13086
+--
+DELETE FROM `creature_template_movement` WHERE (`CreatureId` = 30575);
+INSERT INTO `creature_template_movement` (`CreatureId`, `Ground`, `Swim`, `Flight`, `Rooted`, `Chase`, `Random`, `InteractionPauseTimer`) VALUES
+(30575, 0, 0, 2, 0, 0, 0, NULL);
+
+--
+-- https://www.wowhead.com/wotlk/ru/quest=1218
+-- https://www.wowhead.com/wotlk/ru/quest=862
+--
+UPDATE creature_template SET type = 10 WHERE entry = 23979;
+UPDATE creature_template SET type = 10 WHERE entry =  3444 ;
