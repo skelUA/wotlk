@@ -476,7 +476,7 @@ public:
 
             Field* fields = result->Fetch();
 
-            sObjectMgr->LoadCreatureTemplate(fields, entry);
+            sObjectMgr->LoadCreatureTemplate(fields);
             sObjectMgr->CheckCreatureTemplate(cInfo);
         }
 
