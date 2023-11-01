@@ -702,14 +702,20 @@ void ObjectMgr::LoadCreatureTemplate(Field* fields, uint32 creatureId)
         creatureTemplate.resistance[i] = 0;
     }
 
-    for (uint8 i = 0; i < MAX_CREATURE_SPELLS; ++i)
-    {
-        creatureTemplate.spells[i] = 0;
-    }
-
     if (creatureId != 0)
     {
+        for (uint8 i = 0; i < MAX_CREATURE_SPELLS; ++i)
+        {
+            creatureTemplate.spells[i] = 0;
+        }
         LoadCreatureTemplateSpell(creatureId);
+    }
+    else
+    {
+        for (uint8 i = 0; i < MAX_CREATURE_SPELLS; ++i)
+        {
+            creatureTemplate.spells[i] = 0;
+        }
     }
 
     creatureTemplate.PetSpellDataId = fields[46].Get<uint32>();
