@@ -145,7 +145,7 @@ enum DataTypes
     DATA_HAS_LIMITED_ATTEMPTS       = 255,
     DATA_LK_HC_AVAILABLE            = 256,
     DATA_SINDRAGOSA_INTRO           = 257,
-
+    DATA_SUMMON_SINDRAGOSA          = 299,
     DATA_BPC_TRASH_DIED             = 300,
 };
 

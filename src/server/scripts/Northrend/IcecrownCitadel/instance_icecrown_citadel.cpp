@@ -1258,6 +1258,10 @@ public:
         {
             switch (type)
             {
+                case DATA_SUMMON_SINDRAGOSA:
+                       if (GetBossState(DATA_SINDRAGOSA) != DONE && !GetCreature(DATA_SINDRAGOSA) && Events.GetTimeUntilEvent(EVENT_RESPAWN_SINDRAGOSA) == Milliseconds::max())
+                        Events.ScheduleEvent(EVENT_RESPAWN_SINDRAGOSA, 30s);
+                        break;
                 case DATA_BUFF_AVAILABLE:
                     IsBuffAvailable = !!data;
                     if (!IsBuffAvailable)
