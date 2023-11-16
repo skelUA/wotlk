@@ -19963,35 +19963,11 @@ void Unit::_EnterVehicle(Vehicle* vehicle, int8 seatId, AuraApplication const* a
     ASSERT(!m_vehicle);
     m_vehicle = vehicle;
 
-    //Hack fix for Ulduar siege engine
-    //vehicle accessories don't always work for some vehicles
-    //So, this hack fix casts the spell that the player unit should cast to enter the turret
-    //This may be slightly dangerous, and it is likely non-blizzlike, or incomplete but it appeears to work
-    if (this->GetGUID().IsPlayer() && vehicle->GetCreatureEntry() == 33060 && vehicle->GetPassenger(0)) //if it's Ulduar siege engine and someone is in the first seat
+    if (!m_vehicle->AddPassenger(this, seatId))
     {
-        //Should check that the turret is properly seated to avoid crashes
-        if (!m_vehicle->HasEmptySeat(7))
-        {
-            Unit* turret = m_vehicle->GetPassenger(7); //the turret should be sitting in the 7th passenger seat
-
-            //This casts the http://www.wowhead.com/spell=65031/ride-vehicle-scales-w-gear
-            //spell that interacting with Ulduar vechicles is suppose to cast
-            //Though for the turret it probably should cast based on the drivers gear? This
-            //is good enough for now though.
-            CastSpell(turret, 65031, GetVehicleKit() ? TRIGGERED_IGNORE_CASTER_MOUNTED_OR_ON_VEHICLE : TRIGGERED_NONE, NULL, NULL, GetGUID());
-        }
+        m_vehicle = nullptr;
+        return;
     }
-    else
-    {
-            if (!m_vehicle->AddPassenger(this, seatId))
-            {
-                m_vehicle = nullptr;
-                return;
-            }
-    }
-
-
-
 
     // Xinef: remove movement auras when entering vehicle (food buffs etc)
     RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TURNING | AURA_INTERRUPT_FLAG_MOVE);
