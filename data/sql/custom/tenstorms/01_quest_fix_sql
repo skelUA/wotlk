@@ -431,5 +431,6 @@ INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_
 -- https://www.wowhead.com/wotlk/quest=13060
 -- TEMP FIX!!!
 --
-UPDATE `creature_template` SET `speed_run` = 10, `VehicleId` = 368 WHERE (`entry` = 30477);
-UPDATE `creature_template` SET `speed_run` = 10, `VehicleId` = 368 WHERE (`entry` = 30487);
+-- UPDATE `creature_template` SET `speed_run` = 10, `VehicleId` = 368 WHERE (`entry` = 30477);
+-- UPDATE `creature_template` SET `speed_run` = 10, `VehicleId` = 368 WHERE (`entry` = 30487);
+-- VehicleId was  240
