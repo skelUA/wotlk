@@ -969,6 +969,8 @@ void BattlegroundQueue::BattlegroundQueueAnnouncerUpdate(uint32 diff, Battlegrou
     if (sWorld->getBoolConfig(CONFIG_BATTLEGROUND_QUEUE_ANNOUNCER_TIMED))
     {
         uint32 qPlayers = 0;
+        uint32 qHordePlayers = 0;
+        uint32 qAlliancePlayers = 0;
 
         if (_queueAnnouncementCrossfactioned)
         {
@@ -977,6 +979,8 @@ void BattlegroundQueue::BattlegroundQueueAnnouncerUpdate(uint32 diff, Battlegrou
         else
         {
             qPlayers = GetPlayersCountInGroupsQueue(bracket_id, BG_QUEUE_NORMAL_HORDE) + GetPlayersCountInGroupsQueue(bracket_id, BG_QUEUE_NORMAL_ALLIANCE);
+            qHordePlayers = GetPlayersCountInGroupsQueue(bracket_id, BG_QUEUE_NORMAL_HORDE);
+            qAlliancePlayers =GetPlayersCountInGroupsQueue(bracket_id, BG_QUEUE_NORMAL_ALLIANCE);
         }
 
         if (!qPlayers)
@@ -996,7 +1000,7 @@ void BattlegroundQueue::BattlegroundQueueAnnouncerUpdate(uint32 diff, Battlegrou
                 uint32 q_min_level = std::min(bracketEntry->minLevel, (uint32) 80);
                 uint32 q_max_level = std::min(bracketEntry->maxLevel, (uint32) 80);
 
-                sWorld->SendWorldTextOptional(LANG_BG_QUEUE_ANNOUNCE_WORLD, ANNOUNCER_FLAG_DISABLE_BG_QUEUE, bgName.c_str(), q_min_level, q_max_level, qPlayers, MaxPlayers);
+                  sWorld->SendWorldTextOptional(LANG_BG_QUEUE_ANNOUNCE_WORLD_AH, ANNOUNCER_FLAG_DISABLE_BG_QUEUE, bgName.c_str(), q_min_level, q_max_level, qPlayers, MaxPlayers,qAlliancePlayers,qHordePlayers);
             }
             else
             {
@@ -1077,7 +1081,7 @@ void BattlegroundQueue::SendMessageBGQueue(Player* leader, Battleground* bg, PvP
                 return;
             }
 
-            sWorld->SendWorldTextOptional(LANG_BG_QUEUE_ANNOUNCE_WORLD, ANNOUNCER_FLAG_DISABLE_BG_QUEUE, bgName.c_str(), q_min_level, q_max_level, qAlliance + qHorde, MaxPlayers);
+            sWorld->SendWorldTextOptional(LANG_BG_QUEUE_ANNOUNCE_WORLD_AH, ANNOUNCER_FLAG_DISABLE_BG_QUEUE, bgName.c_str(), q_min_level, q_max_level, qAlliance + qHorde, MaxPlayers,qAlliance,qHorde);
         }
     }
 }

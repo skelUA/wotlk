@@ -660,6 +660,7 @@ enum AcoreStrings
     // BG announce
     LANG_BG_QUEUE_ANNOUNCE_SELF         = 711,
     LANG_BG_QUEUE_ANNOUNCE_WORLD        = 712,
+    LANG_BG_QUEUE_ANNOUNCE_WORLD_AH     = 90009,
 
     // Arena announce
     LANG_ARENA_QUEUE_ANNOUNCE_SELF      = 713,
