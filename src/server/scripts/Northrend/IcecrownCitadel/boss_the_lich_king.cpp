@@ -3279,6 +3279,7 @@ public:
                 case ACTION_FROSTMOURNE_INTRO:
                     me->SetControlled(true, UNIT_STATE_ROOT);
                     me->setActive(true);
+                    DoCastSelf(SPELL_LIGHTS_FAVOR);
                     _events.Reset();
                     _events.ScheduleEvent(EVENT_FROSTMOURNE_TALK_1, 2s);
                     _events.ScheduleEvent(EVENT_FROSTMOURNE_TALK_2, 11s);
