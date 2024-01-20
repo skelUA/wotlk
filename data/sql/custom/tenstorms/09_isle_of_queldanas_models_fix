@@ -1,0 +1,2 @@
+UPDATE creature_template SET modelid1=22752, modelid2=22757, modelid3=22753, modelid4=22763 WHERE entry=24938;
+UPDATE creature_template SET modelid1=22910, modelid2=22914, modelid3=22918, modelid4=22922 WHERE entry=25115;
