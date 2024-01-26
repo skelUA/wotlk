@@ -1390,8 +1390,12 @@ public:
 
             for (uint32 i = 0; i < 3; ++i)
                 caster->CastSpell(summoners.front(), SPELL_SUMMON_SUPPRESSER, true);
-            for (uint32 i = 0; i < 3; ++i)
-                caster->CastSpell(summoners.back(), SPELL_SUMMON_SUPPRESSER, true);
+
+            if (GetCaster()->GetMap()->GetSpawnMode() & 1)
+            {
+                for (uint32 i = 0; i < 3; ++i)
+                    caster->CastSpell(summoners.back(), SPELL_SUMMON_SUPPRESSER, true);
+            }
         }
 
         void Register() override
