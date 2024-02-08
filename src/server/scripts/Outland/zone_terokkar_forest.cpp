@@ -632,7 +632,7 @@ public:
         return true;
     }
 
-    void SendActionMenu(Player* player, GameObject* /*go*/, uint32 action)
+    void SendActionMenu(Player* player, GameObject* go, uint32 action)
     {
         switch (action)
         {
@@ -649,6 +649,7 @@ public:
                 player->CastSpell(player, SPELL_SUMMON_VAKKIZ_THE_WINDRAGER, false);
                 break;
         }
+        go->DespawnOrUnsummon(1s);
     }
 };
 
