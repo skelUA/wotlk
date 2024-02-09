@@ -5,7 +5,7 @@ WHERE `entry` = 22991;
 DELETE
 FROM `smart_scripts`
 WHERE (`entryorguid` = 2299100)
-  AND (`source_type` = 9)
+  AND (`source_type` = 9);
 
 DELETE
 FROM `smart_scripts`
