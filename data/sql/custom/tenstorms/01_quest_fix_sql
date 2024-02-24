@@ -364,11 +364,3 @@ INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_
 (32769, 0, 5, 0, 37, 0, 100, 769, 0, 0, 0, 0, 0, 0, 205, 55, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'On AI Init - Set Combat Distance');
 
 
---
--- https://www.wowhead.com/wotlk/quest=12862
--- https://www.wowhead.com/wotlk/quest=13060
--- TEMP FIX!!!
---
--- UPDATE `creature_template` SET `speed_run` = 1,14286, `VehicleId` = 240 WHERE (`entry` = 30477);
--- UPDATE `creature_template` SET `speed_run` = 1,14286, `VehicleId` = 240 WHERE (`entry` = 30487);
--- VehicleId was  240
