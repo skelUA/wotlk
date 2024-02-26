@@ -72,6 +72,26 @@ void SQLQueryHolderBase::SetSize(size_t size)
     m_queries.resize(size);
 }
 
+SQLQueryHolderBase::SQLQueryHolderBase(SQLQueryHolderBase&&)
+{
+    ABORT();
+}
+
+SQLQueryHolderBase& SQLQueryHolderBase::operator=(SQLQueryHolderBase&&)
+{
+    ABORT();
+}
+
+SQLQueryHolderBase::SQLQueryHolderBase(SQLQueryHolderBase const& right)
+{
+    ABORT();
+}
+
+SQLQueryHolderBase& SQLQueryHolderBase::operator=(SQLQueryHolderBase const& right)
+{
+    ABORT();
+}
+
 SQLQueryHolderTask::~SQLQueryHolderTask() = default;
 
 bool SQLQueryHolderTask::Execute()
