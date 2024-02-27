@@ -8,6 +8,10 @@ SET @last_char_id := 30000;
 SET @last_item_guid := 5000000;
 -- SELECT max(id) FROM character_pet;
 SET @last_pet_id := 2200;
+-- SELECT max(guid) FROM group_member;
+SET @last_group_member_id := 3000;
+-- SELECT max(guildid) FROM guild;
+SET @last_guild_id := 8000;
 
 
 -- set account_data
@@ -40,14 +44,23 @@ UPDATE auctionhouse set  itemowner = itemowner + @last_char_id;
 UPDATE auctionhouse set  buyguid = buyguid + @last_char_id where buyguid > 0;
 -- SELECT * FROM auctionhouse;
 
--- banned_addons will not change
+-- banned_addons
+TRUNCATE banned_addons
 -- battleground_deserters
+TRUNCATE battleground_deserters
 -- bugreport
+TRUNCATE bugreport
 -- calendar_events
+TRUNCATE calendar_events
 -- calendar_invites
+TRUNCATE calendar_invites
 -- channels
+TRUNCATE channels
 -- channels_bans
+TRUNCATE channels_bans
 -- channels_rights
+TRUNCATE channels_rights
+
 
 -- set  character_account_data
 UPDATE character_account_data set  guid = guid + @last_char_id;
@@ -135,3 +148,108 @@ UPDATE character_queststatus_rewarded set  guid = guid + @last_char_id;
 -- character_queststatus_seasonal
 UPDATE character_queststatus_seasonal set  guid = guid + @last_char_id;
 -- SELECT * FROM character_queststatus_seasonal;
+
+-- character_queststatus_weekly
+UPDATE character_queststatus_weekly set  guid = guid + @last_char_id;
+-- SELECT * FROM character_queststatus_weekly;
+
+-- character_reputation
+UPDATE character_reputation set  guid = guid + @last_char_id;
+-- SELECT * FROM character_reputation;
+
+-- characters
+UPDATE characters set  guid = guid + @last_char_id;
+UPDATE characters set  account = account + @last_account_id;
+UPDATE characters set at_login=1;
+-- SELECT * FROM characters;
+
+-- character_settings
+TRUNCATE character_settings;
+
+-- character_skills
+UPDATE character_skills set  guid = guid + @last_char_id;
+-- SELECT * FROM character_skills;
+
+-- character_social
+UPDATE character_social set  guid = guid + @last_char_id;
+UPDATE character_social set  friend = friend + @last_char_id;
+-- SELECT * FROM character_social;
+
+-- character_spell
+UPDATE character_spell set  guid = guid + @last_char_id;
+-- SELECT * FROM character_spell;
+
+-- character_spell_cooldown
+UPDATE character_spell_cooldown set  guid = guid + @last_char_id;
+-- SELECT * FROM character_spell_cooldown;
+
+-- character_stats
+UPDATE character_stats set  guid = guid + @last_char_id;
+-- SELECT * FROM character_stats;
+
+-- character_talent
+UPDATE character_talent set  guid = guid + @last_char_id;
+-- SELECT * FROM character_talent;
+
+-- character_transfer
+TRUNCATE character_transfer;
+-- corpse
+TRUNCATE corpse;
+-- creature_respawn
+TRUNCATE creature_respawn;
+
+-- custom_transmogrification
+UPDATE custom_transmogrification set  GUID = GUID + @last_item_guid;
+UPDATE custom_transmogrification set  owner = owner + @last_char_id;
+-- SELECT * FROM custom_transmogrification;
+
+-- custom_transmogrification_sets;
+TRUNCATE custom_transmogrification_sets;
+
+-- custom_unlocked_appearances
+UPDATE  set  account_id = account_id + @last_account_id;
+-- SELECT * FROM custom_unlocked_appearances;
+
+-- game_event_condition_save
+TRUNCATE game_event_condition_save;
+-- game_event_save
+TRUNCATE game_event_save;
+-- gameobject_respawn
+TRUNCATE gameobject_respawn;
+
+-- globalchat_blacklist
+TRUNCATE globalchat_blacklist;
+-- gm_subsurvey
+TRUNCATE gm_subsurvey;
+-- gm_survey
+TRUNCATE gm_survey;
+-- gm_ticket
+TRUNCATE gm_ticket;
+
+-- group_member
+UPDATE group_member set  guid = guid + @last_group_member_id;
+UPDATE group_member set  memberGuid = memberGuid + @last_char_id;
+-- SELECT * FROM group_member;
+
+-- groups
+UPDATE `groups` set  guid = guid + @last_group_member_id;
+UPDATE `groups` set  LeaderGuid = LeaderGuid + @last_char_id;
+UPDATE `groups` set  MasterLooterGuid = MasterLooterGuid + @MasterLooterGuid where MasterLooterGuid > 0;
+-- SELECT * FROM `groups`;
+
+-- guild
+UPDATE `guild` set  guildid = guildid + @last_guild_id;
+UPDATE `guild` set  leaderguid = leaderguid + @last_char_id;
+-- SELECT * FROM guild;
+
+-- guild_bank_eventlog
+TRUNCATE guild_bank_eventlog;
+
+-- guild_bank_item
+UPDATE `guild_bank_item` set  guildid = guildid + @last_guild_id;
+UPDATE `guild_bank_item` set  item_guid = item_guid + @last_item_guid;
+-- SELECT * FROM guild_bank_item;
+
+-- guild_bank_right
+UPDATE `guild_bank_right` set  guildid = guildid + @last_guild_id;
+-- SELECT * FROM guild_bank_right;
