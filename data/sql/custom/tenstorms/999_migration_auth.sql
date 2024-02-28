@@ -1,22 +1,33 @@
--- set db name
+-- SELECT max(id) FROM account;
+SET @last_account_id := 5811;
+
+use beta_auth;
+-- set account_data
+UPDATE account set id = id + @last_account_id;
+-- SELECT * FROM beta_characters.account_data ;
+
+
+
 USE beta_characters;
-SET @last_account_id := 10000;
-SET @last_arena_team_id := 211;
+SET @last_account_id := 0;
+-- SELECT max(arenaTeamId) FROM arena_team;
+SET @last_arena_team_id := 228;
 -- SELECT max(id) FROM auctionhouse;
-SET @last_auctionhouse_id := 13000;
-SET @last_char_id := 30000;
+SET @last_auctionhouse_id := 925135;
+-- SELECT max(guid) FROM characters;
+SET @last_char_id := 16309;
 -- SELECT max(guid) FROM item_instance;
-SET @last_item_guid := 29257826;
+SET @last_item_guid := 67351026;
 -- SELECT max(id) FROM character_pet;
-SET @last_pet_id := 2200;
+SET @last_pet_id := 7190;
 -- SELECT max(guid) FROM group_member;
-SET @last_group_member_id := 3000;
+SET @last_group_member_id := 7035;
 -- SELECT max(guildid) FROM guild;
-SET @last_guild_id := 8000;
+SET @last_guild_id := 64;
 -- SELECT max(id) FROM mail;
-SET @last_mail_id := 267985;
+SET @last_mail_id := 67266292;
 -- SELECT max(petitionguid) FROM petition;
-SET @last_petition_id := 28979970;
+-- SET @last_petition_id := 66585737;
 
 -- set account_data
 UPDATE account_data set accountid = accountid + @last_account_id;
@@ -44,26 +55,25 @@ UPDATE arena_team_member set guid = guid + @last_char_id;
 UPDATE auctionhouse set id = id + @last_auctionhouse_id ;
 UPDATE auctionhouse set  itemguid = itemguid + @last_item_guid;
 UPDATE auctionhouse set  itemowner = itemowner + @last_char_id;
-UPDATE auctionhouse set  itemowner = itemowner + @last_char_id;
 UPDATE auctionhouse set  buyguid = buyguid + @last_char_id where buyguid > 0;
 -- SELECT * FROM auctionhouse;
 
 -- banned_addons
-TRUNCATE banned_addons
+TRUNCATE banned_addons ;
 -- battleground_deserters
-TRUNCATE battleground_deserters
+TRUNCATE battleground_deserters;
 -- bugreport
-TRUNCATE bugreport
+TRUNCATE bugreport;
 -- calendar_events
-TRUNCATE calendar_events
+TRUNCATE calendar_events;
 -- calendar_invites
-TRUNCATE calendar_invites
+TRUNCATE calendar_invites;
 -- channels
-TRUNCATE channels
+TRUNCATE channels;
 -- channels_bans
-TRUNCATE channels_bans
+TRUNCATE channels_bans;
 -- channels_rights
-TRUNCATE channels_rights
+TRUNCATE channels_rights;
 
 
 -- set  character_account_data
@@ -211,7 +221,7 @@ UPDATE custom_transmogrification set  owner = owner + @last_char_id;
 TRUNCATE custom_transmogrification_sets;
 
 -- custom_unlocked_appearances
-UPDATE  set  account_id = account_id + @last_account_id;
+UPDATE  custom_unlocked_appearances set  account_id = account_id + @last_account_id;
 -- SELECT * FROM custom_unlocked_appearances;
 
 -- game_event_condition_save
@@ -341,12 +351,12 @@ TRUNCATE mail_server_template ;
 TRUNCATE pet_aura;
 
 -- petition;
-UPDATE `petition` set  petitionguid = petitionguid + @last_petition_id;
+UPDATE `petition` set  petitionguid = petitionguid + @last_item_guid;
 UPDATE `petition` set  ownerguid = ownerguid + @last_char_id ;
 -- SELECT * FROM petition;
 
 -- petition_sign
-UPDATE `petition_sign` set  petitionguid = petitionguid + @last_petition_id;
+UPDATE `petition_sign` set  petitionguid = petitionguid + @last_item_guid;
 UPDATE `petition_sign` set  ownerguid = ownerguid + @last_char_id ;
 UPDATE `petition_sign` set  playerguid = playerguid + @last_char_id ;
 UPDATE `petition_sign` set player_account = player_account + @last_account_id;
@@ -376,4 +386,12 @@ TRUNCATE quest_tracker;
 TRUNCATE recovery_item;
 -- reserved_name
 TRUNCATE reserved_name;
+-- updates;
+
+TRUNCATE updates;
+-- updates_include
+TRUNCATE updates_include;
+TRUNCATE worldstates;
+TRUNCATE warden_action;
+TRUNCATE pvpstats_battlegrounds;
 
