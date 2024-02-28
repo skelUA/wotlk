@@ -5,14 +5,18 @@ SET @last_arena_team_id := 211;
 -- SELECT max(id) FROM auctionhouse;
 SET @last_auctionhouse_id := 13000;
 SET @last_char_id := 30000;
-SET @last_item_guid := 5000000;
+-- SELECT max(guid) FROM item_instance;
+SET @last_item_guid := 29257826;
 -- SELECT max(id) FROM character_pet;
 SET @last_pet_id := 2200;
 -- SELECT max(guid) FROM group_member;
 SET @last_group_member_id := 3000;
 -- SELECT max(guildid) FROM guild;
 SET @last_guild_id := 8000;
-
+-- SELECT max(id) FROM mail;
+SET @last_mail_id := 267985;
+-- SELECT max(petitionguid) FROM petition;
+SET @last_petition_id := 28979970;
 
 -- set account_data
 UPDATE account_data set accountid = accountid + @last_account_id;
@@ -253,3 +257,123 @@ UPDATE `guild_bank_item` set  item_guid = item_guid + @last_item_guid;
 -- guild_bank_right
 UPDATE `guild_bank_right` set  guildid = guildid + @last_guild_id;
 -- SELECT * FROM guild_bank_right;
+
+
+-- guild_bank_tab
+UPDATE `guild_bank_tab` set  guildid = guildid + @last_guild_id;
+-- SELECT * FROM guild_bank_tab;
+
+-- guild_eventlog
+TRUNCATE guild_eventlog;
+
+-- guild_member
+UPDATE `guild_member` set  guildid = guildid + @last_guild_id;
+UPDATE `guild_member` set  guid = guid + @last_char_id;
+-- SELECT * FROM guild_member;
+
+-- guild_member_withdraw
+UPDATE `guild_member_withdraw` set  guid = guid + @last_char_id;
+-- SELECT * FROM guild_member_withdraw;
+
+
+-- guild_rank
+UPDATE `guild_rank` set  guildid = guildid + @last_guild_id;
+-- SELECT * FROM guild_rank;
+
+TRUNCATE individualxp;
+
+-- instance_reset
+TRUNCATE  instance_reset;
+
+-- instance_saved_go_state_data
+TRUNCATE instance_saved_go_state_data;
+
+-- item_instance
+UPDATE `item_instance` set  guid = guid + @last_item_guid;
+UPDATE `item_instance` set  owner_guid = owner_guid + @last_char_id where owner_guid > 0;
+UPDATE `item_instance` set  creatorGuid = creatorGuid + @last_char_id where creatorGuid > 0;
+UPDATE `item_instance` set  giftCreatorGuid = giftCreatorGuid + @last_char_id where giftCreatorGuid > 0;
+-- SELECT *  FROM item_instance;
+
+-- item_loot_storage
+UPDATE `item_loot_storage` set  containerGUID = containerGUID + @last_item_guid;
+-- SELECT * FROM item_loot_storage;
+
+-- item_refund_instance
+UPDATE `item_refund_instance` set  item_guid = item_guid + @last_item_guid;
+UPDATE `item_refund_instance` set  player_guid = player_guid + @last_char_id;
+-- SELECT * FROM item_refund_instance;
+
+
+-- item_soulbound_trade_data
+TRUNCATE item_soulbound_trade_data;
+-- lag_reports
+TRUNCATE lag_reports;
+-- lfg_data
+TRUNCATE lfg_data;
+-- log_arena_fights
+TRUNCATE log_arena_fights;
+-- log_arena_memberstats
+TRUNCATE log_arena_memberstats;
+-- log_encounter
+TRUNCATE log_encounter;
+-- log_money
+TRUNCATE log_money;
+
+-- mail
+UPDATE `mail` set  id = id + @last_mail_id;
+UPDATE `mail` set  sender = sender + @last_char_id where sender > 0;
+UPDATE `mail` set  receiver = receiver + @last_char_id where receiver > 0;
+-- SELECT * FROM mail;
+
+-- mail_items
+UPDATE `mail_items` set  mail_id = mail_id + @last_mail_id;
+UPDATE `mail_items` set  receiver = receiver + @last_char_id where receiver > 0;
+UPDATE `mail_items` set  item_guid = item_guid + @last_item_guid;
+-- SELECT * FROM mail_items;
+
+
+-- mail_server_character
+-- mail_server_template
+TRUNCATE mail_server_character ;
+TRUNCATE mail_server_template ;
+
+TRUNCATE pet_aura;
+
+-- petition;
+UPDATE `petition` set  petitionguid = petitionguid + @last_petition_id;
+UPDATE `petition` set  ownerguid = ownerguid + @last_char_id ;
+-- SELECT * FROM petition;
+
+-- petition_sign
+UPDATE `petition_sign` set  petitionguid = petitionguid + @last_petition_id;
+UPDATE `petition_sign` set  ownerguid = ownerguid + @last_char_id ;
+UPDATE `petition_sign` set  playerguid = playerguid + @last_char_id ;
+UPDATE `petition_sign` set player_account = player_account + @last_account_id;
+-- SELECT * FROM petition_sign;
+
+-- pet_spell
+UPDATE `pet_spell` set  guid = guid + @last_pet_id ;
+-- SELECT * FROM pet_spell;
+
+-- pet_spell_cooldown
+UPDATE `pet_spell_cooldown` set  guid = guid + @last_pet_id ;
+-- SELECT * FROM pet_spell_cooldown;
+
+-- player_globalchat_status
+TRUNCATE player_globalchat_status;
+-- pool_quest_save
+TRUNCATE pool_quest_save;
+-- profanity_name
+TRUNCATE profanity_name;
+-- player_globalchat_status
+TRUNCATE player_globalchat_status;
+-- pvpstats_players
+TRUNCATE pvpstats_players ;
+-- quest_tracker;
+TRUNCATE quest_tracker;
+-- recovery_item
+TRUNCATE recovery_item;
+-- reserved_name
+TRUNCATE reserved_name;
+
