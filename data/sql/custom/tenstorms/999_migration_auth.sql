@@ -409,3 +409,6 @@ DROP TABLE `__del_ability_spell`, `__del_override_spell`, `__del_shapeshift_spel
 DROP TABLE `__playercreateinfo_spell`;
 DROP TABLE  `__spell_ranks`;
 DROP TABLE `__profession_autolearn`, `__profession_skill`, `__profession_spell_req_skill`, `__profession_spell_req_spell`;
+DROP TABLE `character_transfer`;
+DROP TABLE  `individualxp`;
+DROP TABLE  `player`;
