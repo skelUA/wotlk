@@ -405,10 +405,10 @@ TRUNCATE worldstates;
 TRUNCATE warden_action;
 TRUNCATE pvpstats_battlegrounds;
 
-DROP TABLE `__del_ability_spell`, `__del_override_spell`, `__del_shapeshift_spell`, `__del_spell_learn_spell`, `__del_spells_with_learn_effect`, `__del_talent_pyroblast`, `__del_talent_pyroblast2`, `__del_talent_rest_ranks`;
-DROP TABLE `__playercreateinfo_spell`;
-DROP TABLE  `__spell_ranks`;
-DROP TABLE `__profession_autolearn`, `__profession_skill`, `__profession_spell_req_skill`, `__profession_spell_req_spell`;
-DROP TABLE `character_transfer`;
-DROP TABLE  `individualxp`;
-DROP TABLE  `player`;
+DROP TABLE IF EXISTS  `__del_ability_spell`, `__del_override_spell`, `__del_shapeshift_spell`, `__del_spell_learn_spell`, `__del_spells_with_learn_effect`, `__del_talent_pyroblast`, `__del_talent_pyroblast2`, `__del_talent_rest_ranks`;
+DROP TABLE IF EXISTS `__playercreateinfo_spell`;
+DROP TABLE IF EXISTS `__spell_ranks`;
+DROP TABLE IF EXISTS `__profession_autolearn`, `__profession_skill`, `__profession_spell_req_skill`, `__profession_spell_req_spell`;
+DROP TABLE IF EXISTS `character_transfer`;
+DROP TABLE IF EXISTS `individualxp`;
+DROP TABLE IF EXISTS `player`;
