@@ -1,21 +1,27 @@
 -- SELECT max(id) FROM account;
 SET @last_account_id := 5811;
-
+ALTER TABLE account ADD COLUMN   `votePoints` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0' AFTER restore_key;
 use beta_auth;
 -- set account_data
 UPDATE account set id = id + @last_account_id;
 -- SELECT * FROM beta_characters.account_data ;
+--
+-- use beta_auth;
+-- UPDATE account_test, account   SET account_test.username = CONCAT('TS_', account_test.username)  where  account.username = account_test.username;
+-- INSERT INTO account SELECT * FROM account_test;
 
 
 
 USE beta_characters;
-SET @last_account_id := 0;
+SET @last_account_id := 5811;
 -- SELECT max(arenaTeamId) FROM arena_team;
 SET @last_arena_team_id := 228;
 -- SELECT max(id) FROM auctionhouse;
 SET @last_auctionhouse_id := 925135;
 -- SELECT max(guid) FROM characters;
 SET @last_char_id := 16309;
+-- SELECT max(setguid) FROM character_equipmentsets;
+SET @last_equipment_id := 4032;
 -- SELECT max(guid) FROM item_instance;
 SET @last_item_guid := 67351026;
 -- SELECT max(id) FROM character_pet;
@@ -58,6 +64,8 @@ UPDATE auctionhouse set  itemowner = itemowner + @last_char_id;
 UPDATE auctionhouse set  buyguid = buyguid + @last_char_id where buyguid > 0;
 -- SELECT * FROM auctionhouse;
 
+-- addons
+TRUNCATE addons ;
 -- banned_addons
 TRUNCATE banned_addons ;
 -- battleground_deserters
@@ -113,9 +121,11 @@ UPDATE character_entry_point set  guid = guid + @last_char_id;
 
 -- set character_equipmentsets
 UPDATE character_equipmentsets set  guid = guid + @last_char_id;
+UPDATE character_equipmentsets SET setguid = setguid +  @last_equipment_id;
 -- SELECT * FROM character_equipmentsets;
 
 -- character_gifts no change
+TRUNCATE character_gifts
 
 -- set character_glyphs
 UPDATE character_glyphs set  guid = guid + @last_char_id;
@@ -173,8 +183,9 @@ UPDATE character_reputation set  guid = guid + @last_char_id;
 
 -- characters
 UPDATE characters set  guid = guid + @last_char_id;
-UPDATE characters set  account = account + @last_account_id;
-UPDATE characters set at_login=1;
+UPDATE characters set  account = account + @last_account_id where account > 0 ;
+UPDATE characters set  deleteInfos_Account = deleteInfos_Account + @last_account_id;
+-- UPDATE characters set at_login=1;
 -- SELECT * FROM characters;
 
 -- character_settings
@@ -387,7 +398,6 @@ TRUNCATE recovery_item;
 -- reserved_name
 TRUNCATE reserved_name;
 -- updates;
-
 TRUNCATE updates;
 -- updates_include
 TRUNCATE updates_include;
@@ -395,3 +405,7 @@ TRUNCATE worldstates;
 TRUNCATE warden_action;
 TRUNCATE pvpstats_battlegrounds;
 
+DROP TABLE `__del_ability_spell`, `__del_override_spell`, `__del_shapeshift_spell`, `__del_spell_learn_spell`, `__del_spells_with_learn_effect`, `__del_talent_pyroblast`, `__del_talent_pyroblast2`, `__del_talent_rest_ranks`;
+DROP TABLE `__playercreateinfo_spell`;
+DROP TABLE  `__spell_ranks`;
+DROP TABLE `__profession_autolearn`, `__profession_skill`, `__profession_spell_req_skill`, `__profession_spell_req_spell`;
