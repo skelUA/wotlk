@@ -122,6 +122,28 @@ UPDATE character_entry_point set  guid = guid + @last_char_id;
 -- set character_equipmentsets
 UPDATE character_equipmentsets set  guid = guid + @last_char_id;
 UPDATE character_equipmentsets SET setguid = setguid +  @last_equipment_id;
+UPDATE character_equipmentsets SET item0 = item0 +  @last_item_guid;
+UPDATE character_equipmentsets SET item1 = item1 +  @last_item_guid;
+UPDATE character_equipmentsets SET item2 = item2 +  @last_item_guid;
+UPDATE character_equipmentsets SET item3 = item3 +  @last_item_guid;
+UPDATE character_equipmentsets SET item4 = item4 +  @last_item_guid;
+UPDATE character_equipmentsets SET item5 = item5 +  @last_item_guid;
+UPDATE character_equipmentsets SET item6 = item6 +  @last_item_guid;
+UPDATE character_equipmentsets SET item7 = item7 +  @last_item_guid;
+UPDATE character_equipmentsets SET item8 = item8 +  @last_item_guid;
+UPDATE character_equipmentsets SET item9 = item9 +  @last_item_guid;
+UPDATE character_equipmentsets SET item10 = item10 +  @last_item_guid;
+UPDATE character_equipmentsets SET item11 = item11 +  @last_item_guid;
+UPDATE character_equipmentsets SET item12 = item12 +  @last_item_guid;
+UPDATE character_equipmentsets SET item13 = item13 +  @last_item_guid;
+UPDATE character_equipmentsets SET item14 = item14 +  @last_item_guid;
+UPDATE character_equipmentsets SET item15 = item15 +  @last_item_guid;
+UPDATE character_equipmentsets SET item16 = item16 +  @last_item_guid;
+UPDATE character_equipmentsets SET item17 = item17 +  @last_item_guid;
+UPDATE character_equipmentsets SET item18 = item18 +  @last_item_guid;
+
+
+
 -- SELECT * FROM character_equipmentsets;
 
 -- character_gifts no change
