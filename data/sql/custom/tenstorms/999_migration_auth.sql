@@ -10,8 +10,12 @@ UPDATE account set id = id + @last_account_id;
 -- UPDATE account_test, account   SET account_test.username = CONCAT('TS_', account_test.username)  where  account.username = account_test.username;
 -- INSERT INTO account SELECT * FROM account_test;
 
+-- mysqldump acore_auth account |\sed -e 's/`account`/`account_test`/'  > a_test.sql
 
 
+--
+-- mysqldump beta_characters characters |\sed -e 's/`characters`/`characters_temp`/'  > c_temp.sql
+-- UPDATE characters, characters_temp set characters.at_login=1 where characters.name=characters_temp.name  and characters.guid > @last_char_id;
 USE beta_characters;
 SET @last_account_id := 5811;
 -- SELECT max(arenaTeamId) FROM arena_team;
@@ -122,32 +126,32 @@ UPDATE character_entry_point set  guid = guid + @last_char_id;
 -- set character_equipmentsets
 UPDATE character_equipmentsets set  guid = guid + @last_char_id;
 UPDATE character_equipmentsets SET setguid = setguid +  @last_equipment_id;
-UPDATE character_equipmentsets SET item0 = item0 +  @last_item_guid;
-UPDATE character_equipmentsets SET item1 = item1 +  @last_item_guid;
-UPDATE character_equipmentsets SET item2 = item2 +  @last_item_guid;
-UPDATE character_equipmentsets SET item3 = item3 +  @last_item_guid;
-UPDATE character_equipmentsets SET item4 = item4 +  @last_item_guid;
-UPDATE character_equipmentsets SET item5 = item5 +  @last_item_guid;
-UPDATE character_equipmentsets SET item6 = item6 +  @last_item_guid;
-UPDATE character_equipmentsets SET item7 = item7 +  @last_item_guid;
-UPDATE character_equipmentsets SET item8 = item8 +  @last_item_guid;
-UPDATE character_equipmentsets SET item9 = item9 +  @last_item_guid;
-UPDATE character_equipmentsets SET item10 = item10 +  @last_item_guid;
-UPDATE character_equipmentsets SET item11 = item11 +  @last_item_guid;
-UPDATE character_equipmentsets SET item12 = item12 +  @last_item_guid;
-UPDATE character_equipmentsets SET item13 = item13 +  @last_item_guid;
-UPDATE character_equipmentsets SET item14 = item14 +  @last_item_guid;
-UPDATE character_equipmentsets SET item15 = item15 +  @last_item_guid;
-UPDATE character_equipmentsets SET item16 = item16 +  @last_item_guid;
-UPDATE character_equipmentsets SET item17 = item17 +  @last_item_guid;
-UPDATE character_equipmentsets SET item18 = item18 +  @last_item_guid;
+UPDATE character_equipmentsets SET item0 = item0 +  @last_item_guid where item0 >0 ;
+UPDATE character_equipmentsets SET item1 = item1 +  @last_item_guid where item1 >0;
+UPDATE character_equipmentsets SET item2 = item2 +  @last_item_guid where item2 >0;
+UPDATE character_equipmentsets SET item3 = item3 +  @last_item_guid where item3 >0;
+UPDATE character_equipmentsets SET item4 = item4 +  @last_item_guid where item4 >0;
+UPDATE character_equipmentsets SET item5 = item5 +  @last_item_guid where item5 >0;
+UPDATE character_equipmentsets SET item6 = item6 +  @last_item_guid where item6 >0 ;
+UPDATE character_equipmentsets SET item7 = item7 +  @last_item_guid where item7 >0;
+UPDATE character_equipmentsets SET item8 = item8 +  @last_item_guid where item8 >0 ;
+UPDATE character_equipmentsets SET item9 = item9 +  @last_item_guid where item9 >0 ;
+UPDATE character_equipmentsets SET item10 = item10 +  @last_item_guid where item10 >0;
+UPDATE character_equipmentsets SET item11 = item11 +  @last_item_guid where item11 >0 ;
+UPDATE character_equipmentsets SET item12 = item12 +  @last_item_guid where item12 >0;
+UPDATE character_equipmentsets SET item13 = item13 +  @last_item_guid where item13 >0;
+UPDATE character_equipmentsets SET item14 = item14 +  @last_item_guid where item14 >0 ;
+UPDATE character_equipmentsets SET item15 = item15 +  @last_item_guid where item15 >0;
+UPDATE character_equipmentsets SET item16 = item16 +  @last_item_guid where item16 >0;
+UPDATE character_equipmentsets SET item17 = item17 +  @last_item_guid where item17 >0;
+UPDATE character_equipmentsets SET item18 = item18 +  @last_item_guid where item18 >0;
 
 
 
 -- SELECT * FROM character_equipmentsets;
 
 -- character_gifts no change
-TRUNCATE character_gifts
+TRUNCATE character_gifts;
 
 -- set character_glyphs
 UPDATE character_glyphs set  guid = guid + @last_char_id;
@@ -434,3 +438,14 @@ DROP TABLE IF EXISTS `__profession_autolearn`, `__profession_skill`, `__professi
 DROP TABLE IF EXISTS `character_transfer`;
 DROP TABLE IF EXISTS `individualxp`;
 DROP TABLE IF EXISTS `player`;
+
+
+--
+---- AFTER
+-- UPDATE characters T1 JOIN
+--  (SELECT name FROM characters
+--   GROUP BY name HAVING count(name) > 1) dup ON T1.name = dup.name
+-- SET T1.at_login=1 where T1.guid > 16309 and T1.name <>'';
+
+
+-- mysql beta_characters < acore_characters.27-02-2024_11-30-01.sql
