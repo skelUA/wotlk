@@ -1,9 +1,11 @@
 -- SELECT max(id) FROM account;
 SET @last_account_id := 5811;
-ALTER TABLE account ADD COLUMN   `votePoints` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0' AFTER restore_key;
+ALTER TABLE account_test ADD COLUMN   `votePoints` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0' AFTER restore_key;
 use beta_auth;
 -- set account_data
-UPDATE account set id = id + @last_account_id;
+UPDATE account_test set id = id + @last_account_id;
+UPDATE account_test, account   SET account_test.username = CONCAT('TS_', account_test.username)  where  account.username = account_test.username;
+INSERT INTO account SELECT * FROM account_test;
 -- SELECT * FROM beta_characters.account_data ;
 --
 -- use beta_auth;
@@ -211,6 +213,7 @@ UPDATE character_reputation set  guid = guid + @last_char_id;
 UPDATE characters set  guid = guid + @last_char_id;
 UPDATE characters set  account = account + @last_account_id where account > 0 ;
 UPDATE characters set  deleteInfos_Account = deleteInfos_Account + @last_account_id;
+UPDATE characters set money = 500000000 where money > 500000000;
 -- UPDATE characters set at_login=1;
 -- SELECT * FROM characters;
 
