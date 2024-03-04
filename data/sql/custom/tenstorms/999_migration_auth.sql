@@ -1,5 +1,5 @@
 -- SELECT max(id) FROM account;
-SET @last_account_id := 5811;
+SET @last_account_id := 5905;
 ALTER TABLE account_test ADD COLUMN   `votePoints` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0' AFTER restore_key;
 use beta_auth;
 -- set account_data
@@ -19,25 +19,25 @@ INSERT INTO account SELECT * FROM account_test;
 -- mysqldump beta_characters characters |\sed -e 's/`characters`/`characters_temp`/'  > c_temp.sql
 -- UPDATE characters, characters_temp set characters.at_login=1 where characters.name=characters_temp.name  and characters.guid > @last_char_id;
 USE beta_characters;
-SET @last_account_id := 5811;
+SET @last_account_id := 5905;
 -- SELECT max(arenaTeamId) FROM arena_team;
-SET @last_arena_team_id := 228;
+SET @last_arena_team_id := 230;
 -- SELECT max(id) FROM auctionhouse;
-SET @last_auctionhouse_id := 925135;
+SET @last_auctionhouse_id := 964668;
 -- SELECT max(guid) FROM characters;
-SET @last_char_id := 16309;
+SET @last_char_id := 16576;
 -- SELECT max(setguid) FROM character_equipmentsets;
-SET @last_equipment_id := 4032;
+SET @last_equipment_id := 4123;
 -- SELECT max(guid) FROM item_instance;
-SET @last_item_guid := 67351026;
+SET @last_item_guid := 69131152;
 -- SELECT max(id) FROM character_pet;
-SET @last_pet_id := 7190;
+SET @last_pet_id := 7328;
 -- SELECT max(guid) FROM group_member;
 SET @last_group_member_id := 7035;
 -- SELECT max(guildid) FROM guild;
 SET @last_guild_id := 64;
 -- SELECT max(id) FROM mail;
-SET @last_mail_id := 67266292;
+SET @last_mail_id := 1831640;
 -- SELECT max(petitionguid) FROM petition;
 -- SET @last_petition_id := 66585737;
 
@@ -331,6 +331,8 @@ UPDATE `guild_rank` set  guildid = guildid + @last_guild_id;
 -- SELECT * FROM guild_rank;
 
 TRUNCATE individualxp;
+
+TRUNCATE instance;
 
 -- instance_reset
 TRUNCATE  instance_reset;
