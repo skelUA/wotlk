@@ -624,7 +624,6 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
 
                     SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(e.action.cast.spell);
                     float distanceToTarget = me->GetDistance(target->ToUnit());
-                 //          if ((!m_caster->IsTotem() || !m_spellInfo->IsPositive()) && !m_spellInfo->HasAttribute(SPELL_ATTR2_IGNORE_LINE_OF_SIGHT) &&
                     float spellMaxRange = me->GetSpellMaxRangeForTarget(target->ToUnit(), spellInfo);
                     float spellMinRange = me->GetSpellMinRangeForTarget(target->ToUnit(), spellInfo);
                     float meleeRange = me->GetMeleeRange(target->ToUnit());
@@ -638,7 +637,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     bool isSpellIgnoreLOS = spellInfo->HasAttribute(SPELL_ATTR2_IGNORE_LINE_OF_SIGHT);
 
                     // If target is rooted we move out of melee range before casting, but not further than spell max range.
-                    if (isWithinLOSInMap  && isWithinMeleeRange && isRangedAttack && isTargetRooted && canCastSpell)
+                    if (isWithinLOSInMap && isWithinMeleeRange && isRangedAttack && isTargetRooted && canCastSpell)
                     {
                         failedSpellCast = true; // Mark spellcast as failed so we can retry it later
                         float minDistance = std::max(meleeRange, spellMinRange) - distanceToTarget + NOMINAL_MELEE_RANGE;
