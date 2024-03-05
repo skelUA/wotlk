@@ -647,13 +647,14 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     }
 
                     // Let us not try to cast spell if we know it is going to fail anyway. Stick to chasing and continue.
-                    if (distanceToTarget > spellMaxRange && (isWithinLOSInMap || isSpellIgnoreLOS))
+                    if (distanceToTarget > spellMaxRange && isWithinLOSInMap)
                     {
                         failedSpellCast = true;
                         CAST_AI(SmartAI, me->AI())->SetCombatMove(true, std::max(spellMaxRange - NOMINAL_MELEE_RANGE, 0.0f));
                         continue;
                     }
-                    else if (distanceToTarget < spellMinRange || !(isWithinLOSInMap  && isSpellIgnoreLOS))
+
+                    else if (distanceToTarget < spellMinRange || !isWithinLOSInMap  || !isSpellIgnoreLOS))
                     {
                         failedSpellCast = true;
                         CAST_AI(SmartAI, me->AI())->SetCombatMove(true);
