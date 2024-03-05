@@ -653,12 +653,12 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                         CAST_AI(SmartAI, me->AI())->SetCombatMove(true, std::max(spellMaxRange - NOMINAL_MELEE_RANGE, 0.0f));
                         continue;
                     }
-                    else if (distanceToTarget < spellMinRange || !isWithinLOSInMap)
-                    {
-                        failedSpellCast = true;
-                        CAST_AI(SmartAI, me->AI())->SetCombatMove(true);
-                        continue;
-                    }
+//                    else if (distanceToTarget < spellMinRange || !isWithinLOSInMap)
+//                    {
+//                        failedSpellCast = true;
+//                        CAST_AI(SmartAI, me->AI())->SetCombatMove(true);
+//                        continue;
+//                    }
 
                     TriggerCastFlags triggerFlags = TRIGGERED_NONE;
                     if (e.action.cast.castFlags & SMARTCAST_TRIGGERED)
