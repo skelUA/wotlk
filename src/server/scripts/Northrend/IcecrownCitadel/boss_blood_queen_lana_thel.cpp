@@ -214,8 +214,6 @@ public:
 
         void JustDied(Unit*  /*killer*/) override
         {
-            me->SetCanFly(false);
-            me->SetDisableGravity(false);
             me->GetMotionMaster()->MoveFall();
             _JustDied();
             Talk(SAY_DEATH);
