@@ -214,6 +214,9 @@ public:
 
         void JustDied(Unit*  /*killer*/) override
         {
+            me->SetCanFly(false);
+            me->SetDisableGravity(false);
+            me->GetMotionMaster()->MoveFall();
             _JustDied();
             Talk(SAY_DEATH);
 
@@ -294,8 +297,9 @@ public:
                     me->SetCanFly(false);
                     me->SetDisableGravity(false);
                     me->SetReactState(REACT_AGGRESSIVE);
-                    if (Unit* target = me->SelectVictim())
-                        AttackStart(target);
+                    if (!me->GetThreatMgr().isThreatListEmpty())
+                        if (Unit* target = me->SelectVictim())
+                            AttackStart(target);
                     events.RescheduleEvent(EVENT_PACT_OF_THE_DARKFALLEN, 5s);
                     events.RescheduleEvent(EVENT_SWARMING_SHADOWS, 20s);
                     break;
@@ -310,8 +314,6 @@ public:
 
         void UpdateAI(uint32 diff) override
         {
-            if (!UpdateVictim())
-                return;
 
             events.Update(diff);
 
