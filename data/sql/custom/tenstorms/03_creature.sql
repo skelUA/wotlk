@@ -7,7 +7,7 @@ INSERT INTO `creature` (`guid`, `id1`, `id2`, `id3`, `map`, `zoneId`, `areaId`, 
 
 
 --
---https://www.wowhead.com/wotlk/npc=32500/dirkee
+-- https://www.wowhead.com/wotlk/npc=32500/dirkee
 --
 DELETE FROM `creature` WHERE (`id1` = 32500) AND (`guid` IN (152010, 152011, 152012, 152013));
 INSERT INTO `creature` (`guid`, `id1`, `id2`, `id3`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `wander_distance`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`, `ScriptName`, `VerifiedBuild`) VALUES
@@ -30,7 +30,7 @@ DELETE FROM creature_template_spell WHERE (`CreatureID` = 28999) AND (`Index` IN
 DELETE FROM creature_template_spell WHERE (`CreatureID` = 28985) AND (`Index` IN (3));
 
 --
---https://www.wowhead.com/wotlk/ru/quest=12856
+-- https://www.wowhead.com/wotlk/ru/quest=12856
 --
 DELETE FROM `creature_template_movement` WHERE (`CreatureId` = 29709);
 INSERT INTO `creature_template_movement` (`CreatureId`, `Ground`, `Swim`, `Flight`, `Rooted`, `Chase`, `Random`, `InteractionPauseTimer`) VALUES
