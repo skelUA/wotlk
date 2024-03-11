@@ -408,8 +408,9 @@ public:
             {
                 case POINT_FROSTWYRM_LAND:
                  LOG_INFO("server.loading", "POINT_FROSTWYRM_LAND");
-                    me->setActive(false);
+                    me->setActive(true);
                     me->SetDisableGravity(false);
+                    me->SetHover(false);
                     me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
                     me->SetHomePosition(SindragosaLandPos);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
