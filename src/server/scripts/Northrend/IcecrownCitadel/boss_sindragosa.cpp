@@ -412,7 +412,7 @@ public:
                     me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
                     me->SetHomePosition(SindragosaLandPos);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-
+                    me->GetMotionMaster()->MoveIdle();
                     // Sindragosa enters combat as soon as she lands
                     me->SetInCombatWithZone();
                     break;
