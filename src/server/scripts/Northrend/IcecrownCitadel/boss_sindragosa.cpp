@@ -422,10 +422,10 @@ public:
 //                            AttackStart(target);
                                 //me->GetMotionMaster()->MoveIdle();
                                 //me->StopMoving();
-
-                         if (!me->GetThreatMgr().isThreatListEmpty())
-                             if (Unit* target = me->SelectVictim())
-                                 AttackStart(target);
+//
+//                         if (!me->GetThreatMgr().isThreatListEmpty())
+//                             if (Unit* target = me->SelectVictim())
+//                                 AttackStart(target);
                     break;
                 case POINT_TAKEOFF:
                     LOG_INFO("server.loading", "POINT_TAKEOFF");
