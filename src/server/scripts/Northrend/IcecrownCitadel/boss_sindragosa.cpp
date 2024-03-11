@@ -415,6 +415,9 @@ public:
 
                     // Sindragosa enters combat as soon as she lands
                     //me->SetInCombatWithZone();
+                    if (!me->GetThreatMgr().isThreatListEmpty())
+                        if (Unit* target = me->SelectVictim())
+                            AttackStart(target);
                     break;
                 case POINT_TAKEOFF:
                     events.ScheduleEvent(EVENT_AIR_MOVEMENT, 0ms);
