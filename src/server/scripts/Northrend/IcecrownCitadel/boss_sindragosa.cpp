@@ -414,7 +414,7 @@ public:
                     me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
                     me->SetHomePosition(SindragosaLandPos);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                    me->SetReactState(REACT_AGGRESSIVE);
+//                    me->SetReactState(REACT_AGGRESSIVE);
                     // Sindragosa enters combat as soon as she lands
                     me->SetInCombatWithZone();
 //                    if (!me->GetThreatMgr().isThreatListEmpty())
