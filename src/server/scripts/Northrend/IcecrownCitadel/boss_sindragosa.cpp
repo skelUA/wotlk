@@ -407,41 +407,19 @@ public:
             switch (point)
             {
                 case POINT_FROSTWYRM_LAND:
-                 LOG_INFO("server.loading", "POINT_FROSTWYRM_LAND");
-//                    me->setActive(false);
-//                    me->SetDisableGravity(false);
-//                    //_isInAirPhase = false;
-//                    me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
-//                    me->SetHomePosition(SindragosaLandPos);
-//                    me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-//                    me->SetReactState(REACT_AGGRESSIVE);
-                    // Sindragosa enters combat as soon as she lands
-//                    me->GetMotionMaster()->MoveIdle();
-//                    me->StopMoving();
-                    if (!me->GetThreatMgr().isThreatListEmpty())
-                        if (Unit* target = me->SelectVictim()){
-                           AttackStart(target);
-                   me->SetInCombatWithZone();
-                   me->setActive(false);
+                    me->setActive(false);
                     me->SetDisableGravity(false);
-                    //_isInAirPhase = false;
                     me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
                     me->SetHomePosition(SindragosaLandPos);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                        }
-                                //me->GetMotionMaster()->MoveIdle();
-                                //me->StopMoving();
-//
-//                         if (!me->GetThreatMgr().isThreatListEmpty())
-//                             if (Unit* target = me->SelectVictim())
-//                                 AttackStart(target);
+                    me->GetMotionMaster()->MoveIdle();
+                    // Sindragosa enters combat as soon as she lands
+                    me->SetInCombatWithZone();
                     break;
                 case POINT_TAKEOFF:
-                    LOG_INFO("server.loading", "POINT_TAKEOFF");
                     events.ScheduleEvent(EVENT_AIR_MOVEMENT, 0ms);
                     break;
                 case POINT_AIR_PHASE:
-                    LOG_INFO("server.loading", "POINT_AIR_PHASE");
                     me->CastCustomSpell(SPELL_ICE_TOMB_TARGET, SPELLVALUE_MAX_TARGETS, RAID_MODE<int32>(2, 5, 2, 6), nullptr);
                     me->SetFacingTo(float(M_PI));
                     events.ScheduleEvent(EVENT_AIR_MOVEMENT_FAR, 0ms); // won't be processed during cast time anyway, so 0
@@ -449,24 +427,19 @@ public:
                     _bombCount = 0;
                     break;
                 case POINT_AIR_PHASE_FAR:
-                    LOG_INFO("server.loading", "POINT_AIR_PHASE_FAR");
                     me->SetFacingTo(float(M_PI));
                     break;
                 case POINT_LAND:
-                                    LOG_INFO("server.loading", "POINT_LAND");
-
                     events.ScheduleEvent(EVENT_LAND_GROUND, 0ms);
                     break;
                 case POINT_LAND_GROUND:
                     {
-                        LOG_INFO("server.loading", "POINT_LAND_GROUND");
                         _isInAirPhase = false;
                         me->SetDisableGravity(false);
                         me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
                         me->SetReactState(REACT_AGGRESSIVE);
-                        if (!me->GetThreatMgr().isThreatListEmpty())
-                            if (Unit* target = me->SelectVictim())
-                                AttackStart(target);
+                        if (Unit* target = me->SelectVictim())
+                            AttackStart(target);
                         break;
                     }
                 default:
@@ -524,7 +497,7 @@ public:
 
         void UpdateAI(uint32 diff) override
         {
-            if (!UpdateVictim() || !CheckInRoom())
+            if (!UpdateVictim())
                 return;
 
             events.Update(diff);
