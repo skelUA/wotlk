@@ -414,10 +414,10 @@ public:
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
 
                     // Sindragosa enters combat as soon as she lands
-                    //me->SetInCombatWithZone();
-                    if (!me->GetThreatMgr().isThreatListEmpty())
-                        if (Unit* target = me->SelectVictim())
-                            AttackStart(target);
+                    me->SetInCombatWithZone();
+//                    if (!me->GetThreatMgr().isThreatListEmpty())
+//                        if (Unit* target = me->SelectVictim())
+//                            AttackStart(target);
                     break;
                 case POINT_TAKEOFF:
                     events.ScheduleEvent(EVENT_AIR_MOVEMENT, 0ms);
@@ -441,8 +441,9 @@ public:
                         me->SetDisableGravity(false);
                         me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
                         me->SetReactState(REACT_AGGRESSIVE);
-                        if (Unit* target = me->SelectVictim())
-                            AttackStart(target);
+                        if (!me->GetThreatMgr().isThreatListEmpty())
+                            if (Unit* target = me->SelectVictim())
+                                AttackStart(target);
                         break;
                     }
                 default:
