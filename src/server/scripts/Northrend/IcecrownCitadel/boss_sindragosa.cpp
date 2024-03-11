@@ -501,7 +501,7 @@ public:
 
         void UpdateAI(uint32 diff) override
         {
-            if (!UpdateVictim())
+            if (!UpdateVictim() || !CheckInRoom())
                 return;
 
             events.Update(diff);
