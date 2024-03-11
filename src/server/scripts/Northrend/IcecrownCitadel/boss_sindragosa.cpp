@@ -410,7 +410,7 @@ public:
                  LOG_INFO("server.loading", "POINT_FROSTWYRM_LAND");
                     me->setActive(false);
                     me->SetDisableGravity(false);
-                    _isInAirPhase = false;
+                    //_isInAirPhase = false;
                     me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
                     me->SetHomePosition(SindragosaLandPos);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
