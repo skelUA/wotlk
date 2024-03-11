@@ -410,19 +410,19 @@ public:
                  LOG_INFO("server.loading", "POINT_FROSTWYRM_LAND");
                     me->setActive(false);
                     me->SetDisableGravity(false);
-
+                    _isInAirPhase = false;
                     me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
                     me->SetHomePosition(SindragosaLandPos);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-
+                    me->SetReactState(REACT_AGGRESSIVE);
                     // Sindragosa enters combat as soon as she lands
-                    //me->SetInCombatWithZone();
+                    me->SetInCombatWithZone();
 //                    if (!me->GetThreatMgr().isThreatListEmpty())
 //                        if (Unit* target = me->SelectVictim())
 //                            AttackStart(target);
                                 //me->GetMotionMaster()->MoveIdle();
                                 //me->StopMoving();
-                      me->SetReactState(REACT_AGGRESSIVE);
+
                          if (!me->GetThreatMgr().isThreatListEmpty())
                              if (Unit* target = me->SelectVictim())
                                  AttackStart(target);
