@@ -408,11 +408,11 @@ public:
             {
                 case POINT_FROSTWYRM_LAND:
                  LOG_INFO("server.loading", "POINT_FROSTWYRM_LAND");
-                    //me->setActive(false);
+                    me->setActive(false);
                     me->SetDisableGravity(false);
 
-                    //me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
-                    //me->SetHomePosition(SindragosaLandPos);
+                    me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
+                    me->SetHomePosition(SindragosaLandPos);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
 
                     // Sindragosa enters combat as soon as she lands
@@ -420,6 +420,12 @@ public:
 //                    if (!me->GetThreatMgr().isThreatListEmpty())
 //                        if (Unit* target = me->SelectVictim())
 //                            AttackStart(target);
+                                //me->GetMotionMaster()->MoveIdle();
+                                //me->StopMoving();
+                      me->SetReactState(REACT_AGGRESSIVE);
+                         if (!me->GetThreatMgr().isThreatListEmpty())
+                             if (Unit* target = me->SelectVictim())
+                                 AttackStart(target);
                     break;
                 case POINT_TAKEOFF:
                     LOG_INFO("server.loading", "POINT_TAKEOFF");
