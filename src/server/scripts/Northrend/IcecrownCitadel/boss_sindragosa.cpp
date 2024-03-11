@@ -417,7 +417,7 @@ public:
 //                    me->SetReactState(REACT_AGGRESSIVE);
                     // Sindragosa enters combat as soon as she lands
                     me->GetMotionMaster()->MoveIdle();
-                    me->StopMoving();
+//                    me->StopMoving();
                     me->SetInCombatWithZone();
 //                    if (!me->GetThreatMgr().isThreatListEmpty())
 //                        if (Unit* target = me->SelectVictim())
