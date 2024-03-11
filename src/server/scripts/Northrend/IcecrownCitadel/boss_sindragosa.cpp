@@ -414,7 +414,7 @@ public:
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
 
                     // Sindragosa enters combat as soon as she lands
-                    me->SetInCombatWithZone();
+                    //me->SetInCombatWithZone();
                     break;
                 case POINT_TAKEOFF:
                     events.ScheduleEvent(EVENT_AIR_MOVEMENT, 0ms);
