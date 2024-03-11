@@ -407,14 +407,14 @@ public:
             switch (point)
             {
                 case POINT_FROSTWYRM_LAND:
-//                    me->setActive(false);
-//                    me->SetDisableGravity(false);
-//                    me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
-//                    me->SetHomePosition(SindragosaLandPos);
-//                    me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-//                    me->GetMotionMaster()->MoveIdle();
-//                    // Sindragosa enters combat as soon as she lands
-//                    me->SetInCombatWithZone();
+                    me->setActive(false);
+                    me->SetDisableGravity(false);
+                    me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
+                    me->SetHomePosition(SindragosaLandPos);
+                    me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
+                    me->GetMotionMaster()->MoveIdle();
+                    // Sindragosa enters combat as soon as she lands
+                    me->SetInCombatWithZone();
                     break;
                 case POINT_TAKEOFF:
                     events.ScheduleEvent(EVENT_AIR_MOVEMENT, 0ms);
