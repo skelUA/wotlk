@@ -1507,6 +1507,10 @@ uint32 WorldSession::DosProtection::GetMaxPacketCounterAllowed(uint16 opcode) co
 
         case CMSG_GUILD_SET_PUBLIC_NOTE:                //   1               2         1 async db query
         case CMSG_GUILD_SET_OFFICER_NOTE:               //   1               2         1 async db query
+             {
+                 maxPacketCounterAllowed = 2000;
+                 break;
+             }
         case CMSG_SET_CONTACT_NOTES:                    //   1               2.5       1 async db query
         case CMSG_CALENDAR_GET_CALENDAR:                //   0               1.5       medium upload bandwidth usage
         case CMSG_GUILD_BANK_QUERY_TAB:                 //   0               3.5       medium upload bandwidth usage
