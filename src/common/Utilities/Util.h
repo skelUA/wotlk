@@ -161,11 +161,14 @@ inline bool isCyrillicCharacter(wchar_t wchar)
     {
         return true;
     }
-    if (wchar == 0x0406 || wchar == 0x0456)                  //UKR I and i
+    if (wchar == 0x0406 || wchar == 0x0456)                  //CYRILLIC CAPITAL LETTER I, CYRILLIC SMALL LETTER I
     {
         return true;
     }
-
+    if (wchar == 0x0407 || wchar == 0x0457)                  //CYRILLIC CAPITAL LETTER YI, CYRILLIC SMALL LETTER YI
+    {
+        return true;
+    }
     return false;
 }
 
