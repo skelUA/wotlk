@@ -169,6 +169,11 @@ inline bool isCyrillicCharacter(wchar_t wchar)
     {
         return true;
     }
+    if (wchar == 0x0404 || wchar == 0x0454)                  //CYRILLIC CAPITAL LETTER YE, CYRILLIC SMALL LETTER YE
+    {
+        return true;
+    }
+
     return false;
 }
 
