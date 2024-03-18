@@ -161,6 +161,11 @@ inline bool isCyrillicCharacter(wchar_t wchar)
     {
         return true;
     }
+    if (wchar == 0x0406 || wchar == 0x0456)                  //UKR I and i
+    {
+        return true;
+    }
+
     return false;
 }
 
