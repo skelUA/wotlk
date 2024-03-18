@@ -161,19 +161,22 @@ inline bool isCyrillicCharacter(wchar_t wchar)
     {
         return true;
     }
-    if (wchar == 0x0406 || wchar == 0x0456)                  //CYRILLIC CAPITAL LETTER I, CYRILLIC SMALL LETTER I
+    if (wchar == 0x0406 || wchar == 0x0456)                  //CYRILLIC CAPITAL LETTER I, CYRILLIC SMALL LETTER I (UA)
     {
         return true;
     }
-    if (wchar == 0x0407 || wchar == 0x0457)                  //CYRILLIC CAPITAL LETTER YI, CYRILLIC SMALL LETTER YI
+    if (wchar == 0x0407 || wchar == 0x0457)                  //CYRILLIC CAPITAL LETTER YI, CYRILLIC SMALL LETTER YI (UA)
     {
         return true;
     }
-    if (wchar == 0x0404 || wchar == 0x0454)                  //CYRILLIC CAPITAL LETTER YE, CYRILLIC SMALL LETTER YE
+    if (wchar == 0x0404 || wchar == 0x0454)                  //CYRILLIC CAPITAL LETTER YE, CYRILLIC SMALL LETTER YE (UA)
     {
         return true;
     }
-
+    if (wchar == 0x0490 || wchar == 0x0491)                  //CYRILLIC CAPITAL LETTER GH, CYRILLIC SMALL LETTER GH (UA)
+    {
+        return true;
+    }
     return false;
 }
 
@@ -321,6 +324,22 @@ inline wchar_t wcharToUpper(wchar_t wchar)
     {
         return wchar_t(0x0401);
     }
+    if (wchar == 0x0456)                                     // CYRILLIC SMALL LETTER YE (UA)
+    {
+        return wchar_t(0x0406);
+    }
+    if (wchar == 0x0457)                                     // CYRILLIC SMALL LETTER YI (UA)
+    {
+        return wchar_t(0x0407);
+    }
+    if (wchar == 0x0454)                                     // CYRILLIC SMALL LETTER YE (UA)
+    {
+        return wchar_t(0x0404);
+    }
+    if (wchar == 0x0491)                                     // CYRILLIC SMALL LETTER GH (UA)
+    {
+        return wchar_t(0x0490);
+    }
 
     return wchar;
 }
@@ -362,6 +381,22 @@ inline wchar_t wcharToLower(wchar_t wchar)
     if (wchar >= 0x0410 && wchar <= 0x042F)                  // CYRILLIC CAPITAL LETTER A - CYRILLIC CAPITAL LETTER YA
     {
         return wchar_t(uint16(wchar) + 0x0020);
+    }
+    if (wchar == 0x0406)                                     // CYRILLIC SMALL LETTER YE (UA)
+    {
+        return wchar_t(0x0456);
+    }
+    if (wchar == 0x0407)                                     // CYRILLIC SMALL LETTER YI (UA)
+    {
+        return wchar_t(0x0457);
+    }
+    if (wchar == 0x0404)                                     // CYRILLIC SMALL LETTER YE (UA)
+    {
+        return wchar_t(0x0454);
+    }
+    if (wchar == 0x0490)                                     // CYRILLIC SMALL LETTER GH (UA)
+    {
+        return wchar_t(0x0491);
     }
 
     return wchar;
