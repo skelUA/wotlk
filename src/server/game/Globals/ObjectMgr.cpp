@@ -8361,7 +8361,7 @@ bool isValidString(std::wstring wstr, uint32 strictMask, bool numericOrSpace, bo
 uint8 ObjectMgr::CheckPlayerName(std::string_view name, bool create)
 {
     std::wstring wname;
-
+/*
     // Check for invalid characters
     if (!Utf8toWStr(name, wname))
         return CHAR_NAME_INVALID_CHARACTER;
@@ -8414,7 +8414,7 @@ uint8 ObjectMgr::CheckPlayerName(std::string_view name, bool create)
             return CHAR_NAME_PROFANE;
         }
     }
-
+*/
     return CHAR_NAME_SUCCESS;
 }
 
