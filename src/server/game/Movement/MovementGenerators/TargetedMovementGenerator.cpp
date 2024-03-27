@@ -36,9 +36,9 @@ inline float GetChaseRange(Unit const* owner, Unit const* target)
 {
     float hitboxSum = owner->GetCombatReach() + target->GetCombatReach();
 
-    float hoverDelta = owner->GetHoverHeight() - target->GetHoverHeight();
-    if (hoverDelta != 0.0f)
-        return std::sqrt(std::max(hitboxSum * hitboxSum - hoverDelta * hoverDelta, 0.0f));
+//    float hoverDelta = owner->GetHoverHeight() - target->GetHoverHeight();
+//    if (hoverDelta != 0.0f)
+//        return std::sqrt(std::max(hitboxSum * hitboxSum - hoverDelta * hoverDelta, 0.0f));
 
     return hitboxSum;
 }
