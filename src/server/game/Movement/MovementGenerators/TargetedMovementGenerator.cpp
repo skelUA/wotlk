@@ -266,7 +266,7 @@ void ChaseMovementGenerator<Creature>::DoInitialize(Creature* owner)
     _lastTargetPosition.reset();
     i_recheckDistance.Reset(0);
     owner->SetWalk(false);
-    owner->StopMoving();
+    //owner->StopMoving();
     owner->AddUnitState(UNIT_STATE_CHASE);
 }
 
