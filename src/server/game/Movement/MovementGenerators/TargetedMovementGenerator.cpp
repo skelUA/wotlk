@@ -192,7 +192,7 @@ bool ChaseMovementGenerator<T>::DoUpdate(T* owner, uint32 time_diff)
             else
             {
                 // otherwise, we fall back to nearpoint finding
-                target->GetNearPoint(owner, x, y, z, (moveToward ? maxTarget : minTarget) - chaseRange - additionalRange, 0, angle ? target->ToAbsoluteAngle(angle->RelativeAngle) : target->GetAngle(owner));
+                target->GetNearPoint(owner, x, y, z, (moveToward ? maxTarget : minTarget) - chaseRange , 0, angle ? target->ToAbsoluteAngle(angle->RelativeAngle) : target->GetAngle(owner));
                 shortenPath = false;
             }
 
