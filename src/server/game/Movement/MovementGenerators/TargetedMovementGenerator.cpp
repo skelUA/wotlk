@@ -103,7 +103,7 @@ bool ChaseMovementGenerator<T>::DoUpdate(T* owner, uint32 time_diff)
     i_recheckDistance.Update(time_diff);
     if (i_recheckDistance.Passed())
     {
-        i_recheckDistance.Reset(400); // Sniffed value
+        i_recheckDistance.Reset(300); // Sniffed value
 
         if (i_recalculateTravel && PositionOkay(owner, target, _movingTowards ? maxTarget : Optional<float>(), angle))
         {
@@ -266,7 +266,7 @@ void ChaseMovementGenerator<Creature>::DoInitialize(Creature* owner)
     _lastTargetPosition.reset();
     i_recheckDistance.Reset(0);
     owner->SetWalk(false);
-    owner->StopMoving();
+    //owner->StopMoving();
     owner->AddUnitState(UNIT_STATE_CHASE);
 }
 
