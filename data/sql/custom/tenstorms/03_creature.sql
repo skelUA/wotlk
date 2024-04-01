@@ -49,3 +49,6 @@ INSERT INTO `creature_template_movement` (`CreatureId`, `Ground`, `Swim`, `Fligh
 --
 UPDATE creature_template SET type = 10 WHERE entry = 23979;
 UPDATE creature_template SET type = 10 WHERE entry =  3444 ;
+
+-- fix https://www.wowhead.com/wotlk/npc=29915/
+UPDATE `creature_template` SET `faction` = 1971 WHERE (`entry` = 29915);
