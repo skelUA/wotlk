@@ -771,14 +771,12 @@ class spell_dk_pet_scaling : public AuraScript
 
         if (Unit* owner = GetUnitOwner()->GetOwner())
         {
-            int32 modifier = 33;
-
-            // xinef: impurity
-            if (owner->GetDummyAuraEffect(SPELLFAMILY_DEATHKNIGHT, 1986, 0))
-                modifier = 40;
-
-            amount = CalculatePct(std::max<int32>(0, owner->GetTotalAttackPowerValue(BASE_ATTACK)), modifier);
-
+//            int32 modifier = 40;
+//
+//            // xinef: impurity
+//            if (owner->GetDummyAuraEffect(SPELLFAMILY_DEATHKNIGHT, 1986, 0))
+//                modifier = 50;
+            amount = owner->GetTotalAttackPowerValue(BASE_ATTACK);
             // xinef: Update appropriate player field
             if (owner->GetTypeId() == TYPEID_PLAYER)
                 owner->SetUInt32Value(PLAYER_PET_SPELL_POWER, (uint32)amount);
@@ -853,6 +851,8 @@ class spell_dk_pet_scaling : public AuraScript
         {
             DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dk_pet_scaling::CalculateStatAmount, EFFECT_ALL, SPELL_AURA_MOD_STAT);
             DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dk_pet_scaling::CalculateSPAmount, EFFECT_ALL, SPELL_AURA_MOD_DAMAGE_DONE);
+            DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dk_pet_scaling::CalculateHasteAmount, EFFECT_ALL, SPELL_AURA_MELEE_SLOW);
+
         }
 
         if (m_scriptSpellId == 51996)

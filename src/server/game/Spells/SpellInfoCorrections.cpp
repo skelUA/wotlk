@@ -627,6 +627,12 @@ void SpellMgr::LoadSpellInfoCorrections()
         spellInfo->AttributesEx3 |= SPELL_ATTR3_IGNORE_CASTER_MODIFIERS;
         spellInfo->DmgClass = SPELL_DAMAGE_CLASS_MAGIC;
     });
+    // gargoyle_strike
+    ApplySpellFix({ 51963 }, [](SpellInfo* spellInfo)
+    {
+        spellInfo->Effects[EFFECT_0].BasePoints = 120;
+        spellInfo->Effects[EFFECT_0].BonusMultiplier = 0.4;
+    });
 
     // Wild Hunt
     ApplySpellFix({ 62758, 62762 }, [](SpellInfo* spellInfo)
