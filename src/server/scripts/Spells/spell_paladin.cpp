@@ -1105,6 +1105,33 @@ class spell_pal_seal_of_righteousness : public AuraScript
     }
 };
 
+// 70765 - Item - Paladin T10 Retribution 2P Bonus
+class spell_paladin_t10_retribution_2p_bonus : public AuraScript
+{
+    PrepareAuraScript(spell_paladin_t10_retribution_2p_bonus);
+
+    bool CheckProc(ProcEventInfo& eventInfo)
+    {
+        return eventInfo.GetActor();
+    }
+
+    void HandleProc(AuraEffect const* aurEff, ProcEventInfo& eventInfo)
+    {
+        PreventDefaultAction();
+
+        if (eventInfo.GetActor()->IsPlayer())
+        {
+            eventInfo.GetActor()->ToPlayer()->RemoveSpellCooldown(SPELL_PALADIN_DIVINE_STORM, true);
+        }
+    }
+
+    void Register() override
+    {
+        DoCheckProc += AuraCheckProcFn(spell_paladin_t10_retribution_2p_bonus::CheckProc);
+        OnEffectProc += AuraEffectProcFn(spell_paladin_t10_retribution_2p_bonus::HandleProc, EFFECT_0, SPELL_AURA_DUMMY);
+    }
+};
+
 void AddSC_paladin_spell_scripts()
 {
     RegisterSpellAndAuraScriptPair(spell_pal_seal_of_command, spell_pal_seal_of_command_aura);
@@ -1132,5 +1159,6 @@ void AddSC_paladin_spell_scripts()
     RegisterSpellScript(spell_pal_lay_on_hands);
     RegisterSpellScript(spell_pal_righteous_defense);
     RegisterSpellScript(spell_pal_seal_of_righteousness);
+    RegisterSpellScript(spell_paladin_t10_retribution_2p_bonus);
 }
 
