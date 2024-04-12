@@ -1118,10 +1118,12 @@ class spell_paladin_t10_retribution_2p_bonus : public AuraScript
     void HandleProc(AuraEffect const* aurEff, ProcEventInfo& eventInfo)
     {
         PreventDefaultAction();
+        int32 gcd = 0;
 
         if (eventInfo.GetActor()->IsPlayer())
         {
             eventInfo.GetActor()->ToPlayer()->RemoveSpellCooldown(SPELL_PALADIN_DIVINE_STORM, true);
+            eventInfo.GetActor()->ToPlayer()->ApplySpellMod(SPELL_PALADIN_DIVINE_STORM, SPELLMOD_GLOBAL_COOLDOWN, gcd);
         }
     }
 
