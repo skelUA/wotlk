@@ -40,15 +40,12 @@ struct npc_pet_pri_lightwell : public TotemAI
 
     void InitializeAI() override
     {
-        if (TempSummon* tempSummon = me->ToTempSummon())
+        if (Unit* owner = me->ToTempSummon()->GetSummonerUnit())
         {
-            if (Unit* owner = tempSummon->GetSummonerUnit())
-            {
-                uint32 hp = uint32(owner->GetMaxHealth() * 0.3f);
-                me->SetMaxHealth(hp);
-                me->SetHealth(hp);
-                me->SetLevel(owner->GetLevel());
-            }
+            uint32 hp = uint32(owner->GetMaxHealth() * 0.3f);
+            me->SetMaxHealth(hp);
+            me->SetHealth(hp);
+            me->SetLevel(owner->GetLevel());
         }
 
         me->CastSpell(me, SPELL_PRIEST_LIGHTWELL_CHARGES, false); // Spell for Lightwell Charges
