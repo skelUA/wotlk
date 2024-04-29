@@ -7567,9 +7567,6 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                     // Glyph of Backstab
                     case 56800:
                         {
-                            if (this == victim)
-                                return false;
-
                             triggered_spell_id = 63975;
                             break;
                         }
