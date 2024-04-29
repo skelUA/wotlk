@@ -544,7 +544,7 @@ class spell_rog_prey_on_the_weak : public AuraScript
 
 // -1943 - Rupture
 #define RuptureScriptName "spell_rog_rupture"
-class spell_rog_rupture : public AuraScript
+class spell_rog_rupture : public SpellScriptLoader
 {
     public:
         spell_rog_rupture() : SpellScriptLoader(RuptureScriptName) { }
