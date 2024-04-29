@@ -791,12 +791,12 @@ class spell_rog_vanish : public SpellScript
     }
 };
 
-class spell_rog_glyph_of_backstab_triggered : public SpellScript
+class spell_rog_glyph_of_backstab_triggered : public SpellScriptLoader
 {
 public:
     spell_rog_glyph_of_backstab_triggered() : SpellScriptLoader("spell_rog_glyph_of_backstab_triggered") { }
 
-    class spell_rog_glyph_of_backstab_triggered_SpellScript : public SpellScriptLoader
+    class spell_rog_glyph_of_backstab_triggered_SpellScript : public SpellScript
     {
         PrepareSpellScript(spell_rog_glyph_of_backstab_triggered_SpellScript);
 
