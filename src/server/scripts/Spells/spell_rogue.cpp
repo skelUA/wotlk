@@ -544,7 +544,7 @@ class spell_rog_prey_on_the_weak : public AuraScript
 
 // -1943 - Rupture
 #define RuptureScriptName "spell_rog_rupture"
-class spell_rog_rupture : public SpellScript
+class spell_rog_rupture : public SpellScriptLoader
 {
     public:
         spell_rog_rupture() : SpellScriptLoader(RuptureScriptName) { }
@@ -796,7 +796,7 @@ class spell_rog_glyph_of_backstab_triggered : public SpellScript
 public:
     spell_rog_glyph_of_backstab_triggered() : SpellScriptLoader("spell_rog_glyph_of_backstab_triggered") { }
 
-    class spell_rog_glyph_of_backstab_triggered_SpellScript : public SpellScript
+    class spell_rog_glyph_of_backstab_triggered_SpellScript : public SpellScriptLoader
     {
         PrepareSpellScript(spell_rog_glyph_of_backstab_triggered_SpellScript);
 
@@ -858,7 +858,9 @@ void AddSC_rogue_spell_scripts()
     RegisterSpellScript(spell_rog_nerves_of_steel);
     RegisterSpellScript(spell_rog_preparation);
     RegisterSpellScript(spell_rog_prey_on_the_weak);
-    RegisterSpellScript(spell_rog_rupture);
+    // RegisterSpellScript(spell_rog_rupture);
+    new spell_rog_rupture();
+    new spell_rog_glyph_of_backstab_triggered();
     RegisterSpellScript(spell_rog_shiv);
     RegisterSpellScript(spell_rog_tricks_of_the_trade);
     RegisterSpellScript(spell_rog_tricks_of_the_trade_proc);
