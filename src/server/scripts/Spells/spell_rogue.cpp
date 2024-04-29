@@ -799,7 +799,7 @@ public:
     class spell_rog_glyph_of_backstab_triggered_SpellScript : public SpellScript
     {
         PrepareSpellScript(spell_rog_glyph_of_backstab_triggered_SpellScript);
-        LOG_ERROR("sql.sql", "1", );
+
         typedef spell_rog_rupture::spell_rog_rupture_AuraScript RuptureAuraScript;
 
         void HandleScript(SpellEffIndex effIndex)
@@ -819,15 +819,16 @@ public:
                 // already includes duration mod from Glyph of Rupture
                 uint32 countMin = aurEff->GetBase()->GetMaxDuration();
                 uint32 countMax = countMin - bonusDuration;
-
+                LOG_ERROR("sql.sql", " countMin {}", countMin);
+                LOG_ERROR("sql.sql", " countMax {}", countMax);
                 // this glyph
                 countMax += 6000;
 
                 if (countMin < countMax)
                 {
-                    LOG_ERROR("sql.sql", "2", );
-                    bonusDuration += 2000;
 
+                    bonusDuration += 2000;
+                    LOG_ERROR("sql.sql", "2 {}", bonusDuration);
                     aurEff->GetBase()->SetDuration(aurEff->GetBase()->GetDuration() + 2000);
                     aurEff->GetBase()->SetMaxDuration(countMin + 2000);
                 }
