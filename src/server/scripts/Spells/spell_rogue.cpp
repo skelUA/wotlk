@@ -867,6 +867,6 @@ void AddSC_rogue_spell_scripts()
     RegisterSpellScript(spell_rog_pickpocket);
     RegisterSpellScript(spell_rog_vanish_purge);
     RegisterSpellScript(spell_rog_vanish);
-    RegisterSpellScript(spell_rog_glyph_of_backstab_triggered);
+    //RegisterSpellScript(spell_rog_glyph_of_backstab_triggered);
 }
 
