@@ -819,8 +819,8 @@ public:
                 // already includes duration mod from Glyph of Rupture
                 uint32 countMin = aurEff->GetBase()->GetMaxDuration();
                 uint32 countMax = countMin - bonusDuration;
-                LOG_ERROR("sql.sql", " countMin {}", countMin);
-                LOG_ERROR("sql.sql", " countMax {}", countMax);
+                LOG_ERROR("sql.sql", "countMin {}", countMin);
+                LOG_ERROR("sql.sql", "countMax {}", countMax);
                 // this glyph
                 countMax += 6000;
 
