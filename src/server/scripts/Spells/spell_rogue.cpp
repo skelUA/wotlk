@@ -819,8 +819,6 @@ public:
                 // already includes duration mod from Glyph of Rupture
                 uint32 countMin = aurEff->GetBase()->GetMaxDuration();
                 uint32 countMax = countMin - bonusDuration;
-                LOG_ERROR("sql.sql", "countMin {}", countMin);
-                LOG_ERROR("sql.sql", "countMax {}", countMax);
                 // this glyph
                 countMax += 6000;
 
@@ -828,7 +826,6 @@ public:
                 {
 
                     bonusDuration += 2000;
-                    LOG_ERROR("sql.sql", "2 {}", bonusDuration);
                     aurEff->GetBase()->SetDuration(aurEff->GetBase()->GetDuration() + 2000);
                     aurEff->GetBase()->SetMaxDuration(countMin + 2000);
                 }
@@ -860,7 +857,6 @@ void AddSC_rogue_spell_scripts()
     RegisterSpellScript(spell_rog_nerves_of_steel);
     RegisterSpellScript(spell_rog_preparation);
     RegisterSpellScript(spell_rog_prey_on_the_weak);
-    // RegisterSpellScript(spell_rog_rupture);
     new spell_rog_rupture();
     new spell_rog_glyph_of_backstab_triggered();
     RegisterSpellScript(spell_rog_shiv);
@@ -869,6 +865,5 @@ void AddSC_rogue_spell_scripts()
     RegisterSpellScript(spell_rog_pickpocket);
     RegisterSpellScript(spell_rog_vanish_purge);
     RegisterSpellScript(spell_rog_vanish);
-    //RegisterSpellScript(spell_rog_glyph_of_backstab_triggered);
 }
 
