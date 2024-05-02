@@ -485,6 +485,78 @@ public:
     }
 };
 
+// teleport spell #45367 (top to bottom)
+class spell_isle_of_queldanas_orb_of_translocation_to_bottom : public SpellScriptLoader
+{
+public:
+    spell_isle_of_queldanas_orb_of_translocation_to_bottom(): SpellScriptLoader("spell_isle_of_queldanas_orb_of_translocation_to_bottom") {}
+
+    class spell_isle_of_queldanas_orb_of_translocation_to_bottom_SpellScript: public SpellScript
+    {
+        PrepareSpellScript(spell_isle_of_queldanas_orb_of_translocation_to_bottom_SpellScript);
+
+        void HandleOnCast()
+        {
+            if (Unit* caster = GetCaster()) {
+                ChatHandler(caster->ToPlayer()->GetSession()).PSendSysMessage("Handle on cast to bottom");
+                caster->NearTeleportTo(
+                        12783.6f,
+                        -6880.9f,
+                        23.6f,
+                        caster->ToPlayer()->GetOrientation()
+                );
+                caster->CastSpell(caster, 35517, true);
+            }
+        }
+
+        void Register() override
+        {
+            OnCast += SpellCastFn(spell_isle_of_queldanas_orb_of_translocation_to_bottom_SpellScript::HandleOnCast);
+        }
+    };
+
+    SpellScript* GetSpellScript() const override
+    {
+        return new spell_isle_of_queldanas_orb_of_translocation_to_bottom_SpellScript();
+    }
+};
+
+// teleport spell #45370
+class spell_isle_of_queldanas_orb_of_translocation_to_up : public SpellScriptLoader
+{
+public:
+    spell_isle_of_queldanas_orb_of_translocation_to_up(): SpellScriptLoader("spell_isle_of_queldanas_orb_of_translocation_to_up") {}
+
+    class spell_isle_of_queldanas_orb_of_translocation_to_up_SpellScript: public SpellScript
+    {
+        PrepareSpellScript(spell_isle_of_queldanas_orb_of_translocation_to_up_SpellScript);
+
+        void HandleOnCast()
+        {
+            if (Unit* caster = GetCaster()) {
+                caster->CastSpell(caster, 35517, true);
+                caster->NearTeleportTo(
+                        12790.9f,
+                        -6890.8f,
+                        31.5f,
+                        caster->ToPlayer()->GetOrientation()
+                );
+                caster->CastSpell(caster, 35517, true);
+            }
+        }
+
+        void Register() override
+        {
+            OnCast += SpellCastFn(spell_isle_of_queldanas_orb_of_translocation_to_up_SpellScript::HandleOnCast);
+        }
+    };
+
+    SpellScript* GetSpellScript() const override
+    {
+        return new spell_isle_of_queldanas_orb_of_translocation_to_up_SpellScript();
+    }
+};
+
 class npc_grand_magister_rommath : public CreatureScript
 {
 public:
@@ -694,6 +766,8 @@ void AddSC_isle_of_queldanas()
     new npc_bh_thalorien_dawnseeker();
     new spell_bh_cleanse_quel_delar();
     new npc_grand_magister_rommath();
+    new spell_isle_of_queldanas_orb_of_translocation_to_up();
+    new spell_isle_of_queldanas_orb_of_translocation_to_bottom();
 
     // THEIR:
     new npc_greengill_slave();
