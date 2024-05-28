@@ -19,6 +19,7 @@
 #include "InstanceMapScript.h"
 #include "InstanceScript.h"
 #include "Opcodes.h"
+#include "Player.h"
 #include "WorldPacket.h"
 #include "hyjal.h"
 
@@ -96,8 +97,6 @@ public:
 
         void Initialize() override
         {
-            SetHeaders(DataHeader);
-
             _bossWave = 0;
             _retreat = 0;
             trash = 0;
@@ -530,6 +529,14 @@ public:
         void Update(uint32 diff) override
         {
             _scheduler.Update(diff);
+        }
+
+        void OnPlayerInWaterStateUpdate(Player* player, bool inWater) override
+        {
+            if (inWater && player->GetAreaId() == AREA_NORDRASSIL)
+            {
+                player->CastSpell(player, SPELL_ETERNAL_SILENCE, true);
+            }
         }
 
     protected:
