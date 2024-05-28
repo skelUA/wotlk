@@ -3411,7 +3411,7 @@ public:
             canBeRecalculated = true;
             amount = 0;
             if (Unit* caster = GetCaster())
-                amount = int32(caster->GetHealthPct());
+                amount = int32(caster->GetHealthPct())*5;
         }
 
         void Register() override
