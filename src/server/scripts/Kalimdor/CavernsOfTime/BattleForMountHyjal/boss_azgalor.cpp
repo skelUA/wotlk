@@ -70,7 +70,7 @@ public:
             context.Repeat(18s, 20s);
         }).Schedule(45s, 55s, [this](TaskContext context)
         {
-            DoCastRandomTarget(SPELL_DOOM, 0, 100.f, true, false, false);
+            DoCastRandomTarget(SPELL_DOOM, 1, 100.f, true, false, false);
             Talk(SAY_DOOM);
             context.Repeat();
         }).Schedule(10min, [this](TaskContext context)
@@ -126,7 +126,7 @@ class spell_azgalor_doom : public AuraScript
     void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
     {
         Unit* target = GetTarget();
-        if (GetTargetApplication()->GetRemoveMode() == AURA_REMOVE_BY_DEATH)
+        if (GetTargetApplication()->GetRemoveMode() == AURA_REMOVE_BY_DEATH && !IsExpired())
         {
             target->CastSpell(target, GetSpellInfo()->Effects[EFFECT_0].TriggerSpell, true);
         }
