@@ -1086,9 +1086,7 @@ public:
         void SpellHit(Unit* caster, SpellInfo const* /*spellInfo*/) override
         {
             if (caster && (caster->GetEntry() == NPC_HORDE_LUMBERBOAT || caster->GetEntry() == NPC_ALLIANCE_LUMBERBOAT))
-            {
-                if (me->PassengerBoarded)
-                    _faction = me->PassengerBoarded->GetTeamId ();
+
                 FinishQuest(true, _faction);
 
             }
@@ -1108,7 +1106,7 @@ public:
             if (success)
             {
                 LOG_INFO("server.loading",  "npc_rocket_propelled_warhead 5   faction {}", faction);
-                if (faction == ALLIANCE)
+                if (faction == TEAM_ALLIANCE)
                 {
                      DoCast(me,  SPELL_ALLIANCE_KILL_CREDIT_TORPEDO, true);
                      LOG_INFO("server.loading",  "npc_rocket_propelled_warhead 6   faction {}", faction);
