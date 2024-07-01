@@ -5700,7 +5700,7 @@ LOG_INFO("server.loading", "EffectKillCredit 3");
     Player* player = unitTarget->GetCharmerOrOwnerPlayerOrPlayerItself();
     if (!player)
     {
-       LOG_INFO("server.loading", "EffectKillCredit 3");
+       LOG_INFO("server.loading", "EffectKillCredit 4");
         return;
     }
 
