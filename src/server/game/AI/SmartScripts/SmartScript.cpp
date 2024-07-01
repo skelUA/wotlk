@@ -1346,8 +1346,10 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
         }
         case SMART_ACTION_SET_DATA:
         {
+            LOG_INFO("server.loading", "SMART_ACTION_SET_DATA 1");
             for (WorldObject* target : targets)
             {
+               LOG_INFO("server.loading", "SMART_ACTION_SET_DATA 2");
                 if (IsCreature(target))
                     target->ToCreature()->AI()->SetData(e.action.setData.field, e.action.setData.data);
                 else if (IsGameObject(target))
@@ -4258,9 +4260,13 @@ void SmartScript::ProcessEvent(SmartScriptHolder& e, Unit* unit, uint32 var0, ui
             }
         case SMART_EVENT_DATA_SET:
             {
+                LOG_INFO("server.loading", " SMART_EVENT_DATA_SET 1");
                 if (e.event.dataSet.id != var0 || e.event.dataSet.value != var1)
                     return;
+
+                 LOG_INFO("server.loading", " SMART_EVENT_DATA_SET 2");
                 RecalcTimer(e, e.event.dataSet.cooldownMin, e.event.dataSet.cooldownMax);
+                 LOG_INFO("server.loading", " SMART_EVENT_DATA_SET 3");
                 ProcessAction(e, unit, var0, var1);
                 break;
             }
