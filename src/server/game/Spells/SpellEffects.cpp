@@ -5694,8 +5694,8 @@ void Spell::EffectKillCredit(SpellEffIndex effIndex)
 //    if (effectHandleMode != SPELL_EFFECT_HANDLE_HIT_TARGET)
 //        return;
 LOG_INFO("server.loading", "EffectKillCredit 2");
-    if (!unitTarget)
-        return;
+//    if (!unitTarget)
+//        return;
 LOG_INFO("server.loading", "EffectKillCredit 3");
     Player* player = unitTarget->GetCharmerOrOwnerPlayerOrPlayerItself();
     if (!player)
