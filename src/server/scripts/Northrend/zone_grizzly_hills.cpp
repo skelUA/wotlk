@@ -1055,15 +1055,18 @@ public:
         npc_rocket_propelled_warheadAI(Creature* creature) : VehicleAI(creature), _faction(ALLIANCE), _finished(false)
         {
         }
-
+       LOG_INFO("server.loading",  "npc_rocket_propelled_warhead   1");
         void PassengerBoarded(Unit* who, int8 /*seatId*/, bool apply) override
         {
             if (apply && who && who->ToPlayer())
             {
                 DoCast(me, SPELL_VEHICLE_WARHEAD_FUSE);
                 _faction = who->ToPlayer()->GetTeamId();
+                LOG_INFO("server.loading",  "npc_rocket_propelled_warhead 2   _faction {}", _faction);
             }
         }
+
+
 
         void JustReachedHome() override
         {
@@ -1087,22 +1090,28 @@ public:
 
         void FinishQuest(bool success, uint32 faction)
         {
+           LOG_INFO("server.loading",  "npc_rocket_propelled_warhead   3");
+
             if (_finished)
             {
                 return;
             }
 
+     LOG_INFO("server.loading",  "npc_rocket_propelled_warhead   4");
             _finished = true;
 
             if (success)
             {
+                LOG_INFO("server.loading",  "npc_rocket_propelled_warhead 5   faction {}", faction);
                 DoCast(me, faction == ALLIANCE ? SPELL_ALLIANCE_KILL_CREDIT_TORPEDO : SPELL_HORDE_KILL_CREDIT_TORPEDO, true);
+
             }
 
             DoCast(me, SPELL_DETONATE, true);
             me->RemoveAllAuras();
             me->SetVisible(false);
             me->GetMotionMaster()->MoveTargetedHome();
+            LOG_INFO("server.loading",  "npc_rocket_propelled_warhead   5");
         }
 
     private:
