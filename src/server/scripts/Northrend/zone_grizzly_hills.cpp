@@ -1105,7 +1105,10 @@ public:
             if (success)
             {
                 LOG_INFO("server.loading",  "npc_rocket_propelled_warhead 5   faction {}", faction);
-                DoCast(me, faction == ALLIANCE ? SPELL_ALLIANCE_KILL_CREDIT_TORPEDO : SPELL_HORDE_KILL_CREDIT_TORPEDO, true);
+                if (faction == ALLIANCE)
+                    DoCast(me,  SPELL_ALLIANCE_KILL_CREDIT_TORPEDO, true);
+                else
+                    DoCast(me,  SPELL_HORDE_KILL_CREDIT_TORPEDO, true)
 
             }
 
