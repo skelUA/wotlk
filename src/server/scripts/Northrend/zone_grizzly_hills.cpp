@@ -1075,6 +1075,7 @@ public:
             _finished = false;
             me->SetVisible(true);
             me->GetMotionMaster()->Clear(true);
+
         }
 
         void DoAction(int32 /*action*/) override
@@ -1086,9 +1087,8 @@ public:
         {
             if (caster && (caster->GetEntry() == NPC_HORDE_LUMBERBOAT || caster->GetEntry() == NPC_ALLIANCE_LUMBERBOAT))
             {
-
-               _faction = who->ToPlayer()->GetTeamId();
-               LOG_INFO("server.loading",  "npc_rocket_propelled_warhead 007   _faction {}",_ faction);
+                if (me->PassengerBoarded)
+                    _faction = me->PassengerBoarded->GetTeamId ();
                 FinishQuest(true, _faction);
 
             }
@@ -1103,7 +1103,6 @@ public:
                 return;
             }
 
-     LOG_INFO("server.loading",  "npc_rocket_propelled_warhead   4");
             _finished = true;
 
             if (success)
