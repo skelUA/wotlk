@@ -1086,10 +1086,7 @@ public:
         void SpellHit(Unit* caster, SpellInfo const* /*spellInfo*/) override
         {
             if (caster && (caster->GetEntry() == NPC_HORDE_LUMBERBOAT || caster->GetEntry() == NPC_ALLIANCE_LUMBERBOAT))
-
-                FinishQuest(true, _faction);
-
-            }
+            FinishQuest(true, _faction);
         }
 
         void FinishQuest(bool success, uint32 faction)
