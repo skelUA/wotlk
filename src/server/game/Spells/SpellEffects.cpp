@@ -5693,6 +5693,7 @@ void Spell::EffectKillCredit(SpellEffIndex effIndex)
         return;
 
     if (!unitTarget)
+        return;
 
     Player* player = unitTarget->GetCharmerOrOwnerPlayerOrPlayerItself();
     if (!player)
