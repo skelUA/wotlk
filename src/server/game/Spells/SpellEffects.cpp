@@ -5669,29 +5669,38 @@ void Spell::EffectStealBeneficialBuff(SpellEffIndex effIndex)
 
 void Spell::EffectKillCreditPersonal(SpellEffIndex effIndex)
 {
+     LOG_INFO("server.loading", "EffectKillCreditPersonal 1");
+
     if (effectHandleMode != SPELL_EFFECT_HANDLE_HIT_TARGET)
         return;
+
+LOG_INFO("server.loading", "EffectKillCreditPersonal 1");
 
     if (!unitTarget)
         return;
 
+LOG_INFO("server.loading", "EffectKillCreditPersonal 1");
+
     if (Player* player = unitTarget->GetCharmerOrOwnerPlayerOrPlayerItself())
     {
+        LOG_INFO("server.loading", "EffectKillCreditPersonal 4");
         player->KilledMonsterCredit(m_spellInfo->Effects[effIndex].MiscValue);
     }
 }
 
 void Spell::EffectKillCredit(SpellEffIndex effIndex)
 {
+    LOG_INFO("server.loading", "EffectKillCredit 1");
     if (effectHandleMode != SPELL_EFFECT_HANDLE_HIT_TARGET)
         return;
-
+LOG_INFO("server.loading", "EffectKillCredit 2");
     if (!unitTarget)
         return;
-
+LOG_INFO("server.loading", "EffectKillCredit 3");
     Player* player = unitTarget->GetCharmerOrOwnerPlayerOrPlayerItself();
     if (!player)
     {
+       LOG_INFO("server.loading", "EffectKillCredit 3");
         return;
     }
 
@@ -5701,7 +5710,7 @@ void Spell::EffectKillCredit(SpellEffIndex effIndex)
         if (m_spellInfo->Id == 42793) // Burn Body
             creatureEntry = 24008; // Fallen Combatant
     }
-
+    LOG_INFO("server.loading", "EffectKillCredit 5");
     if (creatureEntry)
         player->RewardPlayerAndGroupAtEvent(creatureEntry, unitTarget);
 }
