@@ -1086,7 +1086,11 @@ public:
         {
             if (caster && (caster->GetEntry() == NPC_HORDE_LUMBERBOAT || caster->GetEntry() == NPC_ALLIANCE_LUMBERBOAT))
             {
+
+               _faction = who->ToPlayer()->GetTeamId();
+               LOG_INFO("server.loading",  "npc_rocket_propelled_warhead 007   _faction {}",_ faction);
                 FinishQuest(true, _faction);
+
             }
         }
 
