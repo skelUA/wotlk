@@ -1056,7 +1056,7 @@ public:
         npc_rocket_propelled_warheadAI(Creature* creature) : VehicleAI(creature), _faction(ALLIANCE), _finished(false)
         {
         }
-       LOG_INFO("server.loading",  "npc_rocket_propelled_warhead   1");
+
 
         void PassengerBoarded(Unit* who, int8 /*seatId*/, bool apply) override
         {
