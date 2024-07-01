@@ -590,19 +590,17 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
             if (e.action.cast.targetsLimit)
                 Acore::Containers::RandomResize(targets, e.action.cast.targetsLimit);
 
-           LOG_INFO("server.loading", "SMART_ACTION_CAST 3");
+
             bool failedSpellCast = false, successfulSpellCast = false;
 
             for (WorldObject* target : targets)
             {
-                LOG_INFO("server.loading", "SMART_ACTION_CAST 4");
+
                 // may be nullptr
                 if (go)
                     go->CastSpell(target->ToUnit(), e.action.cast.spell);
-                LOG_INFO("server.loading", "SMART_ACTION_CAST 5");
                 if (!IsUnit(target))
                     continue;
-                LOG_INFO("server.loading", "SMART_ACTION_CAST 6");
                 if (caster && caster != me) // Areatrigger cast
                 {
                     caster->CastSpell(target->ToUnit(), e.action.cast.spell, (e.action.cast.castFlags & SMARTCAST_TRIGGERED));
