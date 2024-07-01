@@ -711,7 +711,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
         }
         case SMART_ACTION_SELF_CAST:
         {
-           LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_SELF_CAST >>> 1: spell {}", e.action.cast.spell);
+
 
             if (targets.empty())
                 break;
