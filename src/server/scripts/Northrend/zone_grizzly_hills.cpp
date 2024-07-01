@@ -1096,7 +1096,10 @@ public:
 
             if (success)
             {
-                DoCast(me, faction == ALLIANCE ? SPELL_ALLIANCE_KILL_CREDIT_TORPEDO : SPELL_HORDE_KILL_CREDIT_TORPEDO, true);
+                if (faction == TEAM_ALLIANCE)
+                    DoCast(me,  SPELL_ALLIANCE_KILL_CREDIT_TORPEDO, true);
+                else
+                   DoCast(me,  SPELL_HORDE_KILL_CREDIT_TORPEDO, true);
             }
 
             DoCast(me, SPELL_DETONATE, true);
