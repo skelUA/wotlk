@@ -580,11 +580,10 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
 
                    // LOG_DEBUG("scripts.ai", "SmartScript::ProcessAction:: SMART_ACTION_CAST: Unit {} casts spell {} on target {} with castflags {}",
                     //          me->GetGUID().ToString(), e.action.cast.spell, target->GetGUID().ToString(), e.action.cast.castFlags);
-//           if (e.action.cast.spell == 49122)
-//            {
+         if (e.action.cast.spell == 49122)
+            {
            LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_CAST >>> 1: spell {}", e.action.cast.spell);
-//
-//            }
+            }
             if (targets.empty())
                 break;
             Unit* caster = me;
@@ -712,6 +711,8 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
         }
         case SMART_ACTION_SELF_CAST:
         {
+           LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_SELF_CAST >>> 1: spell {}", e.action.cast.spell);
+
             if (targets.empty())
                 break;
 
