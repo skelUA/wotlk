@@ -25,6 +25,7 @@
 #include "SpellInfo.h"
 #include "SpellScript.h"
 #include "SpellScriptLoader.h"
+#include "Log.h"
 
  // Theirs
 
@@ -1056,6 +1057,7 @@ public:
         {
         }
        LOG_INFO("server.loading",  "npc_rocket_propelled_warhead   1");
+
         void PassengerBoarded(Unit* who, int8 /*seatId*/, bool apply) override
         {
             if (apply && who && who->ToPlayer())
