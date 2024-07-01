@@ -579,13 +579,11 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
         {
             if (targets.empty())
                 break;
-           LOG_INFO("server.loading", "SMART_ACTION_CAST 1");
             Unit* caster = me;
             // Areatrigger Cast!
             if (e.GetScriptType() == SMART_SCRIPT_TYPE_AREATRIGGER)
                 caster = unit->SummonTrigger(unit->GetPositionX(), unit->GetPositionY(), unit->GetPositionZ(), unit->GetOrientation(), 5000);
 
-            LOG_INFO("server.loading", "SMART_ACTION_CAST 2");
 
             if (e.action.cast.targetsLimit)
                 Acore::Containers::RandomResize(targets, e.action.cast.targetsLimit);
