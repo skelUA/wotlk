@@ -2154,6 +2154,7 @@ void WorldObject::AddObjectToRemoveList()
 TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropertiesEntry const* properties /*= nullptr*/, uint32 duration /*= 0*/, WorldObject* summoner /*= nullptr*/, uint32 spellId /*= 0*/, uint32 vehId /*= 0*/, bool visibleBySummonerOnly /*= false*/)
 {
     uint32 mask = UNIT_MASK_SUMMON;
+    LOG_INFO("server.loading",  "Map::SummonCreature entry {}", entry) ;
     if (properties)
     {
         switch (properties->Category)
@@ -2282,6 +2283,7 @@ TempSummon* WorldObject::SummonCreature(uint32 id, float x, float y, float z, fl
         GetClosePoint(x, y, z, GetObjectSize());
         ang = GetOrientation();
     }
+    LOG_INFO("server.loading",  "TempSummon* WorldObject::SummonCreature") ;
     Position pos;
     pos.Relocate(x, y, z, ang);
     return SummonCreature(id, pos, spwtype, despwtime, 0, properties, visibleBySummonerOnly);
@@ -2342,6 +2344,7 @@ void WorldObject::ClearZoneScript()
 
 TempSummon* WorldObject::SummonCreature(uint32 entry, const Position& pos, TempSummonType spwtype, uint32 duration, uint32  /*vehId*/, SummonPropertiesEntry const* properties, bool visibleBySummonerOnly /*= false*/) const
 {
+       LOG_INFO("server.loading",  "TempSummon* WorldObject::SummonCreature(e entry {}", entry) ;
     if (Map* map = FindMap())
     {
         if (TempSummon* summon = map->SummonCreature(entry, pos, properties, duration, (WorldObject*)this, 0, 0, visibleBySummonerOnly))
