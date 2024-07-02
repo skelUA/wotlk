@@ -757,6 +757,10 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
         {
 
 
+         if (e.action.cast.spell == 56676)
+            {
+           LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_SELF_CAST >>> 1: spell {}", e.action.cast.spell);
+            }
 
             if (targets.empty())
                 break;
@@ -776,7 +780,10 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     triggerFlags = TRIGGERED_FULL_MASK;
                 }
             }
-
+         if (e.action.cast.spell == 56676)
+            {
+           LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_SELF_CAST >>> 2: spell {}", e.action.cast.spell);
+            }
             for (WorldObject* target : targets)
             {
                 Unit* uTarget = target->ToUnit();
@@ -789,7 +796,10 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     {
                         uTarget->InterruptNonMeleeSpells(false);
                     }
-
+                             if (e.action.cast.spell == 56676)
+                                {
+                               LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_SELF_CAST >>> 3: spell {}", e.action.cast.spell);
+                                }
                     uTarget->CastSpell(uTarget, e.action.cast.spell, triggerFlags);
                 }
             }
