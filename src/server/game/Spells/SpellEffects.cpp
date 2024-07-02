@@ -2350,6 +2350,10 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                LOG_INFO("server.loading",  "EffectSummonType 5: spell {}", m_spellInfo->Id);
                 }
     bool personalSpawn = (properties->Flags & SUMMON_PROP_FLAG_ONLY_VISIBLE_TO_SUMMONER) != 0;
+                 if (m_spellInfo->Id== 56676)
+                    {
+                   LOG_INFO("server.loading",  "EffectSummonType 100002: properties->Flags & SUMMON_PROP_FLAG_ONLY_VISIBLE_TO_SUMMONER {}", properties->Flags & SUMMON_PROP_FLAG_ONLY_VISIBLE_TO_SUMMONER);
+                    }
     int32 duration = m_spellInfo->GetDuration();
     if (Player* modOwner = m_originalCaster->GetSpellModOwner())
         modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_DURATION, duration);
