@@ -2400,11 +2400,19 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
         case SUMMON_CATEGORY_UNK:
             if (properties->Flags & 512)
             {
+                             if (m_spellInfo->Id== 56676)
+                                {
+                               LOG_INFO("server.loading",  "EffectSummonType 512: spell {}", m_spellInfo->Id);
+                                }
                 SummonGuardian(effIndex, entry, properties, numSummons, personalSpawn);
                 break;
             }
             switch (properties->Type)
             {
+                            if (m_spellInfo->Id== 56676)
+                               {
+                              LOG_INFO("server.loading",  "EffectSummonType 6: spell {} , properties->Type {}",  m_spellInfo->Id, properties->Type);
+                               }
                 case SUMMON_TYPE_PET:
                 case SUMMON_TYPE_GUARDIAN:
                 case SUMMON_TYPE_GUARDIAN2:
@@ -2483,6 +2491,10 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
 
                             if (properties->Category == SUMMON_CATEGORY_ALLY)
                             {
+                                             if (m_spellInfo->Id== 56676)
+                                                {
+                                               LOG_INFO("server.loading",  "EffectSummonType 111: spell {}", m_spellInfo->Id);
+                                                }
                                 summon->SetOwnerGUID(m_originalCaster->GetGUID());
                                 summon->SetFaction(m_originalCaster->GetFaction());
                             }
