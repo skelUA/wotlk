@@ -2312,7 +2312,7 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
 
              if (m_spellInfo->Id== 56676)
                 {
-               LOG_INFO("server.loading",  "EffectSummonType 1: spell {}", e.action.cast.spell);
+               LOG_INFO("server.loading",  "EffectSummonType 1: spell {}", m_spellInfo->Id);
                 }
 
     if (effectHandleMode != SPELL_EFFECT_HANDLE_HIT)
