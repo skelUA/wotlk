@@ -2470,7 +2470,7 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                         float radius = m_spellInfo->Effects[effIndex].CalcRadius();
              if (m_spellInfo->Id== 56676)
                 {
-               LOG_INFO("server.loading",  "EffectSummonType 8: spell {}", m_spellInfo->Id);
+               LOG_INFO("server.loading",  "EffectSummonType 8: radius {}", radius);
                 }
                         TempSummonType summonType = (duration <= 0) ? TEMPSUMMON_DEAD_DESPAWN : TEMPSUMMON_TIMED_DESPAWN;
 
@@ -2482,6 +2482,9 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                             else
                                 // randomize position for multiple summons
                                 pos = m_caster->GetRandomPoint(*destTarget, radius);
+
+  {
+               LOG_INFO("server.loading",  "EffectSummonType 8: pos {}", pos);
 
                             summon = m_originalCaster->SummonCreature(entry, pos, summonType, duration, 0, nullptr, personalSpawn);
                             if (!summon)
