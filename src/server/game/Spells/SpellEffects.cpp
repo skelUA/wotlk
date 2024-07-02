@@ -2339,10 +2339,16 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
         LOG_ERROR("spells.effect", "EffectSummonType: Unhandled summon type {}", m_spellInfo->Effects[effIndex].MiscValueB);
         return;
     }
-
+             if (m_spellInfo->Id== 56676)
+                {
+               LOG_INFO("server.loading",  "EffectSummonType 4: spell {}", m_spellInfo->Id);
+                }
     if (!m_originalCaster)
         return;
-
+             if (m_spellInfo->Id== 56676)
+                {
+               LOG_INFO("server.loading",  "EffectSummonType 5: spell {}", m_spellInfo->Id);
+                }
     bool personalSpawn = (properties->Flags & SUMMON_PROP_FLAG_ONLY_VISIBLE_TO_SUMMONER) != 0;
     int32 duration = m_spellInfo->GetDuration();
     if (Player* modOwner = m_originalCaster->GetSpellModOwner())
@@ -2381,6 +2387,10 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
             break;
     }
 
+             if (m_spellInfo->Id== 56676)
+                {
+               LOG_INFO("server.loading",  "EffectSummonType 6: spell {}", m_spellInfo->Id);
+                }
     switch (properties->Category)
     {
         case SUMMON_CATEGORY_WILD:
