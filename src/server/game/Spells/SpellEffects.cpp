@@ -2483,9 +2483,10 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                                 // randomize position for multiple summons
                                 pos = m_caster->GetRandomPoint(*destTarget, radius);
 
-  {
+      if (m_spellInfo->Id== 56676)
+                {
                LOG_INFO("server.loading",  "EffectSummonType 8: pos {}", pos);
-
+}
                             summon = m_originalCaster->SummonCreature(entry, pos, summonType, duration, 0, nullptr, personalSpawn);
                             if (!summon)
                                 continue;
