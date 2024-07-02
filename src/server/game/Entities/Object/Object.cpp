@@ -2247,11 +2247,11 @@ TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropert
 
     summon->SetUInt32Value(UNIT_CREATED_BY_SPELL, spellId);
 
-    summon->SetHomePosition(pos);
-
-    summon->InitStats(duration);
-
-    summon->SetVisibleBySummonerOnly(visibleBySummonerOnly);
+//    summon->SetHomePosition(pos);
+//
+//    summon->InitStats(duration);
+//
+//    summon->SetVisibleBySummonerOnly(visibleBySummonerOnly);
 
     if (!AddToMap(summon->ToCreature(), summon->GetOwnerGUID().IsPlayer() || (summoner && summoner->GetTransport())))
     {
