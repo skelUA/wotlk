@@ -340,3 +340,36 @@ INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_
 DELETE FROM `smart_scripts` WHERE (`entryorguid` = 2821701) AND (`source_type` = 9) AND (`id` IN (1));
 INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_type`, `event_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `event_param5`, `event_param6`, `action_type`, `action_param1`, `action_param2`, `action_param3`, `action_param4`, `action_param5`, `action_param6`, `target_type`, `target_param1`, `target_param2`, `target_param3`, `target_param4`, `target_x`, `target_y`, `target_z`, `target_o`, `comment`) VALUES
 (2821701, 9, 1, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 11, 51448, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Injured Rainspeaker Oracle - Script 2 - Cast Oracle Intro Quest Complete');
+
+
+--
+-- https://www.wowhead.com/wotlk/quest=12973/the-brothers-bronzebeard
+--
+UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = 30405;
+DELETE FROM `smart_scripts` WHERE (`entryorguid` = 30405) AND (`source_type` = 0) AND (`id` IN (0));
+INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_type`, `event_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `event_param5`, `event_param6`, `action_type`, `action_param1`, `action_param2`, `action_param3`, `action_param4`, `action_param5`, `action_param6`, `target_type`, `target_param1`, `target_param2`, `target_param3`, `target_param4`, `target_x`, `target_y`, `target_z`, `target_o`, `comment`) VALUES
+(30405, 0, 0, 1, 11, 0, 100, 0, 0, 0, 0, 0, 0, 0, 86, 56676, 2, 23, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'On Respawn - Cast Spell');
+
+DELETE FROM `smart_scripts` WHERE (`entryorguid` = 3040500) AND (`source_type` = 9) AND (`id` IN (14));
+INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_type`, `event_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `event_param5`, `event_param6`, `action_type`, `action_param1`, `action_param2`, `action_param3`, `action_param4`, `action_param5`, `action_param6`, `target_type`, `target_param1`, `target_param2`, `target_param3`, `target_param4`, `target_x`, `target_y`, `target_z`, `target_o`, `comment`) VALUES
+(3040500, 9, 14, 0, 0, 0, 100, 0, 2000, 2000, 0, 0, 0, 0, 86, 56697, 2, 23, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Script9 - Cast Spell Summon Magni');
+
+UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = 30134;
+DELETE FROM `smart_scripts` WHERE (`source_type` = 0 AND `entryorguid` = 30134);
+INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_type`, `event_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `event_param5`, `event_param6`, `action_type`, `action_param1`, `action_param2`, `action_param3`, `action_param4`, `action_param5`, `action_param6`, `target_type`, `target_param1`, `target_param2`, `target_param3`, `target_param4`, `target_x`, `target_y`, `target_z`, `target_o`, `comment`) VALUES
+(30134, 0, 0, 13, 27, 0, 100, 512, 0, 0, 0, 0, 0, 0, 53, 1, 30134, 0, 0, 500, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'On Passenger Board - Start WP'),
+(30134, 0, 1, 0, 28, 0, 100, 512, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'On Passenger Remove - Despawn'),
+(30134, 0, 2, 0, 40, 0, 100, 512, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 19, 30107, 5, 0, 0, 0, 0, 0, 0, 'On WP Reached - Talk Target'),
+(30134, 0, 3, 0, 40, 0, 100, 512, 8, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 19, 30107, 5, 0, 0, 0, 0, 0, 0, 'On WP Reached - Talk Target'),
+(30134, 0, 4, 0, 40, 0, 100, 512, 16, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 19, 30107, 5, 0, 0, 0, 0, 0, 0, 'On WP Reached - Talk Target'),
+(30134, 0, 5, 0, 40, 0, 100, 512, 22, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 19, 30107, 5, 0, 0, 0, 0, 0, 0, 'On WP Reached - Talk Target'),
+(30134, 0, 6, 0, 40, 0, 100, 512, 37, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 19, 30107, 5, 0, 0, 0, 0, 0, 0, 'On WP Reached - Talk Target'),
+(30134, 0, 7, 0, 40, 0, 100, 512, 47, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 19, 30107, 5, 0, 0, 0, 0, 0, 0, 'On WP Reached - Talk Target'),
+(30134, 0, 8, 0, 40, 0, 100, 512, 53, 0, 0, 0, 0, 0, 1, 6, 0, 0, 0, 0, 0, 19, 30107, 5, 0, 0, 0, 0, 0, 0, 'On WP Reached - Talk Target'),
+(30134, 0, 9, 0, 40, 0, 100, 512, 57, 0, 0, 0, 0, 0, 1, 7, 0, 0, 0, 0, 0, 19, 30107, 5, 0, 0, 0, 0, 0, 0, 'On WP Reached - Talk Target'),
+(30134, 0, 10, 0, 40, 0, 100, 512, 65, 0, 0, 0, 0, 0, 1, 8, 0, 0, 0, 0, 0, 19, 30107, 5, 0, 0, 0, 0, 0, 0, 'On WP Reached - Talk Target'),
+(30134, 0, 11, 12, 40, 0, 100, 512, 72, 0, 0, 0, 0, 0, 86, 56675, 2, 29, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'On WP Reached - Cast Spell Summon Brann Bronzebeard'),
+(30134, 0, 12, 0, 61, 0, 100, 512, 0, 0, 0, 0, 0, 0, 28, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'On WP Reached - Remove All Auras'),
+(30134, 0, 13, 14, 61, 0, 100, 512, 0, 0, 0, 0, 0, 0, 18, 16777216, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'On Passenger Board - Set Unit Flag'),
+(30134, 0, 14, 15, 61, 0, 100, 512, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'On Passenger Board - Remove Auto Attack'),
+(30134, 0, 15, 0, 61, 0, 100, 512, 0, 0, 0, 0, 0, 0, 44, 7, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'On Passenger Board - Set Phase Mask');
