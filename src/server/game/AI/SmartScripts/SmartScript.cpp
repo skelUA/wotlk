@@ -577,7 +577,6 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
         }
         case SMART_ACTION_CAST:
         {
-         LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_CAST >>> 1: spell {}", e.action.cast.spell);
 
          if (e.action.cast.spell == 56676)
             {
@@ -587,10 +586,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
 
                    // LOG_DEBUG("scripts.ai", "SmartScript::ProcessAction:: SMART_ACTION_CAST: Unit {} casts spell {} on target {} with castflags {}",
                     //          me->GetGUID().ToString(), e.action.cast.spell, target->GetGUID().ToString(), e.action.cast.castFlags);
-         if (e.action.cast.spell == 49122)
-            {
-           LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_CAST >>> 1: spell {}", e.action.cast.spell);
-            }
+
             if (targets.empty())
                 break;
             Unit* caster = me;
@@ -650,6 +646,11 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     bool canCastSpell = me->GetPowerPct(POWER_MANA) > 10.0f && spellInfo->CalcPowerCost(me, spellInfo->GetSchoolMask()) < (int32)me->GetPower(POWER_MANA) && !me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SILENCED);
                     bool isSpellIgnoreLOS = spellInfo->HasAttribute(SPELL_ATTR2_IGNORE_LINE_OF_SIGHT);
 
+
+         if (e.action.cast.spell == 56676)
+            {
+           LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_CAST >>> 3: spell {}", e.action.cast.spell);
+            }
                     // If target is rooted we move out of melee range before casting, but not further than spell max range.
                     if (isWithinLOSInMap && isWithinMeleeRange && isRangedAttack && isTargetRooted && canCastSpell)
                     {
@@ -658,7 +659,10 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                         CAST_AI(SmartAI, me->AI())->MoveAway(std::min(minDistance, spellMaxRange));
                         continue;
                     }
-
+         if (e.action.cast.spell == 56676)
+            {
+           LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_CAST >>> 4: spell {}", e.action.cast.spell);
+            }
                     // Let us not try to cast spell if we know it is going to fail anyway. Stick to chasing and continue.
                     if (distanceToTarget > spellMaxRange && isWithinLOSInMap)
                     {
@@ -672,7 +676,10 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                         CAST_AI(SmartAI, me->AI())->SetCombatMove(true);
                         continue;
                     }
-
+         if (e.action.cast.spell == 56676)
+            {
+           LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_CAST >>> 5: spell {}", e.action.cast.spell);
+            }
                     TriggerCastFlags triggerFlags = TRIGGERED_NONE;
                     if (e.action.cast.castFlags & SMARTCAST_TRIGGERED)
                     {
@@ -685,6 +692,11 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     SpellCastResult result = me->CastSpell(target->ToUnit(), e.action.cast.spell, triggerFlags);
                     bool spellCastFailed = (result != SPELL_CAST_OK && result != SPELL_FAILED_SPELL_IN_PROGRESS);
 
+         if (e.action.cast.spell == 56676)
+            {
+           LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_CAST >>> 6: spell {}", e.action.cast.spell);
+            }
+
                     if (e.action.cast.castFlags & SMARTCAST_COMBAT_MOVE)
                     {
                         // If cast flag SMARTCAST_COMBAT_MOVE is set combat movement will not be allowed unless target is outside spell range, out of mana, or LOS.
@@ -695,7 +707,10 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                             // if spell fail for any other reason, we chase to melee range, or stay where we are if spellcast was successful.
                             CAST_AI(SmartAI, me->AI())->SetCombatMove(spellCastFailed);
                     }
-
+         if (e.action.cast.spell == 56676)
+            {
+           LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_CAST >>> 7: spell {}", e.action.cast.spell);
+            }
                     if (spellCastFailed)
                         failedSpellCast = true;
                     else
