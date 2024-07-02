@@ -658,6 +658,10 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                         float minDistance = std::max(meleeRange, spellMinRange) - distanceToTarget + NOMINAL_MELEE_RANGE;
                         CAST_AI(SmartAI, me->AI())->MoveAway(std::min(minDistance, spellMaxRange));
                         continue;
+                                 if (e.action.cast.spell == 56676)
+                                    {
+                                   LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_CAST >>> 200: spell {}", e.action.cast.spell);
+                                    }
                     }
          if (e.action.cast.spell == 56676)
             {
@@ -667,14 +671,23 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     if (distanceToTarget > spellMaxRange && isWithinLOSInMap)
                     {
                         failedSpellCast = true;
+                                  if (e.action.cast.spell == 56676)
+                                     {
+                                    LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_CAST >>> 201: spell {}", e.action.cast.spell);
+                                     }
                         CAST_AI(SmartAI, me->AI())->SetCombatMove(true, std::max(spellMaxRange - NOMINAL_MELEE_RANGE, 0.0f));
                         continue;
                     }
                     else if (distanceToTarget < spellMinRange || !(isWithinLOSInMap || isSpellIgnoreLOS))
                     {
                         failedSpellCast = true;
+                                  if (e.action.cast.spell == 56676)
+                                     {
+                                    LOG_INFO("server.loading",  "SmartScript::ProcessAction:: SMART_ACTION_CAST >>> 202: spell {}", e.action.cast.spell);
+                                     }
                         CAST_AI(SmartAI, me->AI())->SetCombatMove(true);
                         continue;
+
                     }
          if (e.action.cast.spell == 56676)
             {
