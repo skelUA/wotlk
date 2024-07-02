@@ -2477,16 +2477,23 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                         for (uint32 count = 0; count < numSummons; ++count)
                         {
                             Position pos;
-                            if (count == 0)
+                            if (count == 0){
+                                         if (m_spellInfo->Id== 56676)
+                                            {
+                                           LOG_INFO("server.loading",  "EffectSummonType 411: spell {}", m_spellInfo->Id);
+                                            }
                                 pos = *destTarget;
+                                }
                             else
+                            {
                                 // randomize position for multiple summons
                                 pos = m_caster->GetRandomPoint(*destTarget, radius);
+                                             if (m_spellInfo->Id== 56676)
+                                                {
+                                               LOG_INFO("server.loading",  "EffectSummonType 412: spell {}", m_spellInfo->Id);
+                                                }
+                            }
 
-      if (m_spellInfo->Id== 56676)
-                {
-               LOG_INFO("server.loading",  "EffectSummonType 8: pos {}", pos);
-}
                             summon = m_originalCaster->SummonCreature(entry, pos, summonType, duration, 0, nullptr, personalSpawn);
                             if (!summon)
                                 continue;
