@@ -2389,8 +2389,10 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
 
              if (m_spellInfo->Id== 56676)
                 {
-               LOG_INFO("server.loading",  "EffectSummonType 6: spell {}", m_spellInfo->Id);
+               LOG_INFO("server.loading",  "EffectSummonType 6: spell {} , properties->Category {}",  m_spellInfo->Id, properties->Category);
                 }
+
+
     switch (properties->Category)
     {
         case SUMMON_CATEGORY_WILD:
@@ -2458,7 +2460,10 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                 default:
                     {
                         float radius = m_spellInfo->Effects[effIndex].CalcRadius();
-
+             if (m_spellInfo->Id== 56676)
+                {
+               LOG_INFO("server.loading",  "EffectSummonType 8: spell {}", m_spellInfo->Id);
+                }
                         TempSummonType summonType = (duration <= 0) ? TEMPSUMMON_DEAD_DESPAWN : TEMPSUMMON_TIMED_DESPAWN;
 
                         for (uint32 count = 0; count < numSummons; ++count)
