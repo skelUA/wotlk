@@ -2154,7 +2154,9 @@ void WorldObject::AddObjectToRemoveList()
 TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropertiesEntry const* properties /*= nullptr*/, uint32 duration /*= 0*/, WorldObject* summoner /*= nullptr*/, uint32 spellId /*= 0*/, uint32 vehId /*= 0*/, bool visibleBySummonerOnly /*= false*/)
 {
     uint32 mask = UNIT_MASK_SUMMON;
+    if (entry==30408){
     LOG_INFO("server.loading",  "Map::SummonCreature entry {}", entry) ;
+    }
     if (properties)
     {
         switch (properties->Category)
@@ -2172,6 +2174,9 @@ TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropert
             case SUMMON_CATEGORY_ALLY:
             case SUMMON_CATEGORY_UNK:
                 {
+                        if (entry==30408){
+                        LOG_INFO("server.loading",  "Map::SummonCreature 2 entry {}", entry) ;
+                        }
                     switch (properties->Type)
                     {
                         case SUMMON_TYPE_MINION:
@@ -2206,6 +2211,10 @@ TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropert
     uint32 phase = PHASEMASK_NORMAL;
     if (summoner)
         phase = summoner->GetPhaseMask();
+
+                        if (entry==30408){
+                        LOG_INFO("server.loading",  "Map::SummonCreature 3 entry {}, phase {}", entry,phase) ;
+                        }
 
     TempSummon* summon = nullptr;
     switch (mask)
@@ -2252,6 +2261,9 @@ TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropert
 
     summon->InitSummon();
 
+                         if (entry==30408){
+                         LOG_INFO("server.loading",  "Map::SummonCreature 999 entry {}", entry) ;
+                         }
     //ObjectAccessor::UpdateObjectVisibility(summon);
 
     return summon;
