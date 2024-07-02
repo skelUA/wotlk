@@ -2478,11 +2478,12 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                         {
                             Position pos;
                             if (count == 0){
+
+                                pos = *destTarget;
                                          if (m_spellInfo->Id== 56676)
                                             {
-                                           LOG_INFO("server.loading",  "EffectSummonType 411: spell {}", m_spellInfo->Id);
+                                           LOG_INFO("server.loading",  "EffectSummonType 411: spell {},  PositionX {}, PositionY {} , PositionX {}", m_spellInfo->Id, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ());
                                             }
-                                pos = *destTarget;
                                 }
                             else
                             {
