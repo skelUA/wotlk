@@ -5944,6 +5944,12 @@ void Spell::SummonGuardian(uint32 i, uint32 entry, SummonPropertiesEntry const* 
     if (!caster)
         return;
 
+
+              if (m_spellInfo->Id == 56676)
+                 {
+                LOG_INFO("server.loading",  "SummonGuardian >>> 1: spell {}", m_spellInfo->Id );
+                 }
+
     if (caster->IsTotem())
         caster = caster->ToTotem()->GetOwner();
 
