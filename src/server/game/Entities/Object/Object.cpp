@@ -2155,6 +2155,7 @@ TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropert
 {
     uint32 mask = UNIT_MASK_SUMMON;
     if (entry==30408){
+    LOG_INFO("server.loading",  "Map::SummonCreature visibleBySummonerOnly {}", visibleBySummonerOnly) ;
     LOG_INFO("server.loading",  "Map::SummonCreature entry {}", entry) ;
     }
     if (properties)
