@@ -2318,9 +2318,20 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
     if (effectHandleMode != SPELL_EFFECT_HANDLE_HIT)
         return;
 
+             if (m_spellInfo->Id== 56676)
+                {
+               LOG_INFO("server.loading",  "EffectSummonType 2: spell {}", m_spellInfo->Id);
+                }
+
     uint32 entry = m_spellInfo->Effects[effIndex].MiscValue;
     if (!entry)
         return;
+
+             if (m_spellInfo->Id== 56676)
+                {
+               LOG_INFO("server.loading",  "EffectSummonType 3: spell {}", m_spellInfo->Id);
+                }
+
 
     SummonPropertiesEntry const* properties = sSummonPropertiesStore.LookupEntry(m_spellInfo->Effects[effIndex].MiscValueB);
     if (!properties)
@@ -2516,6 +2527,10 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
 
     if (summon)
     {
+                     if (m_spellInfo->Id== 56676)
+                        {
+                       LOG_INFO("server.loading",  "EffectSummonType 999: spell {}", m_spellInfo->Id);
+                        }
         summon->SetCreatorGUID(m_originalCaster->GetGUID());
         ExecuteLogEffectSummonObject(effIndex, summon);
     }
