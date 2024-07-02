@@ -2496,7 +2496,7 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                             }
 
                          //   summon = m_originalCaster->SummonCreature(entry, pos, summonType, duration, 0, nullptr, personalSpawn);
-                            summon = m_caster->SummonCreature(entry, pos, summonType, duration, 0, nullptr, personalSpawn);
+                            //summon = m_caster->SummonCreature(entry, pos, summonType, duration, 0, nullptr, personalSpawn);
                             if (!summon)
                                 continue;
 
