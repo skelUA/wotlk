@@ -603,10 +603,16 @@ void Map::ScriptsProcess()
                     if (WorldObject* pSummoner = _GetScriptWorldObject(source, true, step.script))
                     {
                         if (!step.script->TempSummonCreature.CreatureEntry)
+                        {
+                        LOG_INFO("server.loading",  "SCRIPT_COMMAND_TEMP_SUMMON_CREATURE");
+
                             LOG_ERROR("maps.script", "{} creature entry (datalong) is not specified.", step.script->GetDebugInfo());
+                            }
                         else
                         {
                             uint32 entry = step.script->TempSummonCreature.CreatureEntry;
+
+                            LOG_INFO("server.loading",  "SCRIPT_COMMAND_TEMP_SUMMON_CREATURE 2: entry {}", entry);
 
                             float x = step.script->TempSummonCreature.PosX;
                             float y = step.script->TempSummonCreature.PosY;
