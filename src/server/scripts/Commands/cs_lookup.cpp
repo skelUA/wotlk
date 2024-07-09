@@ -22,7 +22,6 @@ Comment: All lookup related commands
 Category: commandscripts
 EndScriptData */
 
-#include "AccountMgr.h"
 #include "CharacterCache.h"
 #include "Chat.h"
 #include "CommandScript.h"
@@ -31,9 +30,9 @@ EndScriptData */
 #include "ObjectMgr.h"
 #include "Player.h"
 #include "ReputationMgr.h"
+#include "SharedDefines.h"
 #include "SpellInfo.h"
 #include "SpellMgr.h"
-#include "SharedDefines.h"
 
 using namespace Acore::ChatCommands;
 
