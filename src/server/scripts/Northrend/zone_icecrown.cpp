@@ -1265,7 +1265,7 @@ public:
         void DamageTaken(Unit* who, uint32&, DamageEffectType, SpellSchoolMask) override
         {
             if (who != me)
-                if (me->HealthBelowPct(80) && urand(0, 1))
+                if (me->HealthBelowPct(50) && urand(0, 5))
                     SpreadFire(true);
         }
 
@@ -1304,6 +1304,7 @@ public:
                             {
                                 me->SetSpeed(MOVE_FLIGHT, 1.2f);
                                 owner->RemoveAurasDueToSpell(SPELL_WAITING_FOR_A_BOMBER);
+                                owner->AddAura(66656, owner);
                                 turret->HandleSpellClick(owner, 0);
                                 return;
                             }
@@ -1352,9 +1353,9 @@ public:
                                         fireCount++;
 
                         if (fireCount)
-                            Unit::DealDamage(me, me, 3000 * fireCount, nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_FIRE);
+                            Unit::DealDamage(me, me, 200 * fireCount, nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_FIRE);
                         else // Heal
-                            me->ModifyHealth(2000);
+                            me->ModifyHealth(4000);
 
                         events.ScheduleEvent(EVENT_CHECK_PATH_REGEN_HEALTH_BURN_DAMAGE, 4s);
                         break;
@@ -1370,7 +1371,11 @@ public:
                             {
                                 if (Vehicle* stationKit = station->GetVehicleKit())
                                     if (stationKit->GetPassenger(0))
+                                    {
                                         playerPresent = true;
+                                        station->SetHealth(station->GetMaxHealth() * me->GetHealthPct() / 100.0f);
+                                    }
+
 
                                 if (stackAmount)
                                     station->SetAuraStack(SPELL_INFRA_GREEN_SHIELD, station, stackAmount);
