@@ -1178,22 +1178,21 @@ class spell_fight_fire_bomber : public SpellScript
         if (!kit)
             return;
 
-            bool extinguished = false;
-            uint8 fireCount = 0;
-            for (uint8 seat = 3; seat <= 5; ++seat)
-                if (Unit* banner = kit->GetPassenger(seat))
-                    if (banner->HasAura(SPELL_COSMETIC_FIRE))
+        bool extinguished = false;
+        uint8 fireCount = 0;
+        for (uint8 seat = 3; seat <= 5; ++seat)
+            if (Unit* banner = kit->GetPassenger(seat))
+                if (banner->HasAura(SPELL_COSMETIC_FIRE))
+                {
+                    if (!extinguished)
                     {
-                        if (!extinguished)
-                        {
-                            GetCaster()->CastSpell(banner, SPELL_EXTINGUISH_FIRE, true);
-                            extinguished = true;
-                            banner->RemoveAurasDueToSpell(SPELL_COSMETIC_FIRE);
-                            continue;
-                        }
-                        fireCount++;
+                        GetCaster()->CastSpell(banner, SPELL_EXTINGUISH_FIRE, true);
+                        extinguished = true;
+                        banner->RemoveAurasDueToSpell(SPELL_COSMETIC_FIRE);
+                        continue;
                     }
-
+                    fireCount++;
+                }
         if (fireCount == 0)
             GetCaster()->RemoveAurasDueToSpell(SPELL_BURNING);
     }
