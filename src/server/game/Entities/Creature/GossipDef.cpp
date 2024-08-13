@@ -337,7 +337,7 @@ void PlayerMenu::SendQuestGiverQuestList(QEmote const& eEmote, std::string const
         data << uint32(eEmote._Emote); // NPC emote
     }
 
-    size_t count_pos = data.wpos();
+    std::size_t count_pos = data.wpos();
     data << uint8(0);
     uint32 count = 0;
 
@@ -451,7 +451,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* quest, ObjectGuid npcGU
 
         uint32 moneyRew = 0;
         Player* player = _session->GetPlayer();
-        if (player && (player->getLevel() >= sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL) || sScriptMgr->ShouldBeRewardedWithMoneyInsteadOfExp(player)))
+        if (player && (player->GetLevel() >= sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL) || sScriptMgr->ShouldBeRewardedWithMoneyInsteadOfExp(player)))
         {
             moneyRew = quest->GetRewMoneyMaxLevel();
         }

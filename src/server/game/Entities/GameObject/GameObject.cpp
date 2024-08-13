@@ -20,7 +20,6 @@
 #include "CellImpl.h"
 #include "CreatureAISelector.h"
 #include "DisableMgr.h"
-#include "DynamicTree.h"
 #include "GameObjectAI.h"
 #include "GameObjectModel.h"
 #include "GameTime.h"
@@ -1892,7 +1891,6 @@ void GameObject::Use(Unit* user)
                 user->RemoveAurasByType(SPELL_AURA_MOUNTED);
                 spellId = info->spellcaster.spellId;
 
-                AddUse();
                 break;
             }
         case GAMEOBJECT_TYPE_MEETINGSTONE:                  //23
@@ -2068,7 +2066,10 @@ void GameObject::Use(Unit* user)
         sOutdoorPvPMgr->HandleCustomSpell(player, spellId, this);
 
     if (spellCaster)
-        spellCaster->CastSpell(user, spellInfo, triggered);
+    {
+        if ((spellCaster->CastSpell(user, spellInfo, triggered) == SPELL_CAST_OK) && GetGoType() == GAMEOBJECT_TYPE_SPELLCASTER)
+            AddUse();
+    }
     else
         CastSpell(user, spellId);
 }
