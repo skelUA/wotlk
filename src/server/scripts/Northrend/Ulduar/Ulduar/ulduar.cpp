@@ -546,10 +546,13 @@ struct npc_salvaged_siege_engine : public VehicleAI
             {
                 if (Unit* turret = vehicle->GetPassenger(7))
                 {
-                    if (!turret->GetVehicleKit()->IsVehicleInUse())
+                    if (Vehicle* turretVehicle = turret->GetVehicleKit())
                     {
-                        turret->HandleSpellClick(clicker);
-                        return false;
+                        if (!turretVehicle->IsVehicleInUse())
+                        {
+                            turret->HandleSpellClick(clicker);
+                            return false;
+                        }
                     }
                 }
             }
