@@ -571,7 +571,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (!announced && who->GetTypeId() == TYPEID_PLAYER && who->GetPositionZ() < 30.0f)
+            if (!announced && who->IsPlayer() && who->GetPositionZ() < 30.0f)
             {
                 announced = true;
                 playerGUID = who->GetGUID();
@@ -761,4 +761,3 @@ void AddSC_isle_of_queldanas()
     // THEIR:
     new npc_greengill_slave();
 }
-

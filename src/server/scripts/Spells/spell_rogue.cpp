@@ -201,7 +201,7 @@ class spell_rog_deadly_poison : public SpellScript
     {
         _stackAmount = 0;
         // at this point CastItem must already be initialized
-        return GetCaster()->GetTypeId() == TYPEID_PLAYER && GetCastItem();
+        return GetCaster()->IsPlayer() && GetCastItem();
     }
 
     void HandleBeforeHit(SpellMissInfo missInfo)
@@ -438,7 +438,7 @@ class spell_rog_preparation : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        return GetCaster()->IsPlayer();
     }
 
     bool Validate(SpellInfo const* /*spellInfo*/) override
@@ -505,7 +505,7 @@ class spell_rog_prey_on_the_weak : public AuraScript
     {
         Unit* target = GetTarget();
         Unit* victim = target->GetVictim();
-        if (!victim && target->GetTypeId() == TYPEID_PLAYER)
+        if (!victim && target->IsPlayer())
             victim = target->ToPlayer()->GetSelectedUnit();
 
         if (victim && (target->GetHealthPct() > victim->GetHealthPct()))
@@ -545,7 +545,7 @@ class spell_rog_rupture : public SpellScriptLoader
         {
             Unit* caster = GetCaster();
             BonusDuration = 0;
-            return caster && caster->GetTypeId() == TYPEID_PLAYER;
+            return caster && caster->IsPlayer();
         }
 
         void ResetDuration(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
@@ -597,7 +597,7 @@ class spell_rog_shiv : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        return GetCaster()->IsPlayer();
     }
 
     bool Validate(SpellInfo const* /*spellInfo*/) override
@@ -848,4 +848,3 @@ void AddSC_rogue_spell_scripts()
     RegisterSpellScript(spell_rog_vanish_purge);
     RegisterSpellScript(spell_rog_vanish);
 }
-

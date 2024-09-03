@@ -1386,4 +1386,3 @@ void AddSC_boss_illidan()
     RegisterSpellScript(spell_illidan_cage_trap);
     RegisterSpellScript(spell_illidan_cage_trap_stun_aura);
 }
-

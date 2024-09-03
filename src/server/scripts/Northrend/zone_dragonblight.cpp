@@ -936,7 +936,7 @@ public:
 
         void DamageTaken(Unit* who, uint32&, DamageEffectType, SpellSchoolMask) override
         {
-            if (who && who->GetTypeId() == TYPEID_PLAYER)
+            if (who && who->IsPlayer())
             {
                 me->SetLootRecipient(who);
                 me->LowerPlayerDamageReq(me->GetMaxHealth());
@@ -1586,7 +1586,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() == TYPEID_PLAYER)
+            if (who->IsPlayer())
                 Talk(2);
         }
 

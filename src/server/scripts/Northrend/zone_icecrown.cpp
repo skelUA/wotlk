@@ -2157,4 +2157,3 @@ void AddSC_icecrown()
     new npc_blessed_banner();
     new npc_frostbrood_skytalon();
 }
-
