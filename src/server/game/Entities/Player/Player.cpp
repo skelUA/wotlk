@@ -13770,39 +13770,25 @@ InventoryResult Player::CanEquipUniqueItem(ItemTemplate const* itemProto, uint8 
     if (itemProto->HasFlag(ITEM_FLAG_UNIQUE_EQUIPPABLE))
     {
         // there is an equip limit on this item
-        if (HasItemOrGemWithIdEquipped(itemProto->ItemId, 1, except_slot)){
-        LOG_ERROR("server", "CanEquipUniqueItem. Error [{}]", EQUIP_ERR_ITEM_UNIQUE_EQUIPABLE);
-        return EQUIP_ERR_ITEM_UNIQUE_EQUIPABLE;
-        }
-
+        if (HasItemOrGemWithIdEquipped(itemProto->ItemId, 1, except_slot))
+            return EQUIP_ERR_ITEM_UNIQUE_EQUIPABLE;
     }
 
     // check unique-equipped limit
     if (itemProto->ItemLimitCategory)
     {
         ItemLimitCategoryEntry const* limitEntry = sItemLimitCategoryStore.LookupEntry(itemProto->ItemLimitCategory);
-        if (!limitEntry){
-        LOG_ERROR("server", "CanEquipUniqueItem. Error [{}]", EQUIP_ERR_ITEM_CANT_BE_EQUIPPED);
-        return EQUIP_ERR_ITEM_CANT_BE_EQUIPPED;
-        }
-
+        if (!limitEntry)
+            return EQUIP_ERR_ITEM_CANT_BE_EQUIPPED;
 
         // NOTE: limitEntry->mode not checked because if item have have-limit then it applied and to equip case
 
         if (limit_count > limitEntry->maxCount)
-        {
-        LOG_ERROR("server", "CanEquipUniqueItem. Error [{}]", EQUIP_ERR_ITEM_MAX_LIMIT_CATEGORY_EQUIPPED_EXCEEDED);
-
             return EQUIP_ERR_ITEM_MAX_LIMIT_CATEGORY_EQUIPPED_EXCEEDED;
-        }
 
         // there is an equip limit on this item
         if (HasItemOrGemWithLimitCategoryEquipped(itemProto->ItemLimitCategory, limitEntry->maxCount - limit_count + 1, except_slot))
-        {
-        LOG_ERROR("server", "CanEquipUniqueItem. Error [{}]", EQUIP_ERR_ITEM_MAX_COUNT_EQUIPPED_SOCKETED);
-        return EQUIP_ERR_ITEM_MAX_COUNT_EQUIPPED_SOCKETED;
-        }
-
+            return EQUIP_ERR_ITEM_MAX_COUNT_EQUIPPED_SOCKETED;
     }
 
     return EQUIP_ERR_OK;
