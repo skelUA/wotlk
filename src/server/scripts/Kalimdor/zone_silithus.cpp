@@ -393,9 +393,10 @@ public:
                         break;
                     case 10:
                         Merithra->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
-                        //Merithra->SetDisableGravity(true);
-                        Merithra->SetCanFly(true);
-                        Merithra->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 3);
+                        Merithra->SetDisableGravity(true);
+                        //Merithra->SetCanFly(true);
+                        //Merithra->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 3);
+                        Merithra->GetMotionMaster()->MovePoint(1, -8065, 1530, 6.61f);
                         break;
                     case 11:
                         Merithra->CastSpell(Merithra, 24818, false);
