@@ -393,7 +393,7 @@ public:
                         break;
                     case 10:
                         Merithra->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
-                        Merithra->SetDisableGravity(true);
+                        //Merithra->SetDisableGravity(true);
                         Merithra->SetCanFly(true);
                         Merithra->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 3);
                         break;
@@ -421,7 +421,7 @@ public:
                         break;
                     case 18:
                         Arygos->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
-                        Arygos->SetDisableGravity(true);
+                        //Arygos->SetDisableGravity(true);
                         Arygos->SetCanFly(true);
                         Arygos->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 42);
                         break;
@@ -449,7 +449,7 @@ public:
                         break;
                     case 26:
                         Caelestrasz->HandleEmoteCommand(254);
-                        Caelestrasz->SetDisableGravity(true);
+                       // Caelestrasz->SetDisableGravity(true);
                         Caelestrasz->SetCanFly(true);
                         Caelestrasz->GetMotionMaster()->MoveCharge(-8065, 1530, 7.61f, 4);
                         break;
@@ -594,7 +594,7 @@ public:
                         break;
                     case 63:
                         me->HandleEmoteCommand(254);
-                        me->SetDisableGravity(true);
+                       // me->SetDisableGravity(true);
                         me->SetCanFly(true);
                         break;
                     case 64:
