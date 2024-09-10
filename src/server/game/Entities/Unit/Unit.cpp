@@ -13537,9 +13537,6 @@ void Unit::SetInCombatWith(Unit* enemy, uint32 duration)
         }
     }
 
-    if (Creature* pCreature = ToCreature())
-        pCreature->UpdateLeashExtensionTime();
-
     SetInCombatState(false, enemy, duration);
 }
 
