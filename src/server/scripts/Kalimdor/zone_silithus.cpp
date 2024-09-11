@@ -399,10 +399,10 @@ public:
                         break;
                     case 11:
                         Merithra->CastSpell(Merithra, 24818, false);
-                        Merithra->SetHover(true);
                         Merithra->SetCanFly(true);
                         Merithra->SetDisableGravity(true);
-                        //Merithra->SendMovementFlagUpdate();
+                        Merithra->SetHover(true);
+                        Merithra->SendMovementFlagUpdate();
                         break;
                     case 12:
                         Merithra->GetMotionMaster()->MoveCharge(-8100, 1530, 50, 42);
@@ -431,9 +431,10 @@ public:
                         break;
                     case 19:
                         Arygos->CastSpell(Arygos, 50505, false);
-                        Arygos->SetHover(true);
                         Arygos->SetCanFly(true);
                         Arygos->SetDisableGravity(true);
+                        Arygos->SetHover(true);
+                        Arygos->SendMovementFlagUpdate();
                         break;
                     case 20:
                         Arygos->GetMotionMaster()->MoveCharge(-8095, 1530, 50, 42);
@@ -462,9 +463,10 @@ public:
                         break;
                     case 27:
                         Caelestrasz->CastSpell(Caelestrasz, 54293, false);
-                        Caelestrasz->SetHover(true);
                         Caelestrasz->SetCanFly(true);
                         Caelestrasz->SetDisableGravity(true);
+                        Caelestrasz->SetHover(true);
+                        Caelestrasz->SendMovementFlagUpdate();
                         break;
                     case 28:
                         Talk(ANACHRONOS_SAY_2, Fandral);
