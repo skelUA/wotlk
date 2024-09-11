@@ -399,11 +399,11 @@ public:
                         break;
                     case 11:
                         Merithra->CastSpell(Merithra, 24818, false);
-                        break;
-                    case 12:
                         Merithra->SetDisableGravity(true);
                         Merithra->SetCanFly(true);
                         Merithra->SendMovementFlagUpdate();
+                        break;
+                    case 12:
                         Merithra->GetMotionMaster()->MoveCharge(-8100, 1530, 50, 42);
                         break;
                     case 13:
