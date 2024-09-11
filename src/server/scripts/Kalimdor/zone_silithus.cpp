@@ -513,7 +513,7 @@ public:
                         me->CastSpell(-8088, 1520.43f, 2.67f, 25158, true);
                         break;
                     case 36:
-                        DoCast(player, a, true);
+                        DoCast(player, 25159, true);
                         break;
                     case 37:
                         me->SummonGameObject(GO_GATE_OF_AHN_QIRAJ, -8130, 1525, 17.5f, 0, 0, 0, 0, 0, 0);
