@@ -399,10 +399,10 @@ public:
                         break;
                     case 11:
                         Merithra->CastSpell(Merithra, 24818, false);
-                        Merithra->SetCanFly(true);
+                        //Merithra->SetCanFly(true);
                         Merithra->SetDisableGravity(true);
                         Merithra->SetHover(true);
-                        Merithra->SendMovementFlagUpdate();
+                        //Merithra->SendMovementFlagUpdate();
                         break;
                     case 12:
                         Merithra->GetMotionMaster()->MoveCharge(-8100, 1530, 50, 42);
@@ -598,7 +598,7 @@ public:
                         break;
                     case 61:
                         me->GetMotionMaster()->MoveCharge(-8057.1f, 1470.32f, 2.61f, 6);
-                        if (player->IsInRange(me, 0, 45))
+                        if (player->IsInRange(me, 0, 60))
                             player->GroupEventHappens(QUEST_A_PAWN_ON_THE_ETERNAL_BOARD, me);
                         break;
                     case 62:
