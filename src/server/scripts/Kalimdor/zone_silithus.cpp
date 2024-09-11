@@ -392,10 +392,10 @@ public:
                         Merithra->CastSpell(Merithra, 25105, true);
                         break;
                     case 10:
-                        Merithra->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
                         Merithra->SetDisableGravity(true);
+                        Merithra->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
                         //Merithra->SetCanFly(true);
-                        //Merithra->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 3);
+                        Merithra->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 3);
                         //Merithra->GetMotionMaster()->MovePoint(1, -8065, 1530, 6.61f);
                         break;
                     case 11:
@@ -421,10 +421,10 @@ public:
                         Arygos->CastSpell(Arygos, 25107, true);
                         break;
                     case 18:
-                        Arygos->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
                         Arygos->SetDisableGravity(true);
+                        Arygos->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
                         //Arygos->SetCanFly(true);
-                        //Arygos->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 42);
+                        Arygos->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 42);
                         break;
                     case 19:
                         Arygos->CastSpell(Arygos, 50505, false);
@@ -449,10 +449,10 @@ public:
                         Caelestrasz->CastSpell(Caelestrasz, 25106, true);
                         break;
                     case 26:
-                        Caelestrasz->HandleEmoteCommand(254);
                         Caelestrasz->SetDisableGravity(true);
+                        Caelestrasz->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
                         //Caelestrasz->SetCanFly(true);
-                        //Caelestrasz->GetMotionMaster()->MoveCharge(-8065, 1530, 7.61f, 4);
+                        Caelestrasz->GetMotionMaster()->MoveCharge(-8065, 1530, 7.61f, 4);
                         break;
                     case 27:
                         Caelestrasz->CastSpell(Caelestrasz, 54293, false);
