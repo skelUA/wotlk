@@ -622,7 +622,7 @@ public:
                         break;
                     case 63:
                         me->HandleEmoteCommand(254);
-                        wme->SetDisableGravity(true);
+                        //wme->SetDisableGravity(true);
                         //me->SetCanFly(true);
                         break;
                     case 64:
