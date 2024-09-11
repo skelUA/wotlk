@@ -334,20 +334,6 @@ public:
 
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
 
-            std::list<Creature*> constructList;
-
-            me->GetCreatureListWithEntryInGrid(constructList, 15423, 100.0f);
-            me->GetCreatureListWithEntryInGrid(constructList, 15424, 100.0f);
-            me->GetCreatureListWithEntryInGrid(constructList, 15414, 100.0f);
-            me->GetCreatureListWithEntryInGrid(constructList, 15422, 100.0f);
-
-            if (!constructList.empty())
-            {
-             for (std::list<Creature*>::const_iterator itr = constructList.begin(); itr != constructList.end(); ++itr)
-                 {
-                     (*itr)->RemoveFromWorld();
-                 }
-            }
         }
 
         void HandleAnimation()
@@ -357,6 +343,11 @@ public:
             if (!player)
             {
                 return;
+            }
+
+            if (!eventEnd)
+            {
+               return;
             }
 
             Creature* Fandral = player->FindNearestCreature(C_FANDRAL_STAGHELM, 100.0f);
