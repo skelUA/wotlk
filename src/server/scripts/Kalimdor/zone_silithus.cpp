@@ -400,11 +400,12 @@ public:
                     case 11:
                         Merithra->CastSpell(Merithra, 24818, false);
                         //Merithra->SetCanFly(true);
-                        Merithra->SetDisableGravity(true);
-                        Merithra->SetHover(true);
+
                         //Merithra->SendMovementFlagUpdate();
                         break;
                     case 12:
+                        Merithra->SetDisableGravity(true);
+                        Merithra->SetHover(true);
                         Merithra->GetMotionMaster()->MoveCharge(-8100, 1530, 50, 42);
                         break;
                     case 13:
@@ -431,12 +432,13 @@ public:
                         break;
                     case 19:
                         Arygos->CastSpell(Arygos, 50505, false);
-                        Arygos->SetCanFly(true);
-                        Arygos->SetDisableGravity(true);
-                        Arygos->SetHover(true);
-                        Arygos->SendMovementFlagUpdate();
+
                         break;
                     case 20:
+                        //Arygos->SetCanFly(true);
+                        Arygos->SetDisableGravity(true);
+                        Arygos->SetHover(true);
+                       // Arygos->SendMovementFlagUpdate();
                         Arygos->GetMotionMaster()->MoveCharge(-8095, 1530, 50, 42);
                         break;
                     case 21:
@@ -463,12 +465,13 @@ public:
                         break;
                     case 27:
                         Caelestrasz->CastSpell(Caelestrasz, 54293, false);
-                        Caelestrasz->SetCanFly(true);
-                        Caelestrasz->SetDisableGravity(true);
-                        Caelestrasz->SetHover(true);
-                        Caelestrasz->SendMovementFlagUpdate();
+
                         break;
                     case 28:
+                        //Caelestrasz->SetCanFly(true);
+                        Caelestrasz->SetDisableGravity(true);
+                        Caelestrasz->SetHover(true);
+                        //Caelestrasz->SendMovementFlagUpdate();
                         Talk(ANACHRONOS_SAY_2, Fandral);
                         break;
                     case 29:
