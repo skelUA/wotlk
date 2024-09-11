@@ -424,13 +424,16 @@ public:
                         Arygos->CastSpell(Arygos, 25107, true);
                         break;
                     case 18:
-                        Arygos->SetDisableGravity(true);
+                       // Arygos->SetDisableGravity(true);
                         Arygos->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
                         //Arygos->SetCanFly(true);
-                        Arygos->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 42);
+                        //Arygos->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 42);
                         break;
                     case 19:
                         Arygos->CastSpell(Arygos, 50505, false);
+                        Arygos->SetHover(true);
+                        Arygos->SetCanFly(true);
+                        Arygos->SetDisableGravity(true);
                         break;
                     case 20:
                         Arygos->GetMotionMaster()->MoveCharge(-8095, 1530, 50, 42);
@@ -453,12 +456,15 @@ public:
                         break;
                     case 26:
                         //Caelestrasz->SetDisableGravity(true);
-                       // Caelestrasz->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
+                        Caelestrasz->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
                         //Caelestrasz->SetCanFly(true);
-                        Caelestrasz->GetMotionMaster()->MoveCharge(-8065, 1530, 7.61f, 4);
+                       //Caelestrasz->GetMotionMaster()->MoveCharge(-8065, 1530, 7.61f, 4);
                         break;
                     case 27:
                         Caelestrasz->CastSpell(Caelestrasz, 54293, false);
+                        Caelestrasz->SetHover(true);
+                        Caelestrasz->SetCanFly(true);
+                        Caelestrasz->SetDisableGravity(true);
                         break;
                     case 28:
                         Talk(ANACHRONOS_SAY_2, Fandral);
