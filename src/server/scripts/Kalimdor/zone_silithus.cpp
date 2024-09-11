@@ -333,6 +333,7 @@ public:
             eventEnd = false;
 
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
+
         }
 
         void HandleAnimation()
@@ -343,6 +344,7 @@ public:
             {
                 return;
             }
+
 
             Creature* Fandral = player->FindNearestCreature(C_FANDRAL_STAGHELM, 100.0f);
             Creature* Arygos = player->FindNearestCreature(C_ARYGOS, 100.0f);
@@ -607,8 +609,8 @@ public:
                         break;
                     case 63:
                         me->HandleEmoteCommand(254);
-                       // me->SetDisableGravity(true);
-                        me->SetCanFly(true);
+                        //wme->SetDisableGravity(true);
+                        //me->SetCanFly(true);
                         break;
                     case 64:
                         me->GetMotionMaster()->MoveCharge(-8000, 1400, 150, 9);
