@@ -468,13 +468,11 @@ public:
 
                         break;
                     case 28:
-                        //Caelestrasz->SetCanFly(true);
-                        Caelestrasz->SetDisableGravity(true);
-                        Caelestrasz->SetHover(true);
-                        //Caelestrasz->SendMovementFlagUpdate();
                         Talk(ANACHRONOS_SAY_2, Fandral);
                         break;
                     case 29:
+                        Caelestrasz->SetDisableGravity(true);
+                        Caelestrasz->SetHover(true);
                         Caelestrasz->GetMotionMaster()->MoveCharge(-8095, 1530, 50, 42);
                         Fandral->AI()->Talk(FANDRAL_SAY_2);
                         break;
