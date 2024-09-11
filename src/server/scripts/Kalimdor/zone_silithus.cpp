@@ -345,10 +345,6 @@ public:
                 return;
             }
 
-            if (!eventEnd)
-            {
-               return;
-            }
 
             Creature* Fandral = player->FindNearestCreature(C_FANDRAL_STAGHELM, 100.0f);
             Creature* Arygos = player->FindNearestCreature(C_ARYGOS, 100.0f);
