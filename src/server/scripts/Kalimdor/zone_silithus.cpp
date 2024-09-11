@@ -449,8 +449,8 @@ public:
                         Caelestrasz->CastSpell(Caelestrasz, 25106, true);
                         break;
                     case 26:
-                        Caelestrasz->SetDisableGravity(true);
-                        Caelestrasz->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
+                        //Caelestrasz->SetDisableGravity(true);
+                       // Caelestrasz->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
                         //Caelestrasz->SetCanFly(true);
                         Caelestrasz->GetMotionMaster()->MoveCharge(-8065, 1530, 7.61f, 4);
                         break;
