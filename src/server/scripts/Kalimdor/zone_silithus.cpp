@@ -333,6 +333,21 @@ public:
             eventEnd = false;
 
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
+
+            std::list<Creature*> constructList;
+
+            me->GetCreatureListWithEntryInGrid(constructList, 15423, 100.0f);
+            me->GetCreatureListWithEntryInGrid(constructList, 15424, 100.0f);
+            me->GetCreatureListWithEntryInGrid(constructList, 15414, 100.0f);
+            me->GetCreatureListWithEntryInGrid(constructList, 15422, 100.0f);
+
+            if (!constructList.empty())
+            {
+             for (std::list<Creature*>::const_iterator itr = constructList.begin(); itr != constructList.end(); ++itr)
+                 {
+                     (*itr)->RemoveFromWorld();
+                 }
+            }
         }
 
         void HandleAnimation()
@@ -498,7 +513,7 @@ public:
                         me->CastSpell(-8088, 1520.43f, 2.67f, 25158, true);
                         break;
                     case 36:
-                        DoCast(player, 25159, true);
+                        DoCast(player, a, true);
                         break;
                     case 37:
                         me->SummonGameObject(GO_GATE_OF_AHN_QIRAJ, -8130, 1525, 17.5f, 0, 0, 0, 0, 0, 0);
@@ -607,8 +622,8 @@ public:
                         break;
                     case 63:
                         me->HandleEmoteCommand(254);
-                       // me->SetDisableGravity(true);
-                        me->SetCanFly(true);
+                        wme->SetDisableGravity(true);
+                        //me->SetCanFly(true);
                         break;
                     case 64:
                         me->GetMotionMaster()->MoveCharge(-8000, 1400, 150, 9);
