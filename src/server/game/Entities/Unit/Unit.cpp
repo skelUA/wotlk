@@ -13536,8 +13536,6 @@ void Unit::SetInCombatWith(Unit* enemy, uint32 duration)
             return;
         }
     }
-    if (Creature* pCreature = ToCreature())
-        pCreature->UpdateLeashExtensionTime();
 
     SetInCombatState(false, enemy, duration);
 }
@@ -13696,6 +13694,8 @@ void Unit::SetInCombatState(bool PvP, Unit* enemy, uint32 duration)
 
         if (enemy)
         {
+            creature->UpdateLeashExtensionTime();
+
             if (IsAIEnabled)
                 creature->AI()->JustEngagedWith(enemy);
 
