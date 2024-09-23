@@ -420,7 +420,7 @@ bool LootItem::AllowedForPlayer(Player const* player, ObjectGuid source) const
         return false;
     }
 
-    if (player)
+    if (!player)
     {
        return false;
     }
