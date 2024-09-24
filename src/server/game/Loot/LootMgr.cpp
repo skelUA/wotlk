@@ -424,7 +424,6 @@ bool LootItem::AllowedForPlayer(Player const* player, ObjectGuid source) const
     {
        return false;
     }
-
     bool isMasterLooter = player->GetGroup() && player->GetGroup()->GetMasterLooterGuid() == player->GetGUID();
     bool itemVisibleForMasterLooter = !needs_quest && (!follow_loot_rules || !is_underthreshold);
 
