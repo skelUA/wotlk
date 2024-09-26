@@ -3480,8 +3480,7 @@ void Creature::UpdateMovementFlags()
 
 float Creature::GetNativeObjectScale() const
 {
-    CreatureTemplate const* cinfo = GetCreatureTemplate();
-    return ObjectMgr::ChooseDisplayId(cinfo)->DisplayScale * cinfo->scale;
+    return ObjectMgr::ChooseDisplayId(GetCreatureTemplate())->DisplayScale;
 }
 
 void Creature::SetObjectScale(float scale)
