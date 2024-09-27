@@ -614,7 +614,7 @@ public:
                 _materialDamage = 1;
                 _twilightDamage = 1;
                 _corporeality = 5;
-                _events.ScheduleEvent(EVENT_CHECK_CORPOREALITY, 7s);
+                _events.ScheduleEvent(EVENT_CHECK_CORPOREALITY, 15s);
             }
             else if (action == ACTION_RESET_ENCOUNTER)
             {
@@ -664,7 +664,7 @@ public:
                     break;
                 case EVENT_CHECK_CORPOREALITY:
                     UpdateCorporeality();
-                    _events.ScheduleEvent(EVENT_CHECK_CORPOREALITY, 10s);
+                    _events.ScheduleEvent(EVENT_CHECK_CORPOREALITY, 15s);
                     break;
             }
         }
