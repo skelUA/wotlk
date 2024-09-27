@@ -160,6 +160,28 @@ BanReturn BanMgr::BanAccountByPlayerName(std::string const& CharacterName, std::
 
     return BAN_SUCCESS;
 }
+// Mask IP function
+std::string maskIP(const std::string& ip) {
+    std::string maskedIP = ip;
+    size_t firstDot = maskedIP.find('.');
+    size_t secondDot = maskedIP.find('.', firstDot + 1);
+    size_t thirdDot = maskedIP.find('.', secondDot + 1);
+
+    if (firstDot != std::string::npos && secondDot != std::string::npos && thirdDot != std::string::npos) {
+        for (size_t i = firstDot + 1; i < secondDot; ++i) {
+            if (maskedIP[i] != '.') {
+                maskedIP[i] = '*';
+            }
+        }
+        for (size_t i = secondDot + 1; i < thirdDot; ++i) {
+            if (maskedIP[i] != '.') {
+                maskedIP[i] = '*';
+            }
+        }
+    }
+
+    return maskedIP;
+}
 
 /// Ban an IP address, duration will be parsed using TimeStringToSecs if it is positive, otherwise permban
 BanReturn BanMgr::BanIP(std::string const& IP, std::string const& Duration, std::string const& Reason, std::string const& Author)
@@ -188,10 +210,12 @@ BanReturn BanMgr::BanIP(std::string const& IP, std::string const& Duration, std:
         if (TimeStringToSecs(Duration) > 0)
             IsPermanetly = false;
 
+        // Mask the IP before sending the world text
+        std::string maskedIP = maskIP(IP);
         if (IsPermanetly)
-            ChatHandler(nullptr).SendWorldText(LANG_BAN_IP_YOUPERMBANNEDMESSAGE_WORLD, Author, IP, Reason);
+            ChatHandler(nullptr).SendWorldText(LANG_BAN_IP_YOUPERMBANNEDMESSAGE_WORLD, Author, maskedIP, Reason);
         else
-            ChatHandler(nullptr).SendWorldText(LANG_BAN_IP_YOUBANNEDMESSAGE_WORLD, Author, IP, secsToTimeString(TimeStringToSecs(Duration), true), Reason);
+            ChatHandler(nullptr).SendWorldText(LANG_BAN_IP_YOUBANNEDMESSAGE_WORLD, Author, maskedIP, secsToTimeString(TimeStringToSecs(Duration), true), Reason);
     }
 
     if (!resultAccounts)
