@@ -52,3 +52,15 @@ UPDATE creature_template SET type = 10 WHERE entry =  3444 ;
 
 -- fix https://www.wowhead.com/wotlk/npc=29915/
 UPDATE `creature_template` SET `faction` = 1971 WHERE (`entry` = 29915);
+
+
+
+-- some fix for https://www.wowhead.com/wotlk/quest=13267/the-battle-for-the-undercity
+UPDATE `creature_template` SET `detection_range` = 100 WHERE (`entry` = 31844);
+UPDATE `creature_template` SET `detection_range` = 100 WHERE (`entry` = 32518);
+UPDATE `creature_template` SET `detection_range` = 100 WHERE (`entry` = 32511);
+UPDATE `creature_template` SET `detection_range` = 100 WHERE (`entry` = 31565);
+
+DELETE FROM `creature_template_movement` WHERE (`CreatureId` = 32159);
+INSERT INTO `creature_template_movement` (`CreatureId`, `Ground`, `Swim`, `Flight`, `Rooted`, `Chase`, `Random`, `InteractionPauseTimer`) VALUES
+(32159, 0, 0, 2, 0, 0, 0, 0);
