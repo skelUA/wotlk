@@ -3683,9 +3683,12 @@ void SmartScript::GetTargets(ObjectVector& targets, SmartScriptHolder const& e, 
         case SMART_TARGET_CLOSEST_CREATURE:
         {
             WorldObject* ref = baseObject;
+            if (e.entryOrGuid == 32518) {
             LOG_ERROR("server.loading", "TEST1");
+            }
             if (!ref)
                 ref = scriptTrigger;
+
 
             if (!ref)
             {
@@ -3693,12 +3696,16 @@ void SmartScript::GetTargets(ObjectVector& targets, SmartScriptHolder const& e, 
                     e.entryOrGuid, e.GetScriptType(), e.event_id, e.GetActionType(), e.GetTargetType());
                 break;
             }
+           if (e.entryOrGuid == 32518) {
            LOG_ERROR("server.loading", "TEST2");
+           }
             Creature* target = GetClosestCreatureWithEntry(ref, e.target.unitClosest.entry, (float)(e.target.unitClosest.dist ? e.target.unitClosest.dist : 100), !e.target.unitClosest.dead);
             if (target)
             {
                 targets.push_back(target);
+               if (e.entryOrGuid == 32518) {
                 LOG_ERROR("server.loading", "TEST3");
+               }
             }
 
             break;
