@@ -1731,7 +1731,8 @@ void Battleground::HandleKillPlayer(Player* victim, Player* killer)
 
         UpdatePlayerScore(killer, SCORE_HONORABLE_KILLS, 1);
         UpdatePlayerScore(killer, SCORE_KILLING_BLOWS, 1);
-        killer->KilledMonsterCredit(NPC_QUEST_PVP_KILL_BG);
+        if (!isArena())
+            killer->KilledMonsterCredit(NPC_QUEST_PVP_KILL_BG);
 
         for (BattlegroundPlayerMap::const_iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
         {
@@ -1741,8 +1742,10 @@ void Battleground::HandleKillPlayer(Player* victim, Player* killer)
 
             if (creditedPlayer->GetBgTeamId() == killer->GetBgTeamId() && (creditedPlayer == killer || creditedPlayer->IsAtGroupRewardDistance(victim)))
             {
-              UpdatePlayerScore(creditedPlayer, SCORE_HONORABLE_KILLS, 1);
-              creditedPlayer->KilledMonsterCredit(NPC_QUEST_PVP_KILL_BG);
+                 UpdatePlayerScore(creditedPlayer, SCORE_HONORABLE_KILLS, 1);
+                 if (!isArena())
+                     creditedPlayer->KilledMonsterCredit(NPC_QUEST_PVP_KILL_BG);
+
             }
 
         }
