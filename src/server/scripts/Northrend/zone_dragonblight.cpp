@@ -2156,6 +2156,7 @@ public:
         {
             _textCounter = 1;
             _playerGUID.Clear();
+            _events.Reset();
         }
 
         void JustEngagedWith(Unit* who) override
