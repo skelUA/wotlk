@@ -1741,7 +1741,7 @@ void Battleground::HandleKillPlayer(Player* victim, Player* killer)
             if (creditedPlayer->GetBgTeamId() == killer->GetBgTeamId() && (creditedPlayer == killer || creditedPlayer->IsAtGroupRewardDistance(victim)))
             {
               UpdatePlayerScore(creditedPlayer, SCORE_HONORABLE_KILLS, 1);
-              creditedPlayer->KilledMonsterCredit(killer->GetBgTeamId()== TEAM_HORDE ? NPC_QUEST_PVP_KILL_ALLIANCE_BG : NPC_QUEST_PVP_KILL_HORDE_BG);
+              creditedPlayer->KilledMonsterCredit(NPC_QUEST_PVP_KILL_BG);
             }
 
         }
