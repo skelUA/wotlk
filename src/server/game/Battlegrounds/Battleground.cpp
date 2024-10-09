@@ -926,7 +926,7 @@ void Battleground::EndBattleground(PvPTeamId winnerTeamId)
 
         if (!isArena())
             if(player)
-                killer->KilledMonsterCredit(NPC_QUEST_PVP_BG_END);
+                player->KilledMonsterCredit(NPC_QUEST_PVP_BG_END);
     }
 
     if (IsEventActive(EVENT_SPIRIT_OF_COMPETITION) && isBattleground())
