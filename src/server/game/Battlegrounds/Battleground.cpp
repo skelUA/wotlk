@@ -923,6 +923,10 @@ void Battleground::EndBattleground(PvPTeamId winnerTeamId)
         player->GetSession()->SendPacket(&data);
 
         player->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_COMPLETE_BATTLEGROUND, player->GetMapId());
+
+        if (!isArena())
+            if(player)
+                killer->KilledMonsterCredit(NPC_QUEST_PVP_BG_END);
     }
 
     if (IsEventActive(EVENT_SPIRIT_OF_COMPETITION) && isBattleground())

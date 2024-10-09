@@ -130,7 +130,8 @@ enum BattlegroundCreatures
 {
     BG_CREATURE_ENTRY_A_SPIRITGUIDE = 13116,                // alliance
     BG_CREATURE_ENTRY_H_SPIRITGUIDE = 13117,                // horde
-    NPC_QUEST_PVP_KILL_BG  = 6000001
+    NPC_QUEST_PVP_KILL_BG           = 6000001,
+    NPC_QUEST_PVP_BG_END            = 6000002,
 };
 
 enum BattlegroundSpells
