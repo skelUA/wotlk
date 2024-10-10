@@ -877,10 +877,11 @@ void Battleground::EndBattleground(PvPTeamId winnerTeamId)
                 if (!player->GetRandomWinner())
                     player->SetRandomWinner(true);
 
-                if (!isArena())
-                    if(player)
-                        player->KilledMonsterCredit(NPC_QUEST_PVP_BG_WIN);
+
             }
+               if (!isArena())
+                   if(player)
+                       player->KilledMonsterCredit(NPC_QUEST_PVP_BG_WIN);
 
             player->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_BG, player->GetMapId());
         }
