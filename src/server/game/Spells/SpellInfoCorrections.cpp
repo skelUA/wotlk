@@ -3599,12 +3599,6 @@ void SpellMgr::LoadSpellInfoCorrections()
         spellInfo->AttributesEx2 |= SPELL_ATTR2_IGNORE_LINE_OF_SIGHT;
     });
 
-    // Caged Prisoner
-    ApplySpellFix({ 48710 }, [](SpellInfo* spellInfo)
-    {
-        spellInfo->AttributesEx2 |= SPELL_ATTR2_IGNORE_LINE_OF_SIGHT;
-    });
-
     // That's Abominable
     ApplySpellFix({ 59565 }, [](SpellInfo* spellInfo)
     {
