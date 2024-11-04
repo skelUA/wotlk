@@ -1863,7 +1863,7 @@ struct dragonmaw_race_npc : public ScriptedAI
 {
     dragonmaw_race_npc(Creature* creature) : ScriptedAI(creature)
     {
-        _playerGUID = ObjectGuid::Empty;
+        _player = nullptr;
     }
 
     void Reset() override
@@ -1873,17 +1873,14 @@ struct dragonmaw_race_npc : public ScriptedAI
         me->SetWalk(true);
         me->SetDisableGravity(false);
         me->GetMotionMaster()->MoveIdle();
-        _playerGUID.Clear();
     }
 
     void sQuestAccept(Player* player, Quest const* /*quest*/) override
     {
+        _player = player;
         me->RemoveNpcFlag(UNIT_NPC_FLAG_QUESTGIVER);
-        if (player)
-        {
-            _playerGUID = player->GetGUID();
-            Talk(SAY_START, player);
-        }
+        if (_player)
+            Talk(SAY_START, _player);
 
         switch (me->GetEntry())
         {
@@ -1918,38 +1915,38 @@ struct dragonmaw_race_npc : public ScriptedAI
     void StartRace()
     {
         me->SetWalk(false);
-
         ScheduleTimedEvent(5s, [&]
         {
-            Player *player = ObjectAccessor::GetPlayer(me->GetMap(), _playerGUID);
-            if (!player || !me->IsWithinDist(player, 100.f))
-                FailQuest(player);
+            if (!_player)
+                FailQuest();
+            else if (!me->IsWithinDist(_player, 100.f))
+                FailQuest();
         }, 5s);
     }
 
-    void FailQuest(Player *player)
+    void FailQuest()
     {
-        if (player)
+        if (_player)
         {
             switch (me->GetEntry())
             {
             case NPC_MUCKJAW:
-                player->FailQuest(QUEST_MUCKJAW);
+                _player->FailQuest(QUEST_MUCKJAW);
                 break;
             case NPC_TROPE:
-                player->FailQuest(QUEST_TROPE);
+                _player->FailQuest(QUEST_TROPE);
                 break;
             case NPC_CORLOK:
-                player->FailQuest(QUEST_CORLOK);
+                _player->FailQuest(QUEST_CORLOK);
                 break;
             case NPC_ICHMAN:
-                player->FailQuest(QUEST_ICHMAN);
+                _player->FailQuest(QUEST_ICHMAN);
                 break;
             case NPC_MULVERICK:
-                player->FailQuest(QUEST_MULVERICK);
+                _player->FailQuest(QUEST_MULVERICK);
                 break;
             case NPC_SKYSHATTER:
-                player->FailQuest(QUEST_SKYSHATTER);
+                _player->FailQuest(QUEST_SKYSHATTER);
                 break;
             default:
                 break;
@@ -1965,11 +1962,7 @@ struct dragonmaw_race_npc : public ScriptedAI
         * Timers are placeholders
         * After spawned, the rest is done via SmartAI
         */
-        if (_playerGUID.IsEmpty())
-            return;
-
-        Player *player = ObjectAccessor::GetPlayer(me->GetMap(), _playerGUID);
-        if (!player)
+        if (!_player)
             return;
 
         switch (me->GetEntry())
@@ -1977,79 +1970,85 @@ struct dragonmaw_race_npc : public ScriptedAI
         case NPC_MUCKJAW:
             ScheduleTimedEvent(4s, [&]
             {
-                Player *player = ObjectAccessor::GetPlayer(me->GetMap(), _playerGUID);
-                if (!player)
+                if (_player)
+                {
+                    Position summonPos;
+                    summonPos = me->GetRandomPoint(_player->GetPosition(), 15.f);
+                    summonPos.m_positionZ = _player->GetPositionZ();  // So they don't spawn at ground height
+                    me->SummonCreature(NPC_TARGET_MUCKJAW, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                }
+                else
                     return;
-
-                Position summonPos;
-                summonPos = me->GetRandomPoint(player->GetPosition(), 15.f);
-                summonPos.m_positionZ = player->GetPositionZ();  // So they don't spawn at ground height
-                me->SummonCreature(NPC_TARGET_MUCKJAW, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
             }, 4s, 8s);
             break;
         case NPC_TROPE:
             ScheduleTimedEvent(4s, [&]
             {
-                Player *player = ObjectAccessor::GetPlayer(me->GetMap(), _playerGUID);
-                if (!player)
-                    return;
-
-                Position summonPos;
-                summonPos = me->GetRandomPoint(player->GetPosition(), 10.f);
-                summonPos.m_positionZ = player->GetPositionZ();
-                me->SummonCreature(NPC_TARGET_TROPE, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                    if (_player)
+                    {
+                        Position summonPos;
+                        summonPos = me->GetRandomPoint(_player->GetPosition(), 10.f);
+                        summonPos.m_positionZ = _player->GetPositionZ();
+                        me->SummonCreature(NPC_TARGET_TROPE, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                    }
+                    else
+                        return;
             }, 1s, 3s);
             break;
         case NPC_CORLOK:
             ScheduleTimedEvent(4s, [&]
             {
-                Player *player = ObjectAccessor::GetPlayer(me->GetMap(), _playerGUID);
-                if (!player)
-                    return;
-
-                Position summonPos;
-                summonPos = me->GetRandomPoint(player->GetPosition(), 10.f);
-                summonPos.m_positionZ = player->GetPositionZ();
-                me->SummonCreature(NPC_TARGET_CORLOK, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                    if (_player)
+                    {
+                        Position summonPos;
+                        summonPos = me->GetRandomPoint(_player->GetPosition(), 10.f);
+                        summonPos.m_positionZ = _player->GetPositionZ();
+                        me->SummonCreature(NPC_TARGET_CORLOK, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                    }
+                    else
+                        return;
             }, 1s, 3s);
             break;
         case NPC_ICHMAN:
             ScheduleTimedEvent(4s, [&]
             {
-                Player *player = ObjectAccessor::GetPlayer(me->GetMap(), _playerGUID);
-                if (!player)
-                    return;
-
-                Position summonPos;
-                summonPos = me->GetRandomPoint(player->GetPosition(), 10.f);
-                summonPos.m_positionZ = player->GetPositionZ();
-                me->SummonCreature(NPC_TARGET_ICHMAN, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                    if (_player)
+                    {
+                        Position summonPos;
+                        summonPos = me->GetRandomPoint(_player->GetPosition(), 10.f);
+                        summonPos.m_positionZ = _player->GetPositionZ();
+                        me->SummonCreature(NPC_TARGET_ICHMAN, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                    }
+                    else
+                        return;
             }, 1s, 3s);
             break;
         case NPC_MULVERICK:
             ScheduleTimedEvent(4s, [&]
             {
-                Player *player = ObjectAccessor::GetPlayer(me->GetMap(), _playerGUID);
-                if (!player)
-                    return;
-
-                Position summonPos;
-                summonPos = me->GetRandomPoint(player->GetPosition(), 10.f);
-                summonPos.m_positionZ = player->GetPositionZ();
-                me->SummonCreature(NPC_TARGET_MULVERICK, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                    if (_player)
+                    {
+                        Position summonPos;
+                        summonPos = me->GetRandomPoint(_player->GetPosition(), 10.f);
+                        summonPos.m_positionZ = _player->GetPositionZ();
+                        me->SummonCreature(NPC_TARGET_MULVERICK, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                    }
+                    else
+                        return;
             }, 1s, 3s);
             break;
         case NPC_SKYSHATTER:
             ScheduleTimedEvent(4s, [&]
             {
-                Player *player = ObjectAccessor::GetPlayer(me->GetMap(), _playerGUID);
-                if (!player)
-                    return;
-
-                Position summonPos;
-                summonPos = me->GetRandomPoint(player->GetPosition(), 7.f);
-                summonPos.m_positionZ = player->GetPositionZ();  // So they don't spawn at ground height
-                me->SummonCreature(NPC_TARGET_SKYSHATTER, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                    if (_player)
+                    {
+                        Position summonPos;
+                        summonPos = me->GetRandomPoint(_player->GetPosition(), 7.f);
+                        summonPos.m_positionZ = _player->GetPositionZ();  // So they don't spawn at ground height
+                        me->SummonCreature(NPC_TARGET_SKYSHATTER, summonPos, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                    }
+                    else
+                        return;
             }, 1s, 3s);
             break;
         default:
@@ -2064,33 +2063,32 @@ struct dragonmaw_race_npc : public ScriptedAI
         me->SetDisableGravity(false);
         me->SetWalk(true);
 
-        Player *player = ObjectAccessor::GetPlayer(me->GetMap(), _playerGUID);
-        if (!player)
-            return;
-
-        Talk(SAY_COMPLETE, player);
-        switch (me->GetEntry())
+        if (_player)
         {
-        case NPC_MUCKJAW:
-            player->AreaExploredOrEventHappens(QUEST_MUCKJAW);
-            break;
-        case NPC_TROPE:
-            player->AreaExploredOrEventHappens(QUEST_TROPE);
-            break;
-        case NPC_CORLOK:
-            player->AreaExploredOrEventHappens(QUEST_CORLOK);
-            break;
-        case NPC_ICHMAN:
-            player->AreaExploredOrEventHappens(QUEST_ICHMAN);
-            break;
-        case NPC_MULVERICK:
-            player->AreaExploredOrEventHappens(QUEST_MULVERICK);
-            break;
-        case NPC_SKYSHATTER:
-            player->AreaExploredOrEventHappens(QUEST_SKYSHATTER);
-            break;
-        default:
-            break;
+            Talk(SAY_COMPLETE, _player);
+            switch (me->GetEntry())
+            {
+            case NPC_MUCKJAW:
+                _player->AreaExploredOrEventHappens(QUEST_MUCKJAW);
+                break;
+            case NPC_TROPE:
+                _player->AreaExploredOrEventHappens(QUEST_TROPE);
+                break;
+            case NPC_CORLOK:
+                _player->AreaExploredOrEventHappens(QUEST_CORLOK);
+                break;
+            case NPC_ICHMAN:
+                _player->AreaExploredOrEventHappens(QUEST_ICHMAN);
+                break;
+            case NPC_MULVERICK:
+                _player->AreaExploredOrEventHappens(QUEST_MULVERICK);
+                break;
+            case NPC_SKYSHATTER:
+                _player->AreaExploredOrEventHappens(QUEST_SKYSHATTER);
+                break;
+            default:
+                break;
+            }
         }
     }
 
@@ -2204,8 +2202,8 @@ struct dragonmaw_race_npc : public ScriptedAI
                 break;
             case 7:
                 StartRace();
-                if (Player *player = ObjectAccessor::GetPlayer(me->GetMap(), _playerGUID))
-                    Talk(SAY_SKYSHATTER_SPECIAL, player);
+                if (_player)
+                    Talk(SAY_SKYSHATTER_SPECIAL, _player);
                 break;
             case 10:
                 StartRaceAttacks();
@@ -2234,7 +2232,7 @@ struct dragonmaw_race_npc : public ScriptedAI
     }
 
     private:
-        ObjectGuid _playerGUID;
+        Player* _player;
 };
 
 void AddSC_shadowmoon_valley()
