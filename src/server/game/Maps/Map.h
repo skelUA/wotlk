@@ -33,11 +33,9 @@
 #include "Position.h"
 #include "SharedDefines.h"
 #include "TaskScheduler.h"
-#include "Timer.h"
 #include <bitset>
 #include <list>
 #include <memory>
-#include <mutex>
 #include <shared_mutex>
 
 class Unit;
@@ -454,6 +452,7 @@ public:
     [[nodiscard]] bool IsBattleground() const { return i_mapEntry && i_mapEntry->IsBattleground(); }
     [[nodiscard]] bool IsBattleArena() const { return i_mapEntry && i_mapEntry->IsBattleArena(); }
     [[nodiscard]] bool IsBattlegroundOrArena() const { return i_mapEntry && i_mapEntry->IsBattlegroundOrArena(); }
+    [[nodiscard]] bool IsWorldMap() const { return i_mapEntry && i_mapEntry->IsWorldMap(); }
 
     bool GetEntrancePos(int32& mapid, float& x, float& y)
     {
@@ -650,7 +649,7 @@ public:
         _updateObjects.erase(obj);
     }
 
-    size_t GetActiveNonPlayersCount() const
+    std::size_t GetActiveNonPlayersCount() const
     {
         return m_activeNonPlayers.size();
     }

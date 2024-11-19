@@ -18,6 +18,7 @@
 #include "InstanceMapScript.h"
 #include "InstanceScript.h"
 #include "Player.h"
+#include "SpellScript.h"
 #include "SpellScriptLoader.h"
 #include "sunwell_plateau.h"
 
@@ -32,6 +33,14 @@ DoorData const doorData[] =
     { 0,                   0,             DOOR_TYPE_ROOM   } // END
 };
 
+ObjectData const creatureData[] =
+{
+    { NPC_LADY_SACROLASH,         DATA_SACROLASH },
+    { NPC_GRAND_WARLOCK_ALYTHESS, DATA_ALYTHESS  },
+    { NPC_MADRIGOSA,              DATA_MADRIGOSA },
+    { 0,                          0,             }
+};
+
 class instance_sunwell_plateau : public InstanceMapScript
 {
 public:
@@ -44,6 +53,7 @@ public:
             SetHeaders(DataHeader);
             SetBossNumber(MAX_ENCOUNTERS);
             LoadDoorData(doorData);
+            LoadObjectData(creatureData, nullptr);
         }
 
         void OnPlayerEnter(Player* player) override
@@ -89,17 +99,8 @@ public:
                 case NPC_BRUTALLUS:
                     BrutallusGUID = creature->GetGUID();
                     break;
-                case NPC_MADRIGOSA:
-                    MadrigosaGUID = creature->GetGUID();
-                    break;
                 case NPC_FELMYST:
                     FelmystGUID = creature->GetGUID();
-                    break;
-                case NPC_GRAND_WARLOCK_ALYTHESS:
-                    AlythessGUID = creature->GetGUID();
-                    break;
-                case NPC_LADY_SACROLASH:
-                    SacrolashGUID = creature->GetGUID();
                     break;
                 case NPC_MURU:
                     MuruGUID = creature->GetGUID();
@@ -143,6 +144,8 @@ public:
                 default:
                     break;
             }
+
+            InstanceScript::OnCreatureCreate(creature);
         }
 
         void OnGameObjectCreate(GameObject* go) override
@@ -178,23 +181,6 @@ public:
             }
         }
 
-        void OnGameObjectRemove(GameObject* go) override
-        {
-            switch (go->GetEntry())
-            {
-                case GO_FIRE_BARRIER:
-                case GO_MURUS_GATE_1:
-                case GO_MURUS_GATE_2:
-                case GO_BOSS_COLLISION_1:
-                case GO_BOSS_COLLISION_2:
-                case GO_FORCE_FIELD:
-                    RemoveDoor(go);
-                    break;
-                default:
-                    break;
-            }
-        }
-
         ObjectGuid GetGuidData(uint32 id) const override
         {
             switch (id)
@@ -205,14 +191,8 @@ public:
                     return SathrovarrGUID;
                 case NPC_BRUTALLUS:
                     return BrutallusGUID;
-                case NPC_MADRIGOSA:
-                    return MadrigosaGUID;
                 case NPC_FELMYST:
                     return FelmystGUID;
-                case NPC_GRAND_WARLOCK_ALYTHESS:
-                    return AlythessGUID;
-                case NPC_LADY_SACROLASH:
-                    return SacrolashGUID;
                 case NPC_MURU:
                     return MuruGUID;
                 case NPC_ANVEENA:
@@ -239,10 +219,7 @@ public:
         ObjectGuid KalecgosDragonGUID;
         ObjectGuid SathrovarrGUID;
         ObjectGuid BrutallusGUID;
-        ObjectGuid MadrigosaGUID;
         ObjectGuid FelmystGUID;
-        ObjectGuid AlythessGUID;
-        ObjectGuid SacrolashGUID;
         ObjectGuid MuruGUID;
         ObjectGuid KilJaedenGUID;
         ObjectGuid KilJaedenControllerGUID;
@@ -271,37 +248,30 @@ enum cataclysmBreath
     SPELL_WITHERED_TOUCH        = 46300
 };
 
-class spell_cataclysm_breath : public SpellScriptLoader
+class spell_cataclysm_breath : public SpellScript
 {
-public:
-    spell_cataclysm_breath() : SpellScriptLoader("spell_cataclysm_breath") { }
+    PrepareSpellScript(spell_cataclysm_breath);
 
-    class spell_cataclysm_breath_SpellScript : public SpellScript
+    bool Validate(SpellInfo const* /*spellInfo*/) override
     {
-        PrepareSpellScript(spell_cataclysm_breath_SpellScript);
+        return ValidateSpellInfo({ SPELL_CORROSIVE_POISON, SPELL_FEVERED_FATIGUE, SPELL_HEX, SPELL_NECROTIC_POISON, SPELL_PIERCING_SHADOW, SPELL_SHRINK, SPELL_WAVERING_WILL, SPELL_WITHERED_TOUCH });
+    }
 
-        void HandleAfterCast()
-        {
-            if (Unit* target = GetExplTargetUnit())
-                for (uint8 i = 0; i < 4; ++i)
-                    GetCaster()->CastSpell(target, RAND(SPELL_CORROSIVE_POISON, SPELL_FEVERED_FATIGUE, SPELL_HEX, SPELL_NECROTIC_POISON, SPELL_PIERCING_SHADOW, SPELL_SHRINK, SPELL_WAVERING_WILL, SPELL_WITHERED_TOUCH), true);
-        }
-
-        void Register() override
-        {
-            AfterCast += SpellCastFn(spell_cataclysm_breath_SpellScript::HandleAfterCast);
-        }
-    };
-
-    SpellScript* GetSpellScript() const override
+    void HandleAfterCast()
     {
-        return new spell_cataclysm_breath_SpellScript();
+        if (Unit* target = GetExplTargetUnit())
+            for (uint8 i = 0; i < 4; ++i)
+                GetCaster()->CastSpell(target, RAND(SPELL_CORROSIVE_POISON, SPELL_FEVERED_FATIGUE, SPELL_HEX, SPELL_NECROTIC_POISON, SPELL_PIERCING_SHADOW, SPELL_SHRINK, SPELL_WAVERING_WILL, SPELL_WITHERED_TOUCH), true);
+    }
+
+    void Register() override
+    {
+        AfterCast += SpellCastFn(spell_cataclysm_breath::HandleAfterCast);
     }
 };
 
 void AddSC_instance_sunwell_plateau()
 {
     new instance_sunwell_plateau();
-    new spell_cataclysm_breath();
+    RegisterSpellScript(spell_cataclysm_breath);
 }
-

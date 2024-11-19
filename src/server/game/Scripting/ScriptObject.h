@@ -20,7 +20,6 @@
 
 #include "DatabaseEnvFwd.h"
 #include "ScriptObjectFwd.h"
-#include <string_view>
 
 //#include "Duration.h"
 //#include "LFG.h"
@@ -53,8 +52,10 @@ public:
 
     [[nodiscard]] const std::string& GetName() const { return _name; }
 
+    [[nodiscard]] uint16 GetTotalAvailableHooks() { return _totalAvailableHooks; }
+
 protected:
-    ScriptObject(const char* name) : _name(std::string(name))
+    ScriptObject(const char* name, uint16 totalAvailableHooks = 0) : _name(std::string(name)), _totalAvailableHooks(totalAvailableHooks)
     {
     }
 
@@ -62,6 +63,7 @@ protected:
 
 private:
     const std::string _name;
+    const uint16 _totalAvailableHooks;
 };
 
 template<class TObject>

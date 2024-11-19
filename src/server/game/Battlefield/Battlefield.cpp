@@ -408,6 +408,7 @@ void Battlefield::AskToLeaveQueue(Player* player)
 void Battlefield::PlayerAskToLeave(Player* player)
 {
     // Player leaving Wintergrasp, trigger Hearthstone spell.
+    player->Dismount();
     player->CastSpell(player, 8690, true);
 }
 

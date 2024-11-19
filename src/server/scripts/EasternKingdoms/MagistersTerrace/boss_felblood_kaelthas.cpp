@@ -16,10 +16,12 @@
  */
 
 #include "CreatureScript.h"
-#include "Opcodes.h"
 #include "ScriptedCreature.h"
 #include "SpellScriptLoader.h"
 #include "magisters_terrace.h"
+#include "MapReference.h"
+#include "Player.h"
+#include "SpellScript.h"
 
 enum Says
 {
@@ -35,8 +37,7 @@ enum Says
 enum Spells
 {
     // Phase 1
-    SPELL_FIREBALL_N                = 44189,
-    SPELL_FIREBALL_H                = 46164,
+    SPELL_FIREBALL                  = 44189,
     SPELL_FLAMESTRIKE_SUMMON        = 44192,
     SPELL_PHOENIX                   = 44194,
     SPELL_SHOCK_BARRIER             = 46165,
@@ -117,11 +118,10 @@ struct boss_felblood_kaelthas : public ScriptedAI
     void JustDied(Unit*) override
     {
         instance->SetBossState(DATA_KAELTHAS, DONE);
+        summons.DespawnAll();
 
         if (GameObject* orb = instance->GetGameObject(DATA_ESCAPE_ORB))
-        {
             orb->RemoveGameObjectFlag(GO_FLAG_NOT_SELECTABLE);
-        }
     }
 
     void JustEngagedWith(Unit* /*who*/) override
@@ -140,7 +140,7 @@ struct boss_felblood_kaelthas : public ScriptedAI
 
     void MoveInLineOfSight(Unit* who) override
     {
-        if (!introSpeak && me->IsWithinDistInMap(who, 40.0f) && who->GetTypeId() == TYPEID_PLAYER)
+        if (!introSpeak && me->IsWithinDistInMap(who, 40.0f) && who->IsPlayer())
         {
             Talk(SAY_AGGRO);
             introSpeak = true;
@@ -216,7 +216,7 @@ struct boss_felblood_kaelthas : public ScriptedAI
         switch (uint32 eventId = events.ExecuteEvent())
         {
         case EVENT_SPELL_FIREBALL:
-            me->CastSpell(me->GetVictim(), DUNGEON_MODE(SPELL_FIREBALL_N, SPELL_FIREBALL_H), false);
+            me->CastSpell(me->GetVictim(), SPELL_FIREBALL, false);
             events.ScheduleEvent(EVENT_SPELL_FIREBALL, urand(3000, 4500));
             break;
         case EVENT_SPELL_FLAMESTRIKE:
@@ -311,4 +311,3 @@ void AddSC_boss_felblood_kaelthas()
     RegisterMagistersTerraceCreatureAI(boss_felblood_kaelthas);
     RegisterSpellScript(spell_mt_phoenix_burn);
 }
-

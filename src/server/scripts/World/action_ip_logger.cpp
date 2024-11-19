@@ -17,7 +17,6 @@
 
 #include "AccountScript.h"
 #include "Channel.h"
-#include "CreatureScript.h"
 #include "Group.h"
 #include "Guild.h"
 #include "PlayerScript.h"
@@ -169,7 +168,15 @@ public:
 class CharacterActionIpLogger : public PlayerScript
 {
 public:
-    CharacterActionIpLogger() : PlayerScript("CharacterActionIpLogger") { }
+    CharacterActionIpLogger() :
+        PlayerScript("CharacterActionIpLogger",
+        {
+            PLAYERHOOK_ON_CREATE,
+            PLAYERHOOK_ON_LOGIN,
+            PLAYERHOOK_ON_LOGOUT
+        })
+    {
+    }
 
     // CHARACTER_CREATE = 7
     void OnCreate(Player* player) override
@@ -256,7 +263,14 @@ public:
 class CharacterDeleteActionIpLogger : public PlayerScript
 {
 public:
-    CharacterDeleteActionIpLogger() : PlayerScript("CharacterDeleteActionIpLogger") { }
+    CharacterDeleteActionIpLogger() :
+        PlayerScript("CharacterDeleteActionIpLogger",
+        {
+            PLAYERHOOK_ON_DELETE,
+            PLAYERHOOK_ON_FAILED_DELETE
+        })
+    {
+    }
 
     // CHARACTER_DELETE = 10
     void OnDelete(ObjectGuid guid, uint32 accountId) override

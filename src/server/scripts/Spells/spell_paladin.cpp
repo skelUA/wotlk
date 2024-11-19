@@ -90,7 +90,12 @@ enum PaladinSpells
 
     // Crystalforge Raiment - Tier 5 Holy 2 Set
     SPELL_IMPROVED_JUDGEMENT                     = 37188,
-    SPELL_IMPROVED_JUDGEMENT_ENERGIZE            = 43838
+    SPELL_IMPROVED_JUDGEMENT_ENERGIZE            = 43838,
+
+    SPELL_PALADIN_HOLY_VENGEANCE                 = 31803,
+    SPELL_PALADIN_BLOOD_CORRUPTION               = 53742,
+    SPELL_PALADIN_SEAL_OF_VENGEANCE_EFFECT       = 42463,
+    SPELL_PALADIN_SEAL_OF_CORRUPTION_EFFECT      = 53739
 };
 
 enum PaladinSpellIcons
@@ -173,7 +178,7 @@ class spell_pal_divine_intervention : public AuraScript
 
     void HandleRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
     {
-        if (!GetTarget()->IsInCombat() && GetTarget()->GetTypeId() == TYPEID_PLAYER)
+        if (!GetTarget()->IsInCombat() && GetTarget()->IsPlayer())
             GetTarget()->RemoveAurasDueToSpell(GetTarget()->ToPlayer()->GetTeamId() == TEAM_ALLIANCE ? 57723 : 57724);
     }
 
@@ -324,7 +329,7 @@ private:
     {
         healPct = GetSpellInfo()->Effects[EFFECT_1].CalcValue();
         absorbPct = GetSpellInfo()->Effects[EFFECT_0].CalcValue();
-        return GetUnitOwner()->GetTypeId() == TYPEID_PLAYER;
+        return GetUnitOwner()->IsPlayer();
     }
 
     void CalculateAmount(AuraEffect const* /*aurEff*/, int32& amount, bool& /*canBeRecalculated*/)
@@ -513,7 +518,7 @@ class spell_pal_divine_sacrifice : public AuraScript
     {
         if (Unit* caster = GetCaster())
         {
-            if (caster->GetTypeId() == TYPEID_PLAYER)
+            if (caster->IsPlayer())
             {
                 if (caster->ToPlayer()->GetGroup())
                     groupSize = caster->ToPlayer()->GetGroup()->GetMembersCount();
@@ -1016,7 +1021,7 @@ class spell_pal_righteous_defense : public SpellScript
     SpellCastResult CheckCast()
     {
         Unit* caster = GetCaster();
-        if (caster->GetTypeId() != TYPEID_PLAYER)
+        if (!caster->IsPlayer())
             return SPELL_FAILED_DONT_REPORT;
 
         if (Unit* target = GetExplTargetUnit())
@@ -1105,6 +1110,74 @@ class spell_pal_seal_of_righteousness : public AuraScript
     }
 };
 
+// 42463 - Seal of Vengeance
+// 53739 - Seal of Corruption
+class spell_pal_seal_of_vengeance : public SpellScript
+{
+    PrepareSpellScript(spell_pal_seal_of_vengeance);
+
+    bool Validate(SpellInfo const* /*spellInfo*/) override
+    {
+        return ValidateSpellInfo({ SPELL_PALADIN_SEAL_OF_VENGEANCE_EFFECT, SPELL_PALADIN_SEAL_OF_CORRUPTION_EFFECT });
+    }
+
+    void HandleScriptEffect(SpellEffIndex /*effIndex*/)
+    {
+        Unit* target = GetExplTargetUnit();
+        uint32 spellId = GetSpell()->GetSpellInfo()->Id;
+        uint32 auraId = (spellId == SPELL_PALADIN_SEAL_OF_VENGEANCE_EFFECT)
+            ? SPELL_PALADIN_HOLY_VENGEANCE
+            : SPELL_PALADIN_BLOOD_CORRUPTION;
+        int32 damage = GetHitDamage();
+        uint8 stacks = 0;
+
+        if (target)
+        {
+            Aura* aura = target->GetAura(auraId, GetCaster()->GetGUID());
+            if (aura)
+                stacks = aura->GetStackAmount();
+
+            damage = ((damage * stacks) / 5);
+
+            SetHitDamage(damage);
+        }
+    }
+
+    void Register() override
+    {
+        OnEffectHitTarget += SpellEffectFn(spell_pal_seal_of_vengeance::HandleScriptEffect, EFFECT_0, SPELL_EFFECT_WEAPON_PERCENT_DAMAGE);
+    }
+};
+
+// 70765 - Item - Paladin T10 Retribution 2P Bonus
+class spell_paladin_t10_retribution_2p_bonus : public AuraScript
+{
+    PrepareAuraScript(spell_paladin_t10_retribution_2p_bonus);
+
+    bool CheckProc(ProcEventInfo& eventInfo)
+    {
+        return eventInfo.GetActor();
+    }
+
+    void HandleProc(AuraEffect const* aurEff, ProcEventInfo& eventInfo)
+    {
+        PreventDefaultAction();
+        int32 gcd = 0;
+
+        if (eventInfo.GetActor()->IsPlayer())
+        {
+            eventInfo.GetActor()->ToPlayer()->RemoveSpellCooldown(SPELL_PALADIN_DIVINE_STORM, true);
+            eventInfo.GetActor()->ToPlayer()->ApplySpellMod(SPELL_PALADIN_DIVINE_STORM, SPELLMOD_GLOBAL_COOLDOWN, gcd);
+        }
+    }
+
+    void Register() override
+    {
+        DoCheckProc += AuraCheckProcFn(spell_paladin_t10_retribution_2p_bonus::CheckProc);
+        OnEffectProc += AuraEffectProcFn(spell_paladin_t10_retribution_2p_bonus::HandleProc, EFFECT_0, SPELL_AURA_DUMMY);
+    }
+};
+
 void AddSC_paladin_spell_scripts()
 {
     RegisterSpellAndAuraScriptPair(spell_pal_seal_of_command, spell_pal_seal_of_command_aura);
@@ -1132,5 +1205,6 @@ void AddSC_paladin_spell_scripts()
     RegisterSpellScript(spell_pal_lay_on_hands);
     RegisterSpellScript(spell_pal_righteous_defense);
     RegisterSpellScript(spell_pal_seal_of_righteousness);
+    RegisterSpellScript(spell_paladin_t10_retribution_2p_bonus);
+    RegisterSpellScript(spell_pal_seal_of_vengeance);
 }
-

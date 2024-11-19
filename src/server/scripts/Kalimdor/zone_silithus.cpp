@@ -39,6 +39,7 @@ EndContentData */
 #include "ScriptedGossip.h"
 #include "Spell.h"
 #include "SpellInfo.h"
+#include "SpellMgr.h"
 
 /*####
 # quest_a_pawn_on_the_eternal_board (Defines)
@@ -333,6 +334,7 @@ public:
             eventEnd = false;
 
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
+
         }
 
         void HandleAnimation()
@@ -343,6 +345,7 @@ public:
             {
                 return;
             }
+
 
             Creature* Fandral = player->FindNearestCreature(C_FANDRAL_STAGHELM, 100.0f);
             Creature* Arygos = player->FindNearestCreature(C_ARYGOS, 100.0f);
@@ -393,13 +396,19 @@ public:
                         break;
                     case 10:
                         Merithra->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
-                        Merithra->SetDisableGravity(true);
-                        Merithra->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 3);
+                        //Merithra->SetCanFly(true);
+                        //Merithra->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 3);
+                        //Merithra->GetMotionMaster()->MovePoint(1, -8065, 1530, 6.61f);
                         break;
                     case 11:
                         Merithra->CastSpell(Merithra, 24818, false);
+                        //Merithra->SetCanFly(true);
+
+                        //Merithra->SendMovementFlagUpdate();
                         break;
                     case 12:
+                        Merithra->SetDisableGravity(true);
+                        Merithra->SetHover(true);
                         Merithra->GetMotionMaster()->MoveCharge(-8100, 1530, 50, 42);
                         break;
                     case 13:
@@ -419,14 +428,20 @@ public:
                         Arygos->CastSpell(Arygos, 25107, true);
                         break;
                     case 18:
+                       // Arygos->SetDisableGravity(true);
                         Arygos->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
-                        Arygos->SetDisableGravity(true);
-                        Arygos->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 42);
+                        //Arygos->SetCanFly(true);
+                        //Arygos->GetMotionMaster()->MoveCharge(-8065, 1530, 6.61f, 42);
                         break;
                     case 19:
                         Arygos->CastSpell(Arygos, 50505, false);
+
                         break;
                     case 20:
+                        //Arygos->SetCanFly(true);
+                        Arygos->SetDisableGravity(true);
+                        Arygos->SetHover(true);
+                       // Arygos->SendMovementFlagUpdate();
                         Arygos->GetMotionMaster()->MoveCharge(-8095, 1530, 50, 42);
                         break;
                     case 21:
@@ -446,17 +461,21 @@ public:
                         Caelestrasz->CastSpell(Caelestrasz, 25106, true);
                         break;
                     case 26:
-                        Caelestrasz->HandleEmoteCommand(254);
-                        Caelestrasz->SetDisableGravity(true);
-                        Caelestrasz->GetMotionMaster()->MoveCharge(-8065, 1530, 7.61f, 4);
+                        //Caelestrasz->SetDisableGravity(true);
+                        Caelestrasz->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
+                        //Caelestrasz->SetCanFly(true);
+                       //Caelestrasz->GetMotionMaster()->MoveCharge(-8065, 1530, 7.61f, 4);
                         break;
                     case 27:
                         Caelestrasz->CastSpell(Caelestrasz, 54293, false);
+
                         break;
                     case 28:
                         Talk(ANACHRONOS_SAY_2, Fandral);
                         break;
                     case 29:
+                        Caelestrasz->SetDisableGravity(true);
+                        Caelestrasz->SetHover(true);
                         Caelestrasz->GetMotionMaster()->MoveCharge(-8095, 1530, 50, 42);
                         Fandral->AI()->Talk(FANDRAL_SAY_2);
                         break;
@@ -583,7 +602,7 @@ public:
                         break;
                     case 61:
                         me->GetMotionMaster()->MoveCharge(-8057.1f, 1470.32f, 2.61f, 6);
-                        if (player->IsInRange(me, 0, 15))
+                        if (player->IsInRange(me, 0, 60))
                             player->GroupEventHappens(QUEST_A_PAWN_ON_THE_ETERNAL_BOARD, me);
                         break;
                     case 62:
@@ -591,7 +610,8 @@ public:
                         break;
                     case 63:
                         me->HandleEmoteCommand(254);
-                        me->SetDisableGravity(true);
+                        //wme->SetDisableGravity(true);
+                        //me->SetCanFly(true);
                         break;
                     case 64:
                         me->GetMotionMaster()->MoveCharge(-8000, 1400, 150, 9);
