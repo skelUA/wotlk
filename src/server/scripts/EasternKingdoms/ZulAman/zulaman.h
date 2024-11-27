@@ -37,7 +37,8 @@ enum DataTypes
     TYPE_RAND_VENDOR_2                  = 9,
     DATA_STRANGE_GONG                   = 10,
     DATA_MASSIVE_GATE                   = 11,
-    DATA_HEXLORD_GATE                   = 12
+    DATA_HEXLORD_GATE                   = 12,
+    DATA_HARRISON_JONES                 = 13
 };
 
 enum CreatureIds
@@ -52,14 +53,16 @@ enum CreatureIds
     NPC_AMANISHI_WARBRINGER             = 23580,
     NPC_AMANISHI_TRIBESMAN              = 23582,
     NPC_AMANISHI_MEDICINE_MAN           = 23581,
-    NPC_AMANISHI_AXE_THROWER            = 23542
+    NPC_AMANISHI_AXE_THROWER            = 23542,
+    NPC_AMANI_HATCHLING                 = 23598 // 42493
 };
 
 enum GameobjectIds
 {
     GO_DOOR_HALAZZI                     = 186303,
-    GO_GATE_ZULJIN                      = 186304,
+    GO_LYNX_TEMPLE_ENTRANCE             = 186304,
     GO_GATE_HEXLORD                     = 186305,
+    GO_GATE_ZULJIN                      = 186306,
     GO_MASSIVE_GATE                     = 186728,
     GO_DOOR_AKILZON                     = 186858,
     GO_ZULJIN_FIREWALL                  = 186859,
