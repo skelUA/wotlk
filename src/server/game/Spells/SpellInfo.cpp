@@ -1775,11 +1775,11 @@ SpellCastResult SpellInfo::CheckTarget(Unit const* caster, WorldObject const* ta
             return SPELL_FAILED_TARGET_AFFECTING_COMBAT;
 
         // only spells with SPELL_ATTR3_ONLY_ON_GHOSTS can target ghosts
-        if (((IsRequiringDeadTarget() != 0) != unitTarget->HasAuraType(SPELL_AURA_GHOST)) && !(IsDeathPersistent() && IsAllowingDeadTarget()))
+        if (IsRequiringDeadTarget())
         {
-            if (AttributesEx3 & SPELL_ATTR3_ONLY_ON_GHOSTS)
+            if (!unitTarget->HasGhostAura())
                 return SPELL_FAILED_TARGET_NOT_GHOST;
-            else
+            if (!IsDeathPersistent() && !IsAllowingDeadTarget())
                 return SPELL_FAILED_BAD_TARGETS;
         }
 
@@ -1870,7 +1870,7 @@ SpellCastResult SpellInfo::CheckTarget(Unit const* caster, WorldObject const* ta
         return SPELL_FAILED_TARGETS_DEAD;
 
     // check this flag only for implicit targets (chain and area), allow to explicitly target units for spells like Shield of Righteousness
-    if (implicit && AttributesEx6 & SPELL_ATTR6_DO_NOT_CHAIN_TO_CROWD_CONTROLLED_TARGETS && !unitTarget->CanFreeMove())
+    if (implicit && AttributesEx6 & SPELL_ATTR6_DO_NOT_CHAIN_TO_CROWD_CONTROLLED_TARGETS && unitTarget->HasUnitState(UNIT_STATE_CONTROLLED))
         return SPELL_FAILED_BAD_TARGETS;
 
     // checked in Unit::IsValidAttack/AssistTarget, shouldn't be checked for ENTRY targets
@@ -1923,7 +1923,7 @@ SpellCastResult SpellInfo::CheckTarget(Unit const* caster, WorldObject const* ta
     if (ExcludeTargetAuraSpell && unitTarget->HasAura(sSpellMgr->GetSpellIdForDifficulty(ExcludeTargetAuraSpell, caster)))
         return SPELL_FAILED_TARGET_AURASTATE;
 
-    if (unitTarget->HasAuraType(SPELL_AURA_PREVENT_RESURRECTION) && !HasAttribute(SPELL_ATTR7_BYPASS_NO_RESURRECTION_AURA))
+    if (unitTarget->HasPreventResurectionAura() && !HasAttribute(SPELL_ATTR7_BYPASS_NO_RESURRECTION_AURA))
         if (HasEffect(SPELL_EFFECT_SELF_RESURRECT) || HasEffect(SPELL_EFFECT_RESURRECT) || HasEffect(SPELL_EFFECT_RESURRECT_NEW))
             return SPELL_FAILED_TARGET_CANNOT_BE_RESURRECTED;
 

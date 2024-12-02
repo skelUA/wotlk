@@ -1395,18 +1395,6 @@ void SpellMgr::LoadSpellInfoCorrections()
         spellInfo->RangeEntry = sSpellRangeStore.LookupEntry(13); // 50000yd
     });
 
-    // A'dal's Song of Battle
-    ApplySpellFix({ 39953 }, [](SpellInfo* spellInfo)
-    {
-        spellInfo->Effects[EFFECT_0].TargetA = SpellImplicitTargetInfo(TARGET_SRC_CASTER);
-        spellInfo->Effects[EFFECT_1].TargetA = SpellImplicitTargetInfo(TARGET_SRC_CASTER);
-        spellInfo->Effects[EFFECT_2].TargetA = SpellImplicitTargetInfo(TARGET_SRC_CASTER);
-        spellInfo->Effects[EFFECT_0].TargetB = SpellImplicitTargetInfo(TARGET_UNIT_SRC_AREA_ALLY);
-        spellInfo->Effects[EFFECT_1].TargetB = SpellImplicitTargetInfo(TARGET_UNIT_SRC_AREA_ALLY);
-        spellInfo->Effects[EFFECT_2].TargetB = SpellImplicitTargetInfo(TARGET_UNIT_SRC_AREA_ALLY);
-        spellInfo->DurationEntry = sSpellDurationStore.LookupEntry(367); // 2 Hours
-    });
-
     ApplySpellFix({
         57607,  // WintergraspCatapult - Spell Plague Barrel - EffectRadiusIndex
         57619,  // WintergraspDemolisher - Spell Hourl Boulder - EffectRadiusIndex
@@ -4872,6 +4860,12 @@ void SpellMgr::LoadSpellInfoCorrections()
     ApplySpellFix({ 26655, 26656 }, [](SpellInfo* spellInfo)
     {
         spellInfo->AuraInterruptFlags &= ~(AURA_INTERRUPT_FLAG_CHANGE_MAP | AURA_INTERRUPT_FLAG_TELEPORTED);
+    });
+
+    // Summon Cyclone
+    ApplySpellFix({ 43112 }, [](SpellInfo* spellInfo)
+    {
+        spellInfo->RequiresSpellFocus = 0;
     });
 
     for (uint32 i = 0; i < GetSpellInfoStoreSize(); ++i)
