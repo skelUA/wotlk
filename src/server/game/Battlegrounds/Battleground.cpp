@@ -891,8 +891,9 @@ void Battleground::EndBattleground(PvPTeamId winnerTeamId)
                         case ARENA_TYPE_2v2:
                         case ARENA_TYPE_3v3:
                         case ARENA_TYPE_5v5:
-                            if(player)
-                                player->KilledMonsterCredit(NPC_QUEST_PVP_ARENA_WIN);
+                            if (m_IsRated)
+                                if(player)
+                                    player->KilledMonsterCredit(NPC_QUEST_PVP_ARENA_WIN);
                             break;
                         default:
                             LOG_ERROR("bg.battleground", "Unknown arenatype {} ", GetArenaType());
@@ -957,8 +958,9 @@ void Battleground::EndBattleground(PvPTeamId winnerTeamId)
                 case ARENA_TYPE_2v2:
                 case ARENA_TYPE_3v3:
                 case ARENA_TYPE_5v5:
+                if (m_IsRated)
                     if(player)
-                        player->KilledMonsterCredit(NPC_QUEST_PVP_BG_END);
+                        player->KilledMonsterCredit(NPC_QUEST_PVP_ARENA_END);
                     break;
                 default:
                     LOG_ERROR("bg.battleground", "Unknown arenatype {} ", GetArenaType());
