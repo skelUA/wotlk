@@ -283,7 +283,7 @@ class TugOfWarWG
 {
 public:
     ~TugOfWarWG();
-    TugOfWarWG(BattlefieldWG* battlefield);
+    TugOfWarWG(BattlefieldWG* WG);
 
     int16 GetScale() { return m_Scale; }
     void OnBattleStart();
@@ -291,7 +291,7 @@ public:
     bool CanFastPromoteToCorporal() { return m_FastCorporal; }
     bool CanFastPromoteToLieutenant() { return m_FastLieutenant; }
 protected:
-    Battlefield* m_Bf;
+    BattlefieldWG* m_WG;
     int16 m_Scale;
     uint32 m_DefenseStreak;
     bool m_FastCorporal;
@@ -488,7 +488,7 @@ public:
     }
 protected:
     bool m_isRelicInteractible;
-    TugOfWarWG* m_TugOfWar;
+    std::unique_ptr<TugOfWarWG> m_TugOfWar;
 
     Workshop WorkshopsList;
 
