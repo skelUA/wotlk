@@ -3356,6 +3356,14 @@ void Spell::EffectWeaponDmg(SpellEffIndex effIndex)
                             AddPct(totalDamagePercentMod, unitTarget->GetDiseasesByCaster(m_caster->GetGUID(), 1) * 30.0f);
                             break;
                         }
+                    case 51963:
+                    {
+                        damage = 60;
+                        // about +4 base spell dmg per level
+                        if (unitCaster && unitCaster->getLevel() >= 60)
+                            damage += (unitCaster->getLevel() - 60) * 4;
+                        break;
+                    }
                 }
                 break;
             }
