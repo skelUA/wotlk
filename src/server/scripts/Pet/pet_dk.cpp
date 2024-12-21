@@ -355,7 +355,6 @@ class spell_pet_dk_gargoyle_strike : public SpellScript
             {
                 damage += (caster->GetLevel() - 60) * 4;
             }
-            damage = caster->SpellDamageBonusDone(GetHitUnit(), GetSpellInfo(), damage, SPELL_DIRECT_DAMAGE, EFFECT_0, { });
         }
 
         SetEffectValue(damage);
