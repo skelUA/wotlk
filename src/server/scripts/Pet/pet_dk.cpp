@@ -358,12 +358,12 @@ class spell_pet_dk_gargoyle_strike : public SpellScript
             //damage = caster->SpellDamageBonusDone(GetHitUnit(), GetSpellInfo(), damage, SPELL_DIRECT_DAMAGE, EFFECT_0, { });
         }
 
-        SetHitDamage(damage);
+        SetEffectValue(damage);
     }
 
     void Register() override
     {
-        OnEffectHitTarget += SpellEffectFn(spell_pet_dk_gargoyle_strike::HandleDamageCalc, EFFECT_0, SPELL_EFFECT_SCHOOL_DAMAGE);
+        OnEffectLaunchTarget += SpellEffectFn(spell_pet_dk_gargoyle_strike::HandleDamageCalc, EFFECT_0, SPELL_EFFECT_SCHOOL_DAMAGE);
     }
 };
 
