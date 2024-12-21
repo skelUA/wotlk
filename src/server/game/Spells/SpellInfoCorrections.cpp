@@ -633,6 +633,11 @@ void SpellMgr::LoadSpellInfoCorrections()
         spellInfo->Effects[EFFECT_1].ApplyAuraName = SPELL_AURA_DUMMY;
     });
 
+    ApplySpellFix({ 51963 }, [](SpellInfo* spellInfo)
+    {
+        spellInfo->Effects[EFFECT_0].BasePoints = 120;
+        spellInfo->Effects[EFFECT_0].BonusMultiplier = 0.453;
+    });
     // Intervene
     ApplySpellFix({ 3411 }, [](SpellInfo* spellInfo)
     {
