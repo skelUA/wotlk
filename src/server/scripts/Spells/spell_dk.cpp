@@ -768,21 +768,21 @@ class spell_dk_pet_scaling : public AuraScript
         // xinef: dk gargoyle inherits 33% of SP
         if (GetUnitOwner()->GetEntry() != NPC_EBON_GARGOYLE)
             return;
-//
-//        if (Unit* owner = GetUnitOwner()->GetOwner())
-//        {
+
+        if (Unit* owner = GetUnitOwner()->GetOwner())
+        {
 //            int32 modifier = 33;
 //
 //            // xinef: impurity
 //            if (owner->GetDummyAuraEffect(SPELLFAMILY_DEATHKNIGHT, 1986, 0))
 //                modifier = 40;
-//
-//            amount = CalculatePct(std::max<int32>(0, owner->GetTotalAttackPowerValue(BASE_ATTACK)), modifier);
-//
-//            // xinef: Update appropriate player field
-//            if (owner->IsPlayer())
-//                owner->SetUInt32Value(PLAYER_PET_SPELL_POWER, (uint32)amount);
-//        }
+
+            amount = CalculatePct(std::max<int32>(0, owner->GetTotalAttackPowerValue(BASE_ATTACK)), modifier);
+
+            // xinef: Update appropriate player field
+            if (owner->IsPlayer())
+                owner->SetUInt32Value(PLAYER_PET_SPELL_POWER, (uint32)amount);
+        }
     }
 
     void CalculateHasteAmount(AuraEffect const*  /*aurEff*/, int32& amount, bool& /*canBeRecalculated*/)
