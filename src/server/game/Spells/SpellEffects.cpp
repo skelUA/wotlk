@@ -3360,8 +3360,8 @@ void Spell::EffectWeaponDmg(SpellEffIndex effIndex)
                     {
                         damage = 60;
                         // about +4 base spell dmg per level
-                        if (m_caster && m_caster->GetLeve() >= 60)
-                            damage += (m_caster->GetLevel() - 60) * 4;
+                        if (m_caster && m_caster->getLevel() >= 60)
+                            damage += (m_caster->getLevel() - 60) * 4;
                         break;
                     }
                 }
