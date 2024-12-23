@@ -61,7 +61,7 @@ struct npc_pet_pri_shadowfiend : public PetAI
 
     void Reset() override
     {
-        //PetAI::Reset();
+        PetAI::Reset();
         if (!me->HasAura(SPELL_PRIEST_SHADOWFIEND_DODGE))
             me->AddAura(SPELL_PRIEST_SHADOWFIEND_DODGE, me);
 
