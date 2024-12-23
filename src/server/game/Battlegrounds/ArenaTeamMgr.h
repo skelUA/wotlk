@@ -43,8 +43,6 @@ public:
     void AddArenaTeam(ArenaTeam* arenaTeam);
     void RemoveArenaTeam(uint32 Id);
 
-    void DeleteAllArenaTeams();
-
     ArenaTeamContainer::iterator GetArenaTeamMapBegin() { return ArenaTeamStore.begin(); }
     ArenaTeamContainer::iterator GetArenaTeamMapEnd()   { return ArenaTeamStore.end(); }
     ArenaTeamContainer& GetArenaTeams() { return ArenaTeamStore; }
