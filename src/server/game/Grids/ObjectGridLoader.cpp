@@ -224,6 +224,11 @@ void ObjectGridUnloader::Visit(GridRefMgr<T>& m)
         //TODO: Check if that script has the correct logic. Do we really need to summons something before deleting?
         obj->CleanupsBeforeDelete();
         ///- object will get delinked from the manager when deleted
+
+        // There was a crash on obj deletion. Lets try to add some hints to crashlog.
+        // TODO: delete this once crash fixed.
+        volatile uint32 objEntry = obj->GetEntry();
+
         delete obj;
     }
 }
