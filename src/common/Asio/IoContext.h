@@ -19,6 +19,7 @@
 #define IoContext_h__
 
 #include <boost/version.hpp>
+
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/post.hpp>
 #define IoContextBaseNamespace boost::asio
@@ -51,9 +52,9 @@ namespace Acore::Asio
     }
 
     template<typename T>
-    inline boost::asio::io_context& get_io_context(T&& ioObject)
+    inline decltype(auto) get_io_context(T&& ioObject)
     {
-        return static_cast<boost::asio::io_context&>(ioObject.get_executor().context());
+        return ioObject.get_executor().context();
     }
 }
 
