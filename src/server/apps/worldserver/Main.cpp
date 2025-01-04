@@ -47,7 +47,6 @@
 #include "ScriptMgr.h"
 #include "SecretMgr.h"
 #include "SharedDefines.h"
-#include "SteadyTimer.h"
 #include "World.h"
 #include "WorldSocket.h"
 #include "WorldSocketMgr.h"
@@ -91,7 +90,9 @@ public:
 
     static void Start(std::shared_ptr<FreezeDetector> const& freezeDetector)
     {
-        freezeDetector->_timer.expires_at(Acore::Asio::SteadyTimer::GetExpirationTime(5));
+        // Calculate the expiration time 5seconds from now
+        auto expirationTime = std::chrono::steady_clock::now() + std::chrono::seconds(5);
+        freezeDetector->_timer.expires_at(expirationTime);
         freezeDetector->_timer.async_wait(std::bind(&FreezeDetector::Handler, std::weak_ptr<FreezeDetector>(freezeDetector), std::placeholders::_1));
     }
 
@@ -631,7 +632,9 @@ void FreezeDetector::Handler(std::weak_ptr<FreezeDetector> freezeDetectorRef, bo
                 }
             }
 
-            freezeDetector->_timer.expires_at(Acore::Asio::SteadyTimer::GetExpirationTime(1));
+            // Calculate the expiration time
+            auto expirationTime = std::chrono::steady_clock::now() + std::chrono::seconds(1);
+            freezeDetector->_timer.expires_at(expirationTime);
             freezeDetector->_timer.async_wait(std::bind(&FreezeDetector::Handler, freezeDetectorRef, std::placeholders::_1));
         }
     }

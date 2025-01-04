@@ -18,7 +18,6 @@
 #include "Metric.h"
 #include "Config.h"
 #include "Log.h"
-#include "SteadyTimer.h"
 #include "Strand.h"
 #include "Tokenize.h"
 #include <boost/algorithm/string/replace.hpp>
@@ -247,7 +246,9 @@ void Metric::ScheduleSend()
 {
     if (_enabled)
     {
-        _batchTimer->expires_at(Acore::Asio::SteadyTimer::GetExpirationTime(_updateInterval));
+        // Calculate the expiration time
+        auto expirationTime = std::chrono::steady_clock::now() + std::chrono::seconds(_updateInterval);
+        _batchTimer->expires_at(expirationTime);
         _batchTimer->async_wait(std::bind(&Metric::SendBatch, this));
     }
     else
@@ -280,7 +281,9 @@ void Metric::ScheduleOverallStatusLog()
 {
     if (_enabled)
     {
-        _overallStatusTimer->expires_at(Acore::Asio::SteadyTimer::GetExpirationTime(_overallStatusTimerInterval));
+        // Calculate the expiration time _overallStatusTimerInterval from now
+        auto expirationTime = std::chrono::steady_clock::now() + std::chrono::seconds(_overallStatusTimerInterval);
+        _overallStatusTimer->expires_at(expirationTime);
         _overallStatusTimer->async_wait([this](const boost::system::error_code&)
         {
             _overallStatusTimerTriggered = true;

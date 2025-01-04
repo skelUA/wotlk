@@ -38,7 +38,6 @@
 #include "RealmList.h"
 #include "SecretMgr.h"
 #include "SharedDefines.h"
-#include "SteadyTimer.h"
 #include "Util.h"
 #include <boost/asio/signal_set.hpp>
 #include <boost/program_options.hpp>
@@ -180,13 +179,17 @@ int main(int argc, char** argv)
     int32 dbPingInterval = sConfigMgr->GetOption<int32>("MaxPingTime", 30);
     std::shared_ptr<boost::asio::steady_timer> dbPingTimer = std::make_shared<boost::asio::steady_timer>(*ioContext);
 
-    dbPingTimer->expires_at(Acore::Asio::SteadyTimer::GetExpirationTime(dbPingInterval * MINUTE));
+    // Calculate the expiration time
+    auto expirationTime = std::chrono::steady_clock::now() + std::chrono::seconds(dbPingInterval);
+    dbPingTimer->expires_at(expirationTime);
     dbPingTimer->async_wait(std::bind(&KeepDatabaseAliveHandler, std::weak_ptr<boost::asio::steady_timer>(dbPingTimer), dbPingInterval, std::placeholders::_1));
 
     int32 banExpiryCheckInterval = sConfigMgr->GetOption<int32>("BanExpiryCheckInterval", 60);
     std::shared_ptr<boost::asio::steady_timer> banExpiryCheckTimer = std::make_shared<boost::asio::steady_timer>(*ioContext);
 
-    banExpiryCheckTimer->expires_at(Acore::Asio::SteadyTimer::GetExpirationTime(banExpiryCheckInterval));
+    // Calculate the expiration time
+    auto expirationTimeBanExpiry = std::chrono::steady_clock::now() + std::chrono::seconds(banExpiryCheckInterval);
+    banExpiryCheckTimer->expires_at(expirationTimeBanExpiry);
     banExpiryCheckTimer->async_wait(std::bind(&BanExpiryHandler, std::weak_ptr<boost::asio::steady_timer>(banExpiryCheckTimer), banExpiryCheckInterval, std::placeholders::_1));
 
     // Start the io service worker loop
@@ -249,7 +252,9 @@ void KeepDatabaseAliveHandler(std::weak_ptr<boost::asio::steady_timer> dbPingTim
             LOG_INFO("server.authserver", "Ping MySQL to keep connection alive");
             LoginDatabase.KeepAlive();
 
-            dbPingTimer->expires_at(Acore::Asio::SteadyTimer::GetExpirationTime(dbPingInterval));
+            // Calculate the expiration time
+            auto expirationTime = std::chrono::steady_clock::now() + std::chrono::seconds(dbPingInterval);
+            dbPingTimer->expires_at(expirationTime);
             dbPingTimer->async_wait(std::bind(&KeepDatabaseAliveHandler, dbPingTimerRef, dbPingInterval, std::placeholders::_1));
         }
     }
@@ -264,7 +269,9 @@ void BanExpiryHandler(std::weak_ptr<boost::asio::steady_timer> banExpiryCheckTim
             LoginDatabase.Execute(LoginDatabase.GetPreparedStatement(LOGIN_DEL_EXPIRED_IP_BANS));
             LoginDatabase.Execute(LoginDatabase.GetPreparedStatement(LOGIN_UPD_EXPIRED_ACCOUNT_BANS));
 
-            banExpiryCheckTimer->expires_at(Acore::Asio::SteadyTimer::GetExpirationTime(banExpiryCheckInterval));
+            // Calculate the expiration time
+            auto expirationTime = std::chrono::steady_clock::now() + std::chrono::seconds(banExpiryCheckInterval);
+            banExpiryCheckTimer->expires_at(expirationTime);
             banExpiryCheckTimer->async_wait(std::bind(&BanExpiryHandler, banExpiryCheckTimerRef, banExpiryCheckInterval, std::placeholders::_1));
         }
     }
