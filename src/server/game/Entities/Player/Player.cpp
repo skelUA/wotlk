@@ -93,12 +93,6 @@
 //  see: https://github.com/azerothcore/azerothcore-wotlk/issues/9766
 #include "GridNotifiersImpl.h"
 
-std::set<Player*> DebugRegistry::_deletedPlayerSet;
-std::mutex DebugRegistry::_deleptedPlayersMutex;
-
-std::unordered_map<Player*, Map*> DebugRegistry::_playerUpdateMap;
-std::mutex DebugRegistry::_updateMutex;
-
 enum CharacterFlags
 {
     CHARACTER_FLAG_NONE                 = 0x00000000,
@@ -418,8 +412,6 @@ Player::Player(WorldSession* session): Unit(true), m_mover(this)
 
 Player::~Player()
 {
-    DebugRegistry::RecordPlayerDelete(this);
-
     sScriptMgr->OnDestructPlayer(this);
 
     // it must be unloaded already in PlayerLogout and accessed only for loggined player
