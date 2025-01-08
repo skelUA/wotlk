@@ -52,6 +52,8 @@ constexpr auto ZONE_UPDATE_INTERVAL = 1000;
 
 void Player::Update(uint32 p_time)
 {
+    DebugRegistry::RecordPlayerUpdate(this, GetMap());
+
     if (!IsInWorld())
         return;
 
@@ -79,6 +81,9 @@ void Player::Update(uint32 p_time)
 
     // used to implement delayed far teleports
     SetMustDelayTeleport(true);
+
+    DebugRegistry::ValidatePlayerPointer(this);
+
     ProcessSpellQueue();
     Unit::Update(p_time);
     SetMustDelayTeleport(false);
