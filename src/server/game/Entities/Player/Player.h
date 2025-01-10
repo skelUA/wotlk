@@ -3049,7 +3049,7 @@ public:
         if (Map *map = player->FindMap())
             mapId = map->GetId();
 
-        _deletedPlayerMap[player] = fmt::format("Player: {}({}). Map: {}, x:{}, y:{}, z:{}. Stacktrace: {}",
+        _deletedPlayerMap[player] = std::format("Player: {}({}). Map: {}, x:{}, y:{}, z:{}. Stacktrace: {}",
                                                 player->GetGUID().GetCounter(),
                                                 player->GetName(),
                                                 mapId,
