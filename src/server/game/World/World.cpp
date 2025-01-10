@@ -2270,8 +2270,6 @@ void World::Update(uint32 diff)
 {
     METRIC_TIMER("world_update_time_total");
 
-    DebugRegistry::Clear();
-    
     ///- Update the game time and check for shutdown time
     _UpdateGameTime();
     Seconds currentGameTime = GameTime::GetGameTime();
