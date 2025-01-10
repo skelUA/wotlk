@@ -44,6 +44,11 @@
 #include <string>
 #include <vector>
 
+#include <execinfo.h>
+#include <sstream>
+
+std::string GetStackTrace();
+
 struct CreatureTemplate;
 struct Mail;
 struct TrainerSpell;
@@ -3014,5 +3019,86 @@ private:
 
 void AddItemsSetItem(Player* player, Item* item);
 void RemoveItemsSetItem(Player* player, ItemTemplate const* proto);
+
+class DebugRegistry {
+public:
+    static void RecordPlayerUpdate(Player* player, Map* map)
+    {
+        std::lock_guard<std::mutex> lock(_updateMutex);
+        auto it = _playerUpdateMap.find(player);
+        if (it != _playerUpdateMap.end())
+            LOG_ERROR("server.loading",
+                      "!!!!!!Player with id {} already updated with the map \"{}\" and now trying to update in map \"{}\"",
+                      player->GetGUID().GetCounter(),
+                      it->second->GetDebugInfo(), map->GetDebugInfo());
+
+        _playerUpdateMap[player] = map;
+    }
+
+    static void RecordPlayerDelete(Player* player)
+    {
+        std::lock_guard<std::mutex> lock(_deleptedPlayersMutex);
+
+        auto it = _deletedPlayerMap.find(player);
+        if (it != _deletedPlayerMap.end())
+            LOG_ERROR("server.loading",
+                      "!!!!!!Player with id {} already deleted, double deletion!!! Deleted here: {}, deleting again here: {}",
+                      player->GetGUID().GetCounter(), it->second, GetStackTrace());
+
+        int mapId = -1;
+        if (Map *map = player->FindMap())
+            mapId = map->GetId();
+
+        _deletedPlayerMap[player] = fmt::format("Player: {}({}). Map: {}, x:{}, y:{}, z:{}. IsValidMapRef: {}. Deleted at: \n{}",
+                                                player->GetGUID().GetCounter(),
+                                                player->GetName(),
+                                                mapId,
+                                                player->GetPosition().m_positionX,
+                                                player->GetPosition().m_positionY,
+                                                player->GetPosition().m_positionZ,
+                                                player->GetMapRef().isValid(),
+                                                GetStackTrace());
+    }
+
+    static void ValidatePlayerPointer(Player* player)
+    {
+        std::lock_guard<std::mutex> lock(_deleptedPlayersMutex);
+
+        auto it = _deletedPlayerMap.find(player);
+        if (it != _deletedPlayerMap.end())
+        {
+            LOG_ERROR("server.loading",
+                      "!!!!!!Player with pointer {} already deleted, using dangling pointer!!! Deleted here: {} \nUsing here: \n{}",
+                      static_cast<void*>(player), it->second, GetStackTrace());
+        }
+    }
+
+    static void SetPlayerMap(Player* player, Map* map)
+    {
+        std::lock_guard<std::mutex> lock(_deleptedPlayersMutex);
+
+        int mapid = -1;
+        if (map)
+            mapid = map->GetId();
+
+        auto it = _deletedPlayerMap.find(player);
+        if (it != _deletedPlayerMap.end())
+            _deletedPlayerMap[player] += fmt::format("\nSetPlayerMap, map: {}. Stacktrace: \n{}\n", mapid, GetStackTrace());
+
+    }
+
+    static void Clear()
+    {
+        _playerUpdateMap.clear();
+        _deletedPlayerMap.clear();
+    }
+
+private:
+    static std::unordered_map<Player*, Map*> _playerUpdateMap;
+    static std::mutex _updateMutex;
+
+    static std::unordered_map<Player*, std::string> _deletedPlayerMap;
+    static std::mutex _deleptedPlayersMutex;
+};
 
 #endif

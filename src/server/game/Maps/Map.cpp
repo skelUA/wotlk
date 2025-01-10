@@ -922,7 +922,8 @@ void Map::RemovePlayerFromMap(Player* player, bool remove)
     if (!inWorld) // pussywizard: if was in world, RemoveFromWorld() called DestroyForNearbyPlayers()
         player->DestroyForNearbyPlayers(); // pussywizard: previous player->UpdateObjectVisibility(true)
 
-    if (player->IsInGrid())
+    bool isInGrid = player->IsInGrid();
+    if (isInGrid)
         player->RemoveFromGrid();
     else
         ASSERT(remove); //maybe deleted in logoutplayer when player is not in a map
@@ -931,6 +932,17 @@ void Map::RemovePlayerFromMap(Player* player, bool remove)
     if (remove)
     {
         DeleteFromWorld(player);
+
+        for (m_mapRefIter = m_mapRefMgr.begin(); m_mapRefIter != m_mapRefMgr.end(); ++m_mapRefIter)
+        {
+            Player* p = m_mapRefIter->GetSource();
+            if (p == player)
+            {
+                LOG_ERROR("server.loading", "!!!!{} (is in grid: {}) is still in m_mapRefMgr removing.", static_cast<void*>(player), isInGrid);
+                m_mapRefIter->unlink();
+                break;
+            }
+        }
     }
 }
 
