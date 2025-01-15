@@ -1146,7 +1146,10 @@ enum AcoreStrings
 
     LANG_CMD_GO_RESPAWN                 = 5085,
 
-    // Room for more strings    5086-9999
+    LANG_CMD_NO_DOOR_FOUND              = 5086,
+    LANG_CMD_DOOR_OPENED                = 5087,
+
+    // Room for more strings    5088-9999
 
     // Level requirement notifications
     LANG_SAY_REQ                        = 6604,
