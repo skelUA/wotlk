@@ -2336,7 +2336,7 @@ void Player::ProcessSpellQueue()
         if (!spellInfo)
         {
             LOG_ERROR("entities.player", "Player::ProcessSpellQueue: Invalid spell {}", request.spellId);
-            //SpellQueue.clear();
+            SpellQueue.clear();
             break;
         }
         if (CanExecutePendingSpellCastRequest(spellInfo))
