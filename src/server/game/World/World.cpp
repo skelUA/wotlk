@@ -1493,10 +1493,6 @@ void World::LoadConfigSettings(bool reload)
     // AH Worker threads
     _int_configs[CONFIG_AUCTIONHOUSE_WORKERTHREADS] = sConfigMgr->GetOption<int32>("AuctionHouse.WorkerThreads", 1);
 
-    // SpellQueue
-    _bool_configs[CONFIG_SPELL_QUEUE_ENABLED] = sConfigMgr->GetOption<bool>("SpellQueue.Enabled", true);
-    _int_configs[CONFIG_SPELL_QUEUE_WINDOW] = sConfigMgr->GetOption<uint32>("SpellQueue.Window", 400);
-
     // call ScriptMgr if we're reloading the configuration
     sScriptMgr->OnAfterConfigLoad(reload);
 }
@@ -2270,8 +2266,6 @@ void World::Update(uint32 diff)
 {
     METRIC_TIMER("world_update_time_total");
 
-    DebugRegistry::Clear();
-    
     ///- Update the game time and check for shutdown time
     _UpdateGameTime();
     Seconds currentGameTime = GameTime::GetGameTime();

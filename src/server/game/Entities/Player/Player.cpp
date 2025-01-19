@@ -93,31 +93,6 @@
 //  see: https://github.com/azerothcore/azerothcore-wotlk/issues/9766
 #include "GridNotifiersImpl.h"
 
-std::unordered_map<Player*, std::string> DebugRegistry::_deletedPlayerMap;
-std::mutex DebugRegistry::_deleptedPlayersMutex;
-
-std::unordered_map<Player*, Map*> DebugRegistry::_playerUpdateMap;
-std::mutex DebugRegistry::_updateMutex;
-
-std::string GetStackTrace()
-{
-    const int maxFrames = 100;
-    void* frames[maxFrames];
-    int frameCount = backtrace(frames, maxFrames);
-
-    char** symbols = backtrace_symbols(frames, frameCount);
-    if (!symbols)
-        return "Failed to capture stack trace";
-
-    std::ostringstream oss;
-    for (int i = 0; i < frameCount; ++i)
-    {
-        oss << symbols[i] << "\n";
-    }
-    free(symbols);
-    return oss.str();
-}
-
 enum CharacterFlags
 {
     CHARACTER_FLAG_NONE                 = 0x00000000,
@@ -437,8 +412,6 @@ Player::Player(WorldSession* session): Unit(true), m_mover(this)
 
 Player::~Player()
 {
-    DebugRegistry::RecordPlayerDelete(this);
-
     sScriptMgr->OnDestructPlayer(this);
 
     // it must be unloaded already in PlayerLogout and accessed only for loggined player
@@ -1053,9 +1026,6 @@ void Player::setDeathState(DeathState s, bool /*despawn = false*/)
             LOG_ERROR("entities.player", "setDeathState: attempt to kill a dead player {} ({})", GetName(), GetGUID().ToString());
             return;
         }
-
-        // clear all pending spell cast requests when dying
-        SpellQueue.clear();
 
         // drunken state is cleared on death
         SetDrunkValue(0);
@@ -14709,8 +14679,6 @@ void Player::ResetMap()
 
 void Player::SetMap(Map* map)
 {
-    DebugRegistry::SetPlayerMap(this, map);
-
     Unit::SetMap(map);
     m_mapRef.link(map, this);
 }
