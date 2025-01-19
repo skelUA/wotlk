@@ -776,6 +776,7 @@ public:                                                 // opcodes handlers
     void HandleAuctionSellItem(WorldPacket& recvData);
     void HandleAuctionRemoveItem(WorldPacket& recvData);
     void HandleAuctionListOwnerItems(WorldPacket& recvData);
+    void HandleAuctionListOwnerItemsEvent(ObjectGuid creatureGuid);
     void HandleAuctionPlaceBid(WorldPacket& recvData);
     void HandleAuctionListPendingSales(WorldPacket& recvData);
 
@@ -1071,6 +1072,9 @@ public:                                                 // opcodes handlers
     void HandleEjectPassenger(WorldPacket& data);
     void HandleEnterPlayerVehicle(WorldPacket& data);
     void HandleUpdateProjectilePosition(WorldPacket& recvPacket);
+
+    Milliseconds _lastAuctionListItemsMSTime;
+    Milliseconds _lastAuctionListOwnerItemsMSTime;
 
     void HandleTeleportTimeout(bool updateInSessions);
     bool HandleSocketClosed();
