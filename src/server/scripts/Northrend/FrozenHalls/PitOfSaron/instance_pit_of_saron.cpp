@@ -109,7 +109,7 @@ public:
                     if (GetTeamIdInInstance() == TEAM_ALLIANCE)
                         creature->UpdateEntry(NPC_JAINA_PART1);
                     NPC_LeaderFirstGUID = creature->GetGUID();
-
+                    LOG_ERROR("server.loading", " TEAM IN SCRIPT --- >>> {}.", GetTeamIdInInstance());
                     switch (InstanceProgress)
                     {
                         case INSTANCE_PROGRESS_FINISHED_INTRO:
