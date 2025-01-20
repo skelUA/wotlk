@@ -75,7 +75,6 @@ void InstanceScript::OnPlayerEnter(Player* player)
 
     if (sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GROUP))
         player->SetFaction((_teamIdInInstance == TEAM_HORDE) ? 1610 /*FACTION_HORDE*/ : 1 /*FACTION_ALLIANCE*/);
-    LOG_ERROR("server.loading", " TEAM ON ENTER --- >>> {}.", _teamIdInInstance);
 }
 
 void InstanceScript::OnPlayerLeave(Player* player)
