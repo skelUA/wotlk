@@ -1549,10 +1549,18 @@ uint32 WorldSession::DosProtection::GetMaxPacketCounterAllowed(uint16 opcode) co
         case CMSG_WRAP_ITEM:                            // not profiled
         case CMSG_REPORT_PVP_AFK:                       // not profiled
         case CMSG_AUCTION_LIST_ITEMS:                   // not profiled
+            {
+                maxPacketCounterAllowed = 0;
+                break;
+            }
         case CMSG_AUCTION_LIST_BIDDER_ITEMS:            // not profiled
+            {
+                maxPacketCounterAllowed = 0;
+                break;
+            }
         case CMSG_AUCTION_LIST_OWNER_ITEMS:             // not profiled
             {
-                maxPacketCounterAllowed = 10;
+                maxPacketCounterAllowed = 0;
                 break;
             }
 
