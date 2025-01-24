@@ -723,7 +723,7 @@ bool AuctionHouseUsablePlayerInfo::PlayerCanUseItem(ItemTemplate const* proto) c
             if (HasSpell(proto->Spells[1].SpellId))
                 return false;
     }
-
+    LOG_ERROR("server.loading", "Point 11");
     return true;
 }
 
