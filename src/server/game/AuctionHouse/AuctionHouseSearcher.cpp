@@ -667,33 +667,57 @@ bool AuctionHouseUsablePlayerInfo::PlayerCanUseItem(ItemTemplate const* proto) c
     {
         if (GetSkillValue(itemSkill) == 0)
             return false;
+            LOG_ERROR("server.loading", "Point 1");
     }
 
     if ((proto->AllowableClass & classMask) == 0 || (proto->AllowableRace & raceMask) == 0)
+    {
         return false;
+    LOG_ERROR("server.loading", "Point 2");
+    }
+
 
     if (proto->RequiredSkill != 0)
     {
+        LOG_ERROR("server.loading", "Point 3");
         if (GetSkillValue(proto->RequiredSkill) == 0)
+        {
             return false;
+            LOG_ERROR("server.loading", "Point 4");
+        }
         else if (GetSkillValue(proto->RequiredSkill) < proto->RequiredSkillRank)
+        {
             return false;
+            LOG_ERROR("server.loading", "Point 5");
+        }
     }
 
     if (proto->RequiredSpell != 0 && !HasSpell(proto->RequiredSpell))
+    {
         return false;
+        LOG_ERROR("server.loading", "Point 6");
+    }
 
     if (level < proto->RequiredLevel)
+    {
         return false;
-
+        LOG_ERROR("server.loading", "Point 7");
+   }
     if (proto->Spells[0].SpellId)
     {
+        LOG_ERROR("server.loading", "Point 8");
         // this check is for vanilla recipies. Spells are learned through individual learning spells instead of spell 483 and 55884
         SpellEntry const* spellEntry = sSpellStore.LookupEntry(proto->Spells[0].SpellId);
         if (spellEntry && spellEntry->Effect[0] == SPELL_EFFECT_LEARN_SPELL && spellEntry->EffectTriggerSpell[0])
-            if (HasSpell(spellEntry->EffectTriggerSpell[0]))
-                return false;
+        {
+        LOG_ERROR("server.loading", "Point 9");
 
+            if (HasSpell(spellEntry->EffectTriggerSpell[0]))
+            {
+                return false;
+                LOG_ERROR("server.loading", "Point 10");
+            }
+          }
         // this check is for tbc/wotlk recipies. Spells are learned through 483 and 55884, the second spell in the item will be the actual spell learned.
         if (proto->Spells[0].SpellId == 483 || proto->Spells[0].SpellId == 55884)
             if (HasSpell(proto->Spells[1].SpellId))
