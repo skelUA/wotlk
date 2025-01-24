@@ -672,12 +672,12 @@ bool AuctionHouseUsablePlayerInfo::PlayerCanUseItem(ItemTemplate const* proto) c
             }
     }
 
-//    if ((proto->AllowableClass & classMask) == 0 )
-//        {
-//            LOG_ERROR("server.loading", "Point 2.1");
-//            return false;
-//
-//        }
+    if ((proto->AllowableClass & classMask) == 0 )
+        {
+            LOG_ERROR("server.loading", "Point 2.1 AllowableClass={},classMask={} ", proto->AllowableClass , classMask );
+            return false;
+
+        }
    if ((proto->AllowableRace & raceMask) == 0)
     {
         LOG_ERROR("server.loading", "Point 2.2");
