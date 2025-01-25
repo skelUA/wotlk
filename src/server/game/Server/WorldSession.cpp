@@ -1567,7 +1567,11 @@ uint32 WorldSession::DosProtection::GetMaxPacketCounterAllowed(uint16 opcode) co
                 maxPacketCounterAllowed = 0;
                 break;
             }
-
+        case CMSG_AUCTION_REMOVE_ITEM:
+            {
+                maxPacketCounterAllowed = 0;
+                break;
+            }
         case CMSG_CHAR_CREATE:                          //   7               5         3 async db queries
         case CMSG_CHAR_ENUM:                            //  22               3         2 async db queries
         case CMSG_GMTICKET_CREATE:                      //   1              25         1 async db query
