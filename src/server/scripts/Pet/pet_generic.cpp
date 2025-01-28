@@ -165,9 +165,7 @@ struct npc_pet_gen_argent_pony_bridle : public ScriptedAI
     }
 
     void Reset() override
-    {
-        LOG_ERROR("server.loading", "RESET 1");
-        if (_init)
+    {        if (_init)
             return;
 
         _init = true;
@@ -227,7 +225,6 @@ struct npc_pet_gen_argent_pony_bridle : public ScriptedAI
 
     void UpdateAI(uint32 diff) override
     {
-       // LOG_ERROR("server.loading", "UPDATEAI  1");
         _mountTimer += diff;
         if (_mountTimer > 5000)
         {
@@ -267,14 +264,11 @@ struct npc_pet_gen_argent_pony_bridle : public ScriptedAI
 
     bool OnGossipHello(Player* player, Creature* creature)
     {
-
-        LOG_ERROR("server.loading", "OnGossipHello 1");
         if (player->GetGUID() != creature->GetOwnerGUID())
             return true;
-       LOG_ERROR("server.loading", "OnGossipHello 2");
+
         if (!creature->HasAura(player->GetTeamId(true) ? SPELL_AURA_TIRED_G : SPELL_AURA_TIRED_S))
         {
-            LOG_ERROR("server.loading", "OnGossipHello 3");
             uint8 _state = creature->AI()->GetData(0 /*GET_DATA_STATE*/);
             if (_state == ARGENT_PONY_STATE_ENCH || _state == ARGENT_PONY_STATE_VENDOR)
                 AddGossipItemFor(player, GOSSIP_ICON_VENDOR, "Visit a trader.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
@@ -287,29 +281,22 @@ struct npc_pet_gen_argent_pony_bridle : public ScriptedAI
         for (uint8 i = RACE_HUMAN; i < MAX_RACES; ++i)
             if (creature->AI()->GetData(i) == uint32(true))
                 AddGossipItemFor(player, GOSSIP_ICON_CHAT, argentBanners[i].text, GOSSIP_SENDER_MAIN, argentBanners[i].spell);
-        LOG_ERROR("server.loading", "OnGossipHello 11");
+
         SendGossipMenuFor(player, player->GetGossipTextId(creature), creature->GetGUID());
-        LOG_ERROR("server.loading", "OnGossipHello 12");
         return true;
     }
 
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*uiSender*/, uint32 action)
     {
-       LOG_ERROR("server.loading", "OnGossipSelect 1");
         CloseGossipMenuFor(player);
         uint32 spellId = 0;
         switch (action)
         {
             case GOSSIP_ACTION_TRADE:
-                LOG_ERROR("server.loading", "Point1");
                 creature->ReplaceAllNpcFlags(UNIT_NPC_FLAG_VENDOR);
-                LOG_ERROR("server.loading", "Point2");
                 player->GetSession()->SendListInventory(creature->GetGUID());
-                LOG_ERROR("server.loading", "Point3");
                 spellId = player->GetTeamId(true) ? SPELL_AURA_SHOP_G : SPELL_AURA_SHOP_S;
-                LOG_ERROR("server.loading", "Point3");
                 creature->AI()->DoAction(ARGENT_PONY_STATE_VENDOR);
-                LOG_ERROR("server.loading", "Point5");
                 break;
             case GOSSIP_ACTION_BANK:
                 creature->ReplaceAllNpcFlags(UNIT_NPC_FLAG_BANKER);
