@@ -157,7 +157,11 @@ inline bool isCyrillicCharacter(wchar_t wchar)
     {
         return true;
     }
-    if (wchar == 0x0401 || wchar == 0x0451)                  // CYRILLIC CAPITAL LETTER IO, CYRILLIC SMALL LETTER IO
+    if (wchar == 0x0401 || wchar == 0x0451 ||  // Ё ё
+        wchar == 0x0406 || wchar == 0x0456 ||  // І і
+        wchar == 0x0407 || wchar == 0x0457 ||  // Ї ї
+        wchar == 0x0404 || wchar == 0x0454 ||  // Є є
+        wchar == 0x0490 || wchar == 0x0491)    // Ґ ґ
     {
         return true;
     }
@@ -308,6 +312,22 @@ inline wchar_t wcharToUpper(wchar_t wchar)
     {
         return wchar_t(0x0401);
     }
+    if (wchar == 0x0491)
+    {
+        return wchar_t(0x0490);
+    }
+    if (wchar == 0x0456)
+    {
+        return wchar_t(0x0406);
+    }
+    if (wchar == 0x0457)
+    {
+        return wchar_t(0x0407);
+    }
+    if (wchar == 0x0454)
+    {
+        return wchar_t(0x0404);
+    }
 
     return wchar;
 }
@@ -349,6 +369,22 @@ inline wchar_t wcharToLower(wchar_t wchar)
     if (wchar >= 0x0410 && wchar <= 0x042F)                  // CYRILLIC CAPITAL LETTER A - CYRILLIC CAPITAL LETTER YA
     {
         return wchar_t(uint16(wchar) + 0x0020);
+    }
+    if (wchar == 0x0490)
+    {
+        return wchar_t(0x0491);
+    }
+    if (wchar == 0x0406)
+    {
+        return wchar_t(0x0456);
+    }
+    if (wchar == 0x0407)
+    {
+        return wchar_t(0x0457);
+    }
+    if (wchar == 0x0404)
+    {
+        return wchar_t(0x0454);
     }
 
     return wchar;
