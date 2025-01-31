@@ -90,7 +90,7 @@ public:
            if (player)
            {
                 LOG_ERROR("server.loading", "point3");
-               handler->PSendSysMessage(LANG_RENAME_PLAYER, handler->GetNameLink(target));
+               //handler->PSendSysMessage(LANG_RENAME_PLAYER, handler->GetNameLink(target));
                player->SetAtLoginFlag(AT_LOGIN_RENAME);
            }
         }
