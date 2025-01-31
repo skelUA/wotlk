@@ -33,6 +33,7 @@ enum Spells
     // INSANITY
     SPELL_INSANITY                          = 57496, //Dummy
     INSANITY_VISUAL                         = 57561,
+    SPELL_INSANITY_TARGET                   = 57508,
     SPELL_CLONE_PLAYER                      = 57507, //casted on player during insanity
     SPELL_INSANITY_PHASING_1                = 57508,
     SPELL_INSANITY_PHASING_2                = 57509,
@@ -361,7 +362,7 @@ class spell_herald_volzaj_insanity : public SpellScript
         {
             targets.remove_if([this](WorldObject* targetObj) -> bool
             {
-                return !targetObj || !targetObj->IsPlayer() || !GetCaster()->IsInCombatWith(targetObj->ToPlayer()) ||
+                return !targetObj || !targetObj->IsPlayer() || !targetObj->ToPlayer()->IsInCombatWith(GetCaster()) ||
                         targetObj->GetDistance(GetCaster()) >= (MAX_VISIBILITY_DISTANCE * 2);
             });
         }
@@ -405,7 +406,7 @@ class spell_herald_volzaj_insanity : public SpellScript
             {
                 // Should not make clone of current player target
                 Player const* plrClone = *itr2 ? (*itr2)->ToPlayer() : nullptr;
-                if (!plrClone || plrClone == plrTarget || !plrClone->IsAlive())
+                if (!plrClone || plrClone == plrTarget)
                 {
                     continue;
                 }
