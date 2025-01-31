@@ -3211,6 +3211,11 @@ void InstanceMap::UnloadAll()
         DeleteCorpseData();
     }
 
+    // There was a crash on unloading map. Lets try to add some hints to crashlog.
+    // TODO: delete this once crash fixed.
+    volatile uint32 mapID = GetId();
+    volatile uint32 instanceID = GetInstanceId();
+
     Map::UnloadAll();
 }
 
