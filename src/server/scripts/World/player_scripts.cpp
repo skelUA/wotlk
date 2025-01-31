@@ -66,11 +66,6 @@ public:
     }
 };
 
-void AddSC_player_scripts()
-{
-    new QuestApprenticeAnglerPlayerScript();
-}
-
 
 enum RenameUAQuestEnum
 {
@@ -97,4 +92,5 @@ public:
 void AddSC_player_scripts()
 {
     new QuestRenameUAPlayerScript();
+    new QuestApprenticeAnglerPlayerScript();
 }
