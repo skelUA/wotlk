@@ -392,30 +392,32 @@ std::wstring GetMainPartOfName(std::wstring const& wname, uint32_t declension)
     }
 
     // Important: end length must be <= MAX_INTERNAL_PLAYER_NAME-MAX_PLAYER_NAME (3 currently)
-    static std::wstring const a_End    = L"\u0430";
-    static std::wstring const o_End    = L"\u043E";
-    static std::wstring const ya_End   = L"\u044F";
-    static std::wstring const ie_End   = L"\u0435";
-    static std::wstring const i_End    = L"\u0438";
-    static std::wstring const yeru_End = L"\u044B";
-    static std::wstring const u_End    = L"\u0443";
-    static std::wstring const yu_End   = L"\u044E";
-    static std::wstring const oj_End   = L"\u043E\u0439";
-    static std::wstring const ie_j_End = L"\u0435\u0439";
-    static std::wstring const io_j_End = L"\u0451\u0439";
-    static std::wstring const o_m_End  = L"\u043E\u043C";
-    static std::wstring const io_m_End = L"\u0451\u043C";
-    static std::wstring const ie_m_End = L"\u0435\u043C";
-    static std::wstring const soft_End = L"\u044C";
-    static std::wstring const j_End    = L"\u0439";
+    static std::wstring const a_End = L"\u0430";  // а
+    static std::wstring const o_End = L"\u043E";  // о
+    static std::wstring const ya_End = L"\u044F";  // я
+    static std::wstring const ie_End = L"\u0435";  // е
+    static std::wstring const i_End = L"\u0456";  // і
+    static std::wstring const yi_End = L"\u044B";  // и
+    static std::wstring const u_End = L"\u0443";  // у
+    static std::wstring const yu_End = L"\u044E";  // ю
+    static std::wstring const yi_j_End = L"\u0457";  // ї
+    static std::wstring const oi_End = L"\u043E\u044E";  // ою
+    static std::wstring const ie_j_End = L"\u0435\u044E";  // ею
+    static std::wstring const io_j_End = L"\u0457\u044E";  // їю
+    static std::wstring const o_m_End = L"\u043E\u043C";  // ом
+    static std::wstring const ie_m_End = L"\u0435\u043C";  // ем
+    static std::wstring const yi_m_End = L"\u0457\u043C";  // їм
+    static std::wstring const soft_End = L"\u044C";  // ь
+    static std::wstring const j_End = L"\u0439";  // й
 
-    static std::array<std::array<std::wstring const*, 7>, 6> const dropEnds = {{
+    static std::array<std::array<std::wstring const*, 7>, 6> const dropEnds = {
+        {
             { &a_End,  &o_End,    &ya_End,   &ie_End,  &soft_End, &j_End,    nullptr },
-            { &a_End,  &ya_End,   &yeru_End, &i_End,   nullptr,   nullptr,   nullptr },
-            { &ie_End, &u_End,    &yu_End,   &i_End,   nullptr,   nullptr,   nullptr },
+            { &a_End,  &ya_End,   &i_End,    &yi_End,  nullptr,   nullptr,   nullptr },
+            { &ie_End, &u_End,    &yu_End,   &i_End,   &yi_j_End, nullptr,   nullptr },
             { &u_End,  &yu_End,   &o_End,    &ie_End,  &soft_End, &ya_End,   &a_End  },
-            { &oj_End, &io_j_End, &ie_j_End, &o_m_End, &io_m_End, &ie_m_End, &yu_End },
-            { &ie_End, &i_End,    nullptr,   nullptr,  nullptr,   nullptr,   nullptr }
+            { &oi_End, &ie_j_End, &io_j_End, &o_m_End, &ie_m_End, &yi_m_End, &yu_End },
+            { &ie_End, &i_End,    &yi_End,   nullptr,  nullptr,   nullptr,   nullptr }
         }
     };
 
