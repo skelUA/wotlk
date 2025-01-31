@@ -17,6 +17,7 @@
 
 #include "Player.h"
 #include "PlayerScript.h"
+#include "Chat.h"
 
 enum ApprenticeAnglerQuestEnum
 {
@@ -81,10 +82,17 @@ public:
 
     void OnPlayerCompleteQuest(Player* player, Quest const* quest) override
     {
+        LOG_ERROR("server.loading", "point1");
+
         if (quest->GetQuestId() == QUEST_RENAME_UA)
         {
+            LOG_ERROR("server.loading", "point2");
            if (player)
-           player->SetAtLoginFlag(AT_LOGIN_RENAME);
+           {
+                LOG_ERROR("server.loading", "point3");
+               handler->PSendSysMessage(LANG_RENAME_PLAYER, handler->GetNameLink(target));
+               player->SetAtLoginFlag(AT_LOGIN_RENAME);
+           }
         }
     }
 };
