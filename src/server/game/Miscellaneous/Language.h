@@ -111,7 +111,8 @@ enum AcoreStrings
     LANG_RBAC_PERM_REVOKED_NOT_IN_LIST  = 79,
     LANG_PVPSTATS                       = 80,
     LANG_PVPSTATS_DISABLED              = 81,
-    // Free 82 - 86
+    LANG_GENERIC_TWO_CURLIES_WITH_COLON = 82,
+    // Free 83 - 86
 
     LANG_UNKNOWN_ERROR                  = 87,
     LANG_2FA_COMMANDS_NOT_SETUP         = 88,
@@ -1146,7 +1147,10 @@ enum AcoreStrings
 
     LANG_CMD_GO_RESPAWN                 = 5085,
 
-    // Room for more strings    5086-9999
+    LANG_CMD_NO_DOOR_FOUND              = 5086,
+    LANG_CMD_DOOR_OPENED                = 5087,
+
+    // Room for more strings    5088-9999
 
     // Level requirement notifications
     LANG_SAY_REQ                        = 6604,

@@ -451,7 +451,7 @@ public:
             return false;
         if (_source->GetExactDist(target) > 100.0f)
             return false;
-        if (target->HasAura(SPELL_HARVEST_SOUL_VALKYR) || target->HasAura(SPELL_VALKYR_TARGET_SEARCH))
+        if (target->HasAnyAuras(SPELL_HARVEST_SOUL_VALKYR, SPELL_VALKYR_TARGET_SEARCH))
             return false;
         if (!_source->IsWithinLOSInMap(target))
             return false;
@@ -603,7 +603,7 @@ public:
     {
         if (!unit || !unit->IsPlayer() || unit == _sourceObj || _sourceObj->GetVictim() == unit || !unit->isTargetableForAttack())
             return false;
-        if (unit->HasAura(SPELL_PLAGUE_AVOIDANCE) || unit->HasAura(SPELL_BOSS_HITTIN_YA_AURA) || unit->HasAura(_notAura1) || unit->HasAura(_notAura2))
+        if (unit->HasAnyAuras(SPELL_PLAGUE_AVOIDANCE, SPELL_BOSS_HITTIN_YA_AURA, _notAura1, _notAura2))
             return false;
         if (!_sourceObj->IsWithinLOSInMap(unit))
             return false;
@@ -947,7 +947,7 @@ public:
                     events.ScheduleEvent(EVENT_QUAKE, 62s + 500ms);
                     events.ScheduleEvent(EVENT_PAIN_AND_SUFFERING, 3500ms, EVENT_GROUP_ABILITIES);
                     events.ScheduleEvent(EVENT_SUMMON_ICE_SPHERE, 8s, EVENT_GROUP_ABILITIES);
-                    events.ScheduleEvent(EVENT_SUMMON_RAGING_SPIRIT, 4s, EVENT_GROUP_ABILITIES);
+                    events.ScheduleEvent(EVENT_SUMMON_RAGING_SPIRIT, 6s, EVENT_GROUP_ABILITIES);
                     break;
                 case POINT_CENTER_2:
                     me->SetFacingTo(0.0f);
@@ -959,7 +959,7 @@ public:
                     events.ScheduleEvent(EVENT_QUAKE_2, 62s + 500ms);
                     events.ScheduleEvent(EVENT_PAIN_AND_SUFFERING, 3500ms, EVENT_GROUP_ABILITIES);
                     events.ScheduleEvent(EVENT_SUMMON_ICE_SPHERE, 8s, EVENT_GROUP_ABILITIES);
-                    events.ScheduleEvent(EVENT_SUMMON_RAGING_SPIRIT, 4s, EVENT_GROUP_ABILITIES);
+                    events.ScheduleEvent(EVENT_SUMMON_RAGING_SPIRIT, 5s, EVENT_GROUP_ABILITIES);
                     break;
                 default:
                     break;

@@ -165,8 +165,7 @@ struct npc_pet_gen_argent_pony_bridle : public ScriptedAI
     }
 
     void Reset() override
-    {
-        if (_init)
+    {        if (_init)
             return;
 
         _init = true;
@@ -597,7 +596,7 @@ struct npc_pet_gen_wind_rider_cub : public NullCreatureAI
             checkTimer2 = 0;
             if (Unit* owner = me->GetOwner())
             {
-                if (owner->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) || owner->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED))
+                if (owner->HasIncreaseMountedFlightSpeedAura() || owner->HasIncreaseMountedSpeedAura())
                 {
                     isFlying = true;
                     me->SetCanFly(true);

@@ -115,12 +115,13 @@ public:
     bool IsActiveEvent(uint16 event_id) { return (m_ActiveEvents.find(event_id) != m_ActiveEvents.end()); }
     uint32 StartSystem();
     void Initialize();
-    void StartArenaSeason();
     void StartInternalEvent(uint16 event_id);
     bool StartEvent(uint16 event_id, bool overwrite = false);
     void StopEvent(uint16 event_id, bool overwrite = false);
     void HandleQuestComplete(uint32 quest_id);  // called on world event type quest completions
     uint32 GetNPCFlag(Creature* cr);
+    // Load the game event npc vendor table from the DB
+    void LoadEventVendors();
     [[nodiscard]] uint32 GetHolidayEventId(uint32 holidayId) const;
 private:
     void SendWorldStateUpdate(Player* player, uint16 event_id);

@@ -844,7 +844,7 @@ void Battleground::EndBattleground(PvPTeamId winnerTeamId)
         TeamId bgTeamId = player->GetBgTeamId();
 
         // should remove spirit of redemption
-        if (player->HasAuraType(SPELL_AURA_SPIRIT_OF_REDEMPTION))
+        if (player->HasSpiritOfRedemptionAura())
             player->RemoveAurasByType(SPELL_AURA_MOD_SHAPESHIFT);
 
         if (!player->IsAlive())
@@ -880,9 +880,27 @@ void Battleground::EndBattleground(PvPTeamId winnerTeamId)
 
             }
                if (!isArena())
+               {
                    if(player)
                        player->KilledMonsterCredit(NPC_QUEST_PVP_BG_WIN);
+               }
+               else
+                {
+                    switch (GetArenaType())
+                    {
+                        case ARENA_TYPE_2v2:
+                        case ARENA_TYPE_3v3:
+                        case ARENA_TYPE_5v5:
+                            if (m_IsRated) {
+                                if(player)
+                                    player->KilledMonsterCredit(NPC_QUEST_PVP_ARENA_WIN);
+                                }
+                            break;
+                        default:
+                            LOG_ERROR("bg.battleground", "Unknown arenatype {} ", GetArenaType());
+                    }
 
+                }
             player->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_BG, player->GetMapId());
         }
         else
@@ -930,8 +948,27 @@ void Battleground::EndBattleground(PvPTeamId winnerTeamId)
         player->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_COMPLETE_BATTLEGROUND, player->GetMapId());
 
         if (!isArena())
+        {
             if(player)
                 player->KilledMonsterCredit(NPC_QUEST_PVP_BG_END);
+        }
+        else
+        {
+            switch (GetArenaType())
+            {
+                case ARENA_TYPE_2v2:
+                case ARENA_TYPE_3v3:
+                case ARENA_TYPE_5v5:
+                    if (m_IsRated) {
+                        if(player)
+                            player->KilledMonsterCredit(NPC_QUEST_PVP_ARENA_END);
+                        }
+                    break;
+                default:
+                    LOG_ERROR("bg.battleground", "Unknown arenatype {} ", GetArenaType());
+            }
+
+            }
     }
 
     if (IsEventActive(EVENT_SPIRIT_OF_COMPETITION) && isBattleground())
@@ -1017,7 +1054,7 @@ void Battleground::RemovePlayerAtLeave(Player* player)
     RemovePlayer(player);
 
     // should remove spirit of redemption
-    if (player->HasAuraType(SPELL_AURA_SPIRIT_OF_REDEMPTION))
+    if (player->HasSpiritOfRedemptionAura())
         player->RemoveAurasByType(SPELL_AURA_MOD_SHAPESHIFT);
 
     // if the player was a match participant

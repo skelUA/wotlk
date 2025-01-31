@@ -18,11 +18,13 @@
 #ifndef __SPELL_H
 #define __SPELL_H
 
+#include "ConditionMgr.h"
 #include "GridDefines.h"
-#include "ObjectMgr.h"
+#include "LootMgr.h"
 #include "PathGenerator.h"
 #include "SharedDefines.h"
 #include "SpellInfo.h"
+#include "Unit.h"
 
 class Unit;
 class Player;
@@ -216,6 +218,7 @@ struct SpellValue
     uint8     AuraStackAmount;
     int32     AuraDuration;
     bool      ForcedCritResult;
+    uint32    MiscVal[MAX_SPELL_EFFECTS];
 };
 
 enum SpellState
@@ -779,14 +782,6 @@ public:
     bool _spellTargetsSelected;
 
     ByteBuffer* m_effectExecuteData[MAX_SPELL_EFFECTS];
-
-#ifdef MAP_BASED_RAND_GEN
-    int32 irand(int32 min, int32 max)       { return int32 (m_caster->GetMap()->mtRand.randInt(max - min)) + min; }
-    uint32 urand(uint32 min, uint32 max)    { return m_caster->GetMap()->mtRand.randInt(max - min) + min; }
-    int32 rand32()                          { return m_caster->GetMap()->mtRand.randInt(); }
-    double rand_norm()                      { return m_caster->GetMap()->mtRand.randExc(); }
-    double rand_chance()                    { return m_caster->GetMap()->mtRand.randExc(100.0); }
-#endif
 };
 
 namespace Acore
