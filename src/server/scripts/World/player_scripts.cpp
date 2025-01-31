@@ -70,3 +70,31 @@ void AddSC_player_scripts()
 {
     new QuestApprenticeAnglerPlayerScript();
 }
+
+
+enum RenameUAQuestEnum
+{
+    QUEST_RENAME_UA= 90070
+};
+
+class QuestRenameUAPlayerScript : public PlayerScript
+{
+public:
+    QuestRenameUAPlayerScript() : PlayerScript("QuestRenameUAPlayerScript", {PLAYERHOOK_ON_PLAYER_COMPLETE_QUEST})
+    {
+    }
+
+    void OnPlayerCompleteQuest(Player* player, Quest const* quest) override
+    {
+        if (quest->GetQuestId() == QUEST_RENAME_UA)
+        {
+           if (player)
+           player->SetAtLoginFlag(AT_LOGIN_RENAME);
+        }
+    }
+};
+
+void AddSC_player_scripts()
+{
+    new QuestRenameUAPlayerScript();
+}
