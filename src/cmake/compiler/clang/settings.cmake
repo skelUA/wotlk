@@ -66,6 +66,24 @@ if(WITH_COREDEBUG)
   message(STATUS "Clang: Debug-flags set (-g3)")
 endif()
 
+if(ASAN)
+    target_compile_options(acore-compile-option-interface
+            INTERFACE
+            -fno-omit-frame-pointer
+            -fsanitize=address
+            -fsanitize-recover=address
+            -fsanitize-address-use-after-scope)
+
+    target_link_options(acore-compile-option-interface
+            INTERFACE
+            -fno-omit-frame-pointer
+            -fsanitize=address
+            -fsanitize-recover=address)
+
+    message(STATUS "Clang: Enabled memory error detector Address Snitizer (ASan)")
+endif()
+
+
 if(MSAN)
     target_compile_options(acore-compile-option-interface
             INTERFACE
