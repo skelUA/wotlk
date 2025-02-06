@@ -163,7 +163,6 @@ struct boss_felmyst : public BossAI
             me->HandleEmoteCommand(EMOTE_ONESHOT_LAND);
             me->SetDisableGravity(false);
             me->SendMovementFlagUpdate();
-            SetInvincibility(false);
 
             me->m_Events.AddEventAtOffset([&] {
                 me->SetReactState(REACT_AGGRESSIVE);
@@ -239,7 +238,6 @@ struct boss_felmyst : public BossAI
         me->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
         me->SetDisableGravity(true);
         me->SendMovementFlagUpdate();
-        SetInvincibility(true);
 
         me->m_Events.AddEventAtOffset([&] {
             me->GetMotionMaster()->MovePoint(POINT_AIR, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 15.0f, false, true);
