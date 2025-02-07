@@ -82,14 +82,14 @@ public:
 
     void OnPlayerCompleteQuest(Player* player, Quest const* quest) override
     {
-        LOG_ERROR("server.loading", "point1");
+        //LOG_ERROR("server.loading", "point1");
 
         if (quest->GetQuestId() == QUEST_RENAME_UA)
         {
-            LOG_ERROR("server.loading", "point2");
+            //LOG_ERROR("server.loading", "point2");
            if (player)
            {
-                LOG_ERROR("server.loading", "point3");
+               //LOG_ERROR("server.loading", "point3");
                //handler->PSendSysMessage(LANG_RENAME_PLAYER, handler->GetNameLink(target));
                player->SetAtLoginFlag(AT_LOGIN_RENAME);
            }
