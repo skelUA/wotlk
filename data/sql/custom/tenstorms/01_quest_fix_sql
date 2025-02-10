@@ -404,3 +404,9 @@ INSERT INTO `smart_scripts` (`entryorguid`, `source_type`, `id`, `link`, `event_
 (27499, 0, 0, 1, 19, 0, 100, 0, 12308, 0, 0, 0, 0, 0, 86, 48710, 0, 19, 24042, 0, 0, 19, 24042, 20, 0, 0, 0, 0, 0, 0, 'Caged Prisoner - On Quest \'Escape from Silverbrook\' Taken - Cast \'Summon Freed Alliance Scout\''),
 (27499, 0, 1, 2, 61, 0, 100, 512, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 15, 188706, 10, 0, 0, 0, 0, 0, 0, 'Caged Prisoner - On Quest \'Escape from Silverbrook\' Taken - Activate Gameobject'),
 (27499, 0, 2, 0, 61, 0, 100, 512, 0, 0, 0, 0, 0, 0, 41, 500, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Caged Prisoner - On Quest \'Escape from Silverbrook\' Taken - Despawn In 500 ms');
+
+
+--
+-- https://www.wowhead.com/wotlk/quest=12459/that-which-creates-can-also-destroy
+--
+UPDATE `creature_template` SET `MovementType` = 2 WHERE (`entry` = 26841);
