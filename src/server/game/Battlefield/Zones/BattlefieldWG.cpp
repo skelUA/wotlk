@@ -30,6 +30,7 @@
 #include "Vehicle.h"
 #include "WorldSession.h"
 #include "WorldStatePackets.h"
+#include "WorldSessionMgr.h"
 
 BattlefieldWG::~BattlefieldWG()
 {
@@ -1084,7 +1085,7 @@ void BattlefieldWG::SendUpdateWorldStateMessage(uint32 variable, uint32 value, P
         player->SendDirectMessage(worldstate.Write());
     }
     else {
-        sWorld->SendGlobalMessage(worldstate.Write());
+        sWorldSessionMgr->SendGlobalMessage(worldstate.Write());
     }
 }
 
