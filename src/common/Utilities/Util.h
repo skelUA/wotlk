@@ -153,27 +153,22 @@ inline bool isExtendedLatinCharacter(wchar_t wchar)
 
 inline bool isCyrillicCharacter(wchar_t wchar)
 {
-    if (wchar >= 0x0410 && wchar <= 0x044F)                  // CYRILLIC CAPITAL LETTER A - CYRILLIC SMALL LETTER YA
+    if (wchar >= 0x0410 && wchar <= 0x0429)                  // А-Щ
     {
         return true;
     }
-    if (wchar == 0x0401 || wchar == 0x0451)                  // CYRILLIC CAPITAL LETTER IO, CYRILLIC SMALL LETTER IO
+    if (wchar >= 0x0430 && wchar <= 0x0449)                  // а-щ
     {
         return true;
     }
-    if (wchar == 0x0406 || wchar == 0x0456)                  //CYRILLIC CAPITAL LETTER I, CYRILLIC SMALL LETTER I (UA)
-    {
-        return true;
-    }
-    if (wchar == 0x0407 || wchar == 0x0457)                  //CYRILLIC CAPITAL LETTER YI, CYRILLIC SMALL LETTER YI (UA)
-    {
-        return true;
-    }
-    if (wchar == 0x0404 || wchar == 0x0454)                  //CYRILLIC CAPITAL LETTER YE, CYRILLIC SMALL LETTER YE (UA)
-    {
-        return true;
-    }
-    if (wchar == 0x0490 || wchar == 0x0491)                  //CYRILLIC CAPITAL LETTER GH, CYRILLIC SMALL LETTER GH (UA)
+    if (wchar == 0x042C || wchar == 0x044C || // Ь ь
+        wchar == 0x042E || wchar == 0x044E || // Ю ю
+        wchar == 0x042F || wchar == 0x044F || // Я я
+        wchar == 0x0406 || wchar == 0x0456 || // І і
+        wchar == 0x0407 || wchar == 0x0457 || // Ї ї
+        wchar == 0x0404 || wchar == 0x0454 || // Є є
+        wchar == 0x0490 || wchar == 0x0491 || // Ґ ґ
+        wchar == 0x0027) // '
     {
         return true;
     }
