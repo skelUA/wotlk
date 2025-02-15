@@ -50,16 +50,14 @@ void WorldSession::SendNameQueryOpcode(ObjectGuid guid)
     data << uint8(playerData->Sex);
     data << uint8(playerData->Class);
 
-    // pussywizard: optimization
-    /*Player* player = ObjectAccessor::FindConnectedPlayer(guid);
     if (DeclinedName const* names = (player ? player->GetDeclinedNames() : nullptr))
     {
         data << uint8(1);                           // Name is declined
         for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
             data << names->name[i];
     }
-    else*/
-    data << uint8(0);                           // Name is not declined
+    else
+        data << uint8(0);                           // Name is not declined
 
     SendPacket(&data);
 }
