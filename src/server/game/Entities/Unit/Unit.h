@@ -1868,10 +1868,7 @@ public:
 
     // ShapeShitForm (use by druid)
     [[nodiscard]] ShapeshiftForm GetShapeshiftForm() const { return ShapeshiftForm(GetByteValue(UNIT_FIELD_BYTES_2, 3)); }
-    void SetShapeshiftForm(ShapeshiftForm form)
-    {
-        SetByteValue(UNIT_FIELD_BYTES_2, 3, form);
-    }
+    void SetShapeshiftForm(ShapeshiftForm form);
     bool IsAttackSpeedOverridenShapeShift() const;
     [[nodiscard]] bool IsInFeralForm() const
     {
@@ -2004,9 +2001,6 @@ public:
 
     float m_threatModifier[MAX_SPELL_SCHOOL];
     float m_modAttackSpeedPct[3];
-
-    // Event handler
-    EventProcessor m_Events;
 
     SpellImmuneList m_spellImmune[MAX_SPELL_IMMUNITY];
     uint32 m_lastSanctuaryTime;

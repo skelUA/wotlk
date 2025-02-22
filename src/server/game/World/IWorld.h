@@ -182,6 +182,7 @@ enum WorldBoolConfigs
     CONFIG_ALLOWS_RANK_MOD_FOR_PET_HEALTH,
     CONFIG_MUNCHING_BLIZZLIKE,
     CONFIG_ENABLE_DAZE,
+    CONFIG_SPELL_QUEUE_ENABLED,
     BOOL_CONFIG_VALUE_COUNT
 };
 
@@ -417,6 +418,8 @@ enum WorldIntConfigs
     CONFIG_WATER_BREATH_TIMER,
     CONFIG_DAILY_RBG_MIN_LEVEL_AP_REWARD,
     CONFIG_AUCTIONHOUSE_WORKERTHREADS,
+    CONFIG_SUNSREACH_COUNTER_MAX,
+    CONFIG_SPELL_QUEUE_WINDOW,
     INT_CONFIG_VALUE_COUNT
 };
 
@@ -567,7 +570,7 @@ public:
     virtual void SendGlobalMessage(WorldPacket const* packet, WorldSession* self = nullptr, TeamId teamId = TEAM_NEUTRAL) = 0;
     virtual void SendGlobalGMMessage(WorldPacket const* packet, WorldSession* self = nullptr, TeamId teamId = TEAM_NEUTRAL) = 0;
     virtual bool SendZoneMessage(uint32 zone, WorldPacket const* packet, WorldSession* self = nullptr, TeamId teamId = TEAM_NEUTRAL) = 0;
-    virtual void SendZoneText(uint32 zone, const char* text, WorldSession* self = nullptr, TeamId teamId = TEAM_NEUTRAL) = 0;
+    virtual void SendZoneText(uint32 zone, std::string text, WorldSession* self = nullptr, TeamId teamId = TEAM_NEUTRAL) = 0;
     virtual void SendServerMessage(ServerMessageType messageID, std::string stringParam = "", Player* player = nullptr) = 0;
     [[nodiscard]] virtual bool IsShuttingDown() const = 0;
     [[nodiscard]] virtual uint32 GetShutDownTimeLeft() const = 0;

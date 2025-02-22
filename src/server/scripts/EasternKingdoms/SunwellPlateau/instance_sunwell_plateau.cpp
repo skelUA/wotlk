@@ -46,7 +46,7 @@ ObjectData const creatureData[] =
     { NPC_KILJAEDEN_CONTROLLER,   DATA_KJ_CONTROLLER },
     { NPC_ANVEENA,                DATA_ANVEENA       },
     { NPC_KALECGOS_KJ,            DATA_KALECGOS_KJ   },
-    { 0,                          0                  }
+    { 0,                          0,                 }
 };
 
 ObjectData const gameObjectData[] =
@@ -95,14 +95,6 @@ public:
             instance->LoadGrid(1641.45f, 988.08f);
             if (GameObject* gobj = GetGameObject(DATA_ICEBARRIER))
                 gobj->SendUpdateToPlayer(player);
-        }
-
-        void OnCreatureCreate(Creature* creature) override
-        {
-            if (creature->GetSpawnId() > 0 || !creature->GetOwnerGUID().IsPlayer())
-                creature->CastSpell(creature, SPELL_SUNWELL_RADIANCE, true);
-
-            InstanceScript::OnCreatureCreate(creature);
         }
     };
 

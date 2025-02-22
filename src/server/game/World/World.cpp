@@ -1493,6 +1493,12 @@ void World::LoadConfigSettings(bool reload)
     // AH Worker threads
     _int_configs[CONFIG_AUCTIONHOUSE_WORKERTHREADS] = sConfigMgr->GetOption<int32>("AuctionHouse.WorkerThreads", 1);
 
+    _int_configs[CONFIG_SUNSREACH_COUNTER_MAX] = sConfigMgr->GetOption<uint32>("Sunsreach.CounterMax", 10000);
+
+    // SpellQueue
+    _bool_configs[CONFIG_SPELL_QUEUE_ENABLED] = sConfigMgr->GetOption<bool>("SpellQueue.Enabled", true);
+    _int_configs[CONFIG_SPELL_QUEUE_WINDOW] = sConfigMgr->GetOption<uint32>("SpellQueue.Window", 400);
+
     // call ScriptMgr if we're reloading the configuration
     sScriptMgr->OnAfterConfigLoad(reload);
 }
@@ -1714,7 +1720,7 @@ void World::SetInitialWorldSettings()
     LoadRandomEnchantmentsTable();
 
     LOG_INFO("server.loading", "Loading Disables");
-    DisableMgr::LoadDisables();                                  // must be before loading quests and items
+    sDisableMgr->LoadDisables();                                  // must be before loading quests and items
 
     LOG_INFO("server.loading", "Loading Items...");                         // must be after LoadRandomEnchantmentsTable and LoadPageTexts
     sObjectMgr->LoadItemTemplates();
@@ -1795,7 +1801,7 @@ void World::SetInitialWorldSettings()
     sObjectMgr->LoadQuests();                                    // must be loaded after DBCs, creature_template, item_template, gameobject tables
 
     LOG_INFO("server.loading", "Checking Quest Disables");
-    DisableMgr::CheckQuestDisables();                           // must be after loading quests
+    sDisableMgr->CheckQuestDisables();                           // must be after loading quests
 
     LOG_INFO("server.loading", "Loading Quest POI");
     sObjectMgr->LoadQuestPOI();
@@ -2120,6 +2126,9 @@ void World::SetInitialWorldSettings()
     sArenaSeasonMgr->LoadRewards();
     LOG_INFO("server.loading", "Loading Active Arena Season...");
     sArenaSeasonMgr->LoadActiveSeason();
+
+    LOG_INFO("server.loading", "Loading WorldState...");
+    sWorldState->Load();
 
     sTicketMgr->Initialize();
 
@@ -2563,7 +2572,8 @@ namespace Acore
         explicit WorldWorldTextBuilder(uint32 textId, va_list* args = nullptr) : i_textId(textId), i_args(args) {}
         void operator()(WorldPacketList& data_list, LocaleConstant loc_idx)
         {
-            char const* text = sObjectMgr->GetAcoreString(i_textId, loc_idx);
+            std::string strtext = sObjectMgr->GetAcoreString(i_textId, loc_idx);
+            char const* text = strtext.c_str();
 
             if (i_args)
             {
@@ -2622,10 +2632,10 @@ bool World::SendZoneMessage(uint32 zone, WorldPacket const* packet, WorldSession
 }
 
 /// Send a System Message to all players in the zone (except self if mentioned)
-void World::SendZoneText(uint32 zone, const char* text, WorldSession* self, TeamId teamId)
+void World::SendZoneText(uint32 zone, std::string text, WorldSession* self, TeamId teamId)
 {
     WorldPacket data;
-    ChatHandler::BuildChatPacket(data, CHAT_MSG_SYSTEM, LANG_UNIVERSAL, nullptr, nullptr, text);
+    ChatHandler::BuildChatPacket(data, CHAT_MSG_SYSTEM, LANG_UNIVERSAL, nullptr, nullptr, text.c_str());
     SendZoneMessage(zone, &data, self, teamId);
 }
 
