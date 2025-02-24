@@ -91,8 +91,8 @@ public:
            {
                //LOG_ERROR("server.loading", "point3");
                //handler->PSendSysMessage(LANG_RENAME_PLAYER, handler->GetNameLink(target));
-               sObjectMgr->AddReservedPlayerName(player->GetName());
                player->SetAtLoginFlag(AT_LOGIN_RENAME);
+               sObjectMgr->AddReservedPlayerName(player->GetName());
            }
         }
     }
