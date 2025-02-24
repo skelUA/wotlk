@@ -2174,6 +2174,21 @@ NoResetTalentsCost = 0
 ToggleXP.Cost = 100000
 
 #
+#    SpellQueue.Enabled
+#        Description: Enable SpellQueue.
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+
+SpellQueue.Enabled = 1
+
+#
+#    SpellQueue.Window
+#        Description: Time (in milliseconds) for spells to be queued.
+#        Default:     400 - (400ms)
+
+SpellQueue.Window = 400
+
+#
 ###################################################################################################
 
 ###################################################################################################
@@ -4268,6 +4283,19 @@ Calendar.DeleteOldEventsHour = 6
 #                     1 - (Enabled)
 
 Event.Announce = 0
+
+#
+###################################################################################################
+
+###################################################################################################
+# WORLD STATE
+#
+#    Sunsreach.CounterMax
+#        Description: Counter value to be reached to transition phases
+#                     during the Sun's Reach Reclamation event.
+#        Default:     10000
+
+Sunsreach.CounterMax = 10000
 
 #
 ###################################################################################################

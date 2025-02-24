@@ -1488,8 +1488,12 @@ void WorldSession::HandleSetPlayerDeclinedNames(WorldPacket& recvData)
     stmt = CharacterDatabase.GetPreparedStatement(CHAR_INS_CHAR_DECLINED_NAME);
     stmt->SetData(0, guid.GetCounter());
 
-    for (uint8 i = 0; i < 5; i++)
-        stmt->SetData(i + 1, declinedname.name[i]);
+    for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES; i++)
+    {
+        std::string& dn = declinedname.name[i];
+        dn.erase(std::remove(dn.begin(), dn.end(), '\\'), dn.end());
+        stmt->SetData(i + 1, dn);
+    }
 
     trans->Append(stmt);
 

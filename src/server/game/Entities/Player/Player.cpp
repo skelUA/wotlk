@@ -1027,6 +1027,9 @@ void Player::setDeathState(DeathState s, bool /*despawn = false*/)
             return;
         }
 
+        // clear all pending spell cast requests when dying
+        SpellQueue.clear();
+
         // drunken state is cleared on death
         SetDrunkValue(0);
         // lost combo points at any target (targeted combo points clear in Unit::setDeathState)
@@ -1338,7 +1341,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         return false;
     }
 
-    if (AccountMgr::IsPlayerAccount(GetSession()->GetSecurity()) && DisableMgr::IsDisabledFor(DISABLE_TYPE_MAP, mapid, this))
+    if (AccountMgr::IsPlayerAccount(GetSession()->GetSecurity()) && sDisableMgr->IsDisabledFor(DISABLE_TYPE_MAP, mapid, this))
     {
         LOG_ERROR("entities.player", "Player ({}, name: {}) tried to enter a forbidden map {}", GetGUID().ToString(), GetName(), mapid);
         SendTransferAborted(mapid, TRANSFER_ABORT_MAP_NOT_ALLOWED);
@@ -4470,6 +4473,9 @@ void Player::BuildPlayerRepop()
 
 void Player::ResurrectPlayer(float restore_percent, bool applySickness)
 {
+    if (!sScriptMgr->CanPlayerResurrect(this))
+        return;
+
     WorldPacket data(SMSG_DEATH_RELEASE_LOC, 4 * 4);        // remove spirit healer position
     data << uint32(-1);
     data << float(0);
@@ -5961,7 +5967,7 @@ void Player::RewardReputation(Unit* victim)
     if (!victim || victim->IsPlayer())
         return;
 
-    if (victim->ToCreature()->IsReputationGainDisabled())
+    if (victim->ToCreature()->IsReputationRewardDisabled())
         return;
 
     ReputationOnKillEntry const* Rep = sObjectMgr->GetReputationOnKilEntry(victim->ToCreature()->GetCreatureTemplate()->Entry);
@@ -7864,7 +7870,7 @@ void Player::SendLoot(ObjectGuid guid, LootType loot_type)
             if (loot_type == LOOT_FISHING)
                 go->GetFishLoot(loot, this);
             else if (loot_type == LOOT_FISHING_JUNK)
-                go->GetFishLootJunk(loot, this);
+                go->GetFishLoot(loot, this, true);
 
             if (go->GetGOInfo()->type == GAMEOBJECT_TYPE_CHEST && go->GetGOInfo()->chest.groupLootRules)
             {
@@ -8825,6 +8831,8 @@ void Player::SendInitWorldStates(uint32 zoneid, uint32 areaid)
                 break;
         }
     }
+
+    sWorldState->FillInitialWorldStates(data, zoneid, areaid);
 
     uint16 length = (data.wpos() - countPos) / 8;
     data.put<uint16>(countPos, length);
@@ -13073,7 +13081,7 @@ PartyResult Player::CanUninviteFromGroup(ObjectGuid targetPlayerGUID) const
     return ERR_PARTY_RESULT_OK;
 }
 
-bool Player::isUsingLfg()
+bool Player::IsUsingLfg()
 {
     return sLFGMgr->GetState(GetGUID()) != lfg::LFG_STATE_NONE;
 }

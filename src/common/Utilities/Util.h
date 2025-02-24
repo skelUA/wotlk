@@ -153,15 +153,22 @@ inline bool isExtendedLatinCharacter(wchar_t wchar)
 
 inline bool isCyrillicCharacter(wchar_t wchar)
 {
-    if (wchar >= 0x0410 && wchar <= 0x044F)                  // CYRILLIC CAPITAL LETTER A - CYRILLIC SMALL LETTER YA
+    if (wchar >= 0x0410 && wchar <= 0x0429)                  // А-Щ
     {
         return true;
     }
-    if (wchar == 0x0401 || wchar == 0x0451 ||  // Ё ё
-        wchar == 0x0406 || wchar == 0x0456 ||  // І і
-        wchar == 0x0407 || wchar == 0x0457 ||  // Ї ї
-        wchar == 0x0404 || wchar == 0x0454 ||  // Є є
-        wchar == 0x0490 || wchar == 0x0491)    // Ґ ґ
+    if (wchar >= 0x0430 && wchar <= 0x0449)                  // а-щ
+    {
+        return true;
+    }
+    if (wchar == 0x042C || wchar == 0x044C || // Ь ь
+        wchar == 0x042E || wchar == 0x044E || // Ю ю
+        wchar == 0x042F || wchar == 0x044F || // Я я
+        wchar == 0x0406 || wchar == 0x0456 || // І і
+        wchar == 0x0407 || wchar == 0x0457 || // Ї ї
+        wchar == 0x0404 || wchar == 0x0454 || // Є є
+        wchar == 0x0490 || wchar == 0x0491 || // Ґ ґ
+        wchar == 0x0027) // '
     {
         return true;
     }
@@ -312,21 +319,21 @@ inline wchar_t wcharToUpper(wchar_t wchar)
     {
         return wchar_t(0x0401);
     }
-    if (wchar == 0x0491)
-    {
-        return wchar_t(0x0490);
-    }
-    if (wchar == 0x0456)
+    if (wchar == 0x0456)                                     // CYRILLIC SMALL LETTER YE (UA)
     {
         return wchar_t(0x0406);
     }
-    if (wchar == 0x0457)
+    if (wchar == 0x0457)                                     // CYRILLIC SMALL LETTER YI (UA)
     {
         return wchar_t(0x0407);
     }
-    if (wchar == 0x0454)
+    if (wchar == 0x0454)                                     // CYRILLIC SMALL LETTER YE (UA)
     {
         return wchar_t(0x0404);
+    }
+    if (wchar == 0x0491)                                     // CYRILLIC SMALL LETTER GH (UA)
+    {
+        return wchar_t(0x0490);
     }
 
     return wchar;
@@ -370,21 +377,21 @@ inline wchar_t wcharToLower(wchar_t wchar)
     {
         return wchar_t(uint16(wchar) + 0x0020);
     }
-    if (wchar == 0x0490)
-    {
-        return wchar_t(0x0491);
-    }
-    if (wchar == 0x0406)
+    if (wchar == 0x0406)                                     // CYRILLIC SMALL LETTER YE (UA)
     {
         return wchar_t(0x0456);
     }
-    if (wchar == 0x0407)
+    if (wchar == 0x0407)                                     // CYRILLIC SMALL LETTER YI (UA)
     {
         return wchar_t(0x0457);
     }
-    if (wchar == 0x0404)
+    if (wchar == 0x0404)                                     // CYRILLIC SMALL LETTER YE (UA)
     {
         return wchar_t(0x0454);
+    }
+    if (wchar == 0x0490)                                     // CYRILLIC SMALL LETTER GH (UA)
+    {
+        return wchar_t(0x0491);
     }
 
     return wchar;

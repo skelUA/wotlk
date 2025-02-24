@@ -17,6 +17,7 @@
 
 #include "Player.h"
 #include "PlayerScript.h"
+#include "Chat.h"
 
 enum ApprenticeAnglerQuestEnum
 {
@@ -66,7 +67,39 @@ public:
     }
 };
 
+
+enum RenameUAQuestEnum
+{
+    QUEST_RENAME_UA= 90070
+};
+
+class QuestRenameUAPlayerScript : public PlayerScript
+{
+public:
+    QuestRenameUAPlayerScript() : PlayerScript("QuestRenameUAPlayerScript", {PLAYERHOOK_ON_PLAYER_COMPLETE_QUEST})
+    {
+    }
+
+    void OnPlayerCompleteQuest(Player* player, Quest const* quest) override
+    {
+        //LOG_ERROR("server.loading", "point1");
+
+        if (quest->GetQuestId() == QUEST_RENAME_UA)
+        {
+            //LOG_ERROR("server.loading", "point2");
+           if (player)
+           {
+               //LOG_ERROR("server.loading", "point3");
+               //handler->PSendSysMessage(LANG_RENAME_PLAYER, handler->GetNameLink(target));
+               sObjectMgr->AddReservedPlayerName(player->GetName());
+               player->SetAtLoginFlag(AT_LOGIN_RENAME);
+           }
+        }
+    }
+};
+
 void AddSC_player_scripts()
 {
+    new QuestRenameUAPlayerScript();
     new QuestApprenticeAnglerPlayerScript();
 }

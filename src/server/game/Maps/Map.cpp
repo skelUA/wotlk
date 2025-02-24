@@ -145,7 +145,7 @@ bool Map::ExistVMap(uint32 mapid, int gx, int gy)
 
 void Map::LoadMMap(int gx, int gy)
 {
-    if (!DisableMgr::IsPathfindingEnabled(this)) // pussywizard
+    if (!sDisableMgr->IsPathfindingEnabled(this)) // pussywizard
         return;
 
     int mmapLoadResult = MMAP::MMapFactory::createOrGetMMapMgr()->loadMap(GetId(), gx, gy);
@@ -3020,6 +3020,15 @@ bool InstanceMap::AddPlayerToMap(Player* player)
     m_resetAfterUnload = false;
     m_unloadWhenEmpty = false;
 
+    if (instance_data && instance_data->IsTwoFactionInstance()
+        && instance_data->GetTeamIdInInstance() == TEAM_NEUTRAL)
+    {
+        instance_data->SetTeamIdInInstance(player->GetTeamId());
+        if (Group* group = player->GetGroup())
+            if (Player* leader = ObjectAccessor::FindConnectedPlayer(group->GetLeaderGUID()))
+                instance_data->SetTeamIdInInstance(leader->GetTeamId());
+    }
+
     // this will acquire the same mutex so it cannot be in the previous block
     Map::AddPlayerToMap(player);
 
@@ -3201,6 +3210,11 @@ void InstanceMap::UnloadAll()
         DeleteRespawnTimes();
         DeleteCorpseData();
     }
+
+    // There was a crash on unloading map. Lets try to add some hints to crashlog.
+    // TODO: delete this once crash fixed.
+    volatile uint32 mapID = GetId();
+    volatile uint32 instanceID = GetInstanceId();
 
     Map::UnloadAll();
 }

@@ -1431,7 +1431,16 @@ void Spell::SelectImplicitCasterDestTargets(SpellEffIndex effIndex, SpellImplici
                 float destx = pos.GetPositionX() + distance * cos(pos.GetOrientation());
                 float desty = pos.GetPositionY() + distance * sin(pos.GetOrientation());
 
-                float ground = map->GetHeight(phasemask, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ());
+                // Added GROUND_HEIGHT_TOLERANCE to account for cases where, during a jump,
+                // the Z position may be slightly below the vmap ground level.
+                // Without this tolerance, a ray trace might incorrectly attempt to find ground
+                // beneath the actual surface.
+                //
+                // Example:
+                //    actual vmap ground: -56.342392
+                //    Z position:         -56.347195
+                float searchGroundZPos = pos.GetPositionZ()+GROUND_HEIGHT_TOLERANCE;
+                float ground = map->GetHeight(phasemask, pos.GetPositionX(), pos.GetPositionY(), searchGroundZPos);
 
                 bool isCasterInWater = m_caster->IsInWater();
                 if (!m_caster->HasUnitMovementFlag(MOVEMENTFLAG_FALLING) || (pos.GetPositionZ() - ground < distance))
@@ -3530,7 +3539,7 @@ SpellCastResult Spell::prepare(SpellCastTargets const* targets, AuraEffect const
     _spellEvent = new SpellEvent(this);
     m_caster->m_Events.AddEvent(_spellEvent, m_caster->m_Events.CalculateTime(1));
 
-    if (DisableMgr::IsDisabledFor(DISABLE_TYPE_SPELL, m_spellInfo->Id, m_caster))
+    if (sDisableMgr->IsDisabledFor(DISABLE_TYPE_SPELL, m_spellInfo->Id, m_caster))
     {
         SendCastResult(SPELL_FAILED_SPELL_UNAVAILABLE);
         finish(false);
@@ -3717,6 +3726,8 @@ SpellCastResult Spell::prepare(SpellCastTargets const* targets, AuraEffect const
             TriggerGlobalCooldown();
     }
 
+    sScriptMgr->OnSpellPrepare(this, m_caster, m_spellInfo);
+
     return SPELL_CAST_OK;
 }
 
@@ -3787,6 +3798,8 @@ void Spell::cancel(bool bySelf)
 
     //set state back so finish will be processed
     m_spellState = oldState;
+
+    sScriptMgr->OnSpellCastCancel(this, m_caster, m_spellInfo, bySelf);
 
     finish(false);
 }
@@ -4113,6 +4126,8 @@ void Spell::_cast(bool skipCheck)
     if (m_caster->IsPlayer())
         if (m_caster->ToPlayer()->GetCommandStatus(CHEAT_COOLDOWN))
             m_caster->ToPlayer()->RemoveSpellCooldown(m_spellInfo->Id, true);
+
+    sScriptMgr->OnSpellCast(this, m_caster, m_spellInfo, skipCheck);
 
     SetExecutedCurrently(false);
 }
@@ -6241,7 +6256,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                                 return SPELL_FAILED_BAD_TARGETS;
                     // Xinef: Pass only explicit unit target spells
                     // pussywizard:
-                    if (DisableMgr::IsPathfindingEnabled(m_caster->FindMap()) && m_spellInfo->NeedsExplicitUnitTarget())
+                    if (sDisableMgr->IsPathfindingEnabled(m_caster->FindMap()) && m_spellInfo->NeedsExplicitUnitTarget())
                     {
                         Unit* target = m_targets.GetUnitTarget();
                         if (!target)
@@ -7954,7 +7969,7 @@ bool Spell::CheckEffectTarget(Unit const* target, uint32 eff) const
 
      // if spell is triggered, need to check for LOS disable on the aura triggering it and inherit that behaviour
     if (IsTriggered() && m_triggeredByAuraSpell && (m_triggeredByAuraSpell.spellInfo->HasAttribute(SPELL_ATTR2_IGNORE_LINE_OF_SIGHT) ||
-        DisableMgr::IsDisabledFor(DISABLE_TYPE_SPELL, m_triggeredByAuraSpell.spellInfo->Id, nullptr, SPELL_DISABLE_LOS)))
+        sDisableMgr->IsDisabledFor(DISABLE_TYPE_SPELL, m_triggeredByAuraSpell.spellInfo->Id, nullptr, SPELL_DISABLE_LOS)))
     {
         return true;
     }

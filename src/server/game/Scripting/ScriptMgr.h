@@ -459,6 +459,7 @@ public: /* PlayerScript */
     void OnAfterCreatureLoot(Player* player);
     void OnAfterCreatureLootMoney(Player* player);
     bool OnCanPlayerFlyInZone(Player* player, uint32 mapId, uint32 zoneId, SpellInfo const* bySpell);
+    bool CanPlayerResurrect(Player* player);
 
     // Anti cheat
     void AnticheatSetCanFlybyServer(Player* player, bool apply);
@@ -556,6 +557,7 @@ public: /* UnitScript */
     void OnUnitEnterEvadeMode(Unit* unit, uint8 why);
     void OnUnitEnterCombat(Unit* unit, Unit* victim);
     void OnUnitDeath(Unit* unit, Unit* killer);
+    void OnUnitSetShapeshiftForm(Unit* unit, uint8 form);
 
 public: /* MovementHandlerScript */
     void OnPlayerMove(Player* player, MovementInfo movementInfo, uint32 opcode);
@@ -615,6 +617,9 @@ public: /* SpellSC */
     void OnDummyEffect(WorldObject* caster, uint32 spellID, SpellEffIndex effIndex, GameObject* gameObjTarget);
     void OnDummyEffect(WorldObject* caster, uint32 spellID, SpellEffIndex effIndex, Creature* creatureTarget);
     void OnDummyEffect(WorldObject* caster, uint32 spellID, SpellEffIndex effIndex, Item* itemTarget);
+    void OnSpellCastCancel(Spell* spell, Unit* caster, SpellInfo const* spellInfo, bool bySelf);
+    void OnSpellCast(Spell* spell, Unit* caster, SpellInfo const* spellInfo, bool skipCheck);
+    void OnSpellPrepare(Spell* spell, Unit* caster, SpellInfo const* spellInfo);
 
 public: /* GameEventScript */
     void OnGameEventStart(uint16 EventID);
