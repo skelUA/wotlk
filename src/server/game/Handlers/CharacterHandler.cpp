@@ -1355,6 +1355,9 @@ void WorldSession::HandleCharRenameOpcode(WorldPacket& recvData)
         return;
     }
 
+    if (HandleCharRenameByQuest(renameInfo))
+        return;
+
     // Ensure that the character belongs to the current account, that rename at login is enabled
     // and that there is no character with the desired new name
     CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_FREE_NAME);
@@ -1411,12 +1414,67 @@ void WorldSession::HandleCharRenameCallBack(std::shared_ptr<CharacterRenameInfo>
         CharacterDatabase.Execute(stmt);
     }
 
+    stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_RENAME_QUEST);
+    stmt->SetData(0, guidLow);
+    CharacterDatabase.Execute(stmt);
+
     LOG_INFO("entities.player.character", "Account: {} (IP: {}), Character [{}] (guid: {}) Changed name to: {}", GetAccountId(), GetRemoteAddress(), oldName, guidLow, renameInfo->Name);
 
     SendCharRename(RESPONSE_SUCCESS, renameInfo.get());
 
     // xinef: update global data
     sCharacterCache->UpdateCharacterData(renameInfo->Guid, renameInfo->Name);
+}
+
+bool WorldSession::HandleCharRenameByQuest(std::shared_ptr<CharacterRenameInfo> renameInfo)
+{
+    auto guid = renameInfo->Guid.GetCounter();
+    auto* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_RENAME_QUEST);
+    stmt->SetData(0, guid);
+    stmt->SetData(1, guid);
+    auto result = CharacterDatabase.Query(stmt);
+
+    if (!result)
+        return false;
+
+    Field* fields = result->Fetch();
+    bool exist = fields[0].Get<bool>();
+
+    if (!exist)
+        return false;
+
+    std::string currentName = fields[1].Get<std::string>();
+
+    if (renameInfo->Name != currentName)
+        return false;
+
+    uint16 atLoginFlags = fields[2].Get<uint16>();
+    if (!(atLoginFlags & AT_LOGIN_RENAME))
+    {
+        SendCharRename(CHAR_CREATE_ERROR, renameInfo.get());
+        return true;
+    }
+
+    atLoginFlags &= ~AT_LOGIN_RENAME;
+
+    stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPD_AT_LOGIN);
+    stmt->SetData(0, atLoginFlags);
+    stmt->SetData(1, guid);
+    CharacterDatabase.Execute(stmt);
+
+    if (sWorld->getBoolConfig(CONFIG_DECLINED_NAMES_USED))
+    {
+        stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_DECLINED_NAME);
+        stmt->SetData(0, guid);
+        CharacterDatabase.Execute(stmt);
+    }
+
+    stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_RENAME_QUEST);
+    stmt->SetData(0, guid);
+    CharacterDatabase.Execute(stmt);
+
+    SendCharRename(RESPONSE_SUCCESS, renameInfo.get());
+    return true;
 }
 
 void WorldSession::HandleSetPlayerDeclinedNames(WorldPacket& recvData)
