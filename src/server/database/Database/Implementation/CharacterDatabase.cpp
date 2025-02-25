@@ -153,6 +153,11 @@ void CharacterDatabaseConnection::DoPrepareStatements()
     PrepareStatement(CHAR_UPD_NAME_BY_GUID, "UPDATE characters SET name = ? WHERE guid = ?", CONNECTION_ASYNC);
     PrepareStatement(CHAR_DEL_DECLINED_NAME, "DELETE FROM character_declinedname WHERE guid = ?", CONNECTION_ASYNC);
 
+    PrepareStatement(CHAR_SEL_RENAME_QUEST, "SELECT EXISTS(SELECT NULL FROM rename_quest_event WHERE guid = ?) AS exist, c.name, c.at_login FROM characters c WHERE c.guid = ?", CONNECTION_SYNCH);
+    PrepareStatement(CHAR_INS_RENAME_QUEST, "INSERT IGNORE INTO rename_quest_event (guid) VALUES (?)", CONNECTION_ASYNC);
+    PrepareStatement(CHAR_DEL_RENAME_QUEST, "DELETE FROM rename_quest_event WHERE guid = ?", CONNECTION_ASYNC);
+    PrepareStatement(CHAR_UPD_AT_LOGIN, "UPDATE characters SET at_login = ? WHERE guid = ?", CONNECTION_ASYNC);
+
     // Guild handling
     // 0: uint32, 1: string, 2: uint32, 3: string, 4: string, 5: uint64, 6-10: uint32, 11: uint64
     PrepareStatement(CHAR_INS_GUILD, "INSERT INTO guild (guildid, name, leaderguid, info, motd, createdate, EmblemStyle, EmblemColor, BorderStyle, BorderColor, BackgroundColor, BankMoney) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", CONNECTION_ASYNC);

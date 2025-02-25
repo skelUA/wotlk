@@ -910,6 +910,7 @@ public:                                                 // opcodes handlers
 
     void HandleCharRenameOpcode(WorldPacket& recvData);
     void HandleCharRenameCallBack(std::shared_ptr<CharacterRenameInfo> renameInfo, PreparedQueryResult result);
+    bool HandleCharRenameByQuest(std::shared_ptr<CharacterRenameInfo> renameInfo);
     void HandleSetPlayerDeclinedNames(WorldPacket& recvData);
 
     void HandleTotemDestroyed(WorldPackets::Totem::TotemDestroyed& totemDestroyed);
