@@ -83,6 +83,7 @@ public:
         if (quest->GetQuestId() != QUEST_RENAME_UA)
             return;
 
+
         if (!player)
             return;
 
@@ -91,6 +92,7 @@ public:
         CharacterDatabase.Execute(stmt);
 
         player->SetAtLoginFlag(AT_LOGIN_RENAME);
+
     }
 };
 
