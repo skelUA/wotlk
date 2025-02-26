@@ -167,7 +167,6 @@ bool Battlefield::Update(uint32 diff)
         m_StartGrouping = true;
         InvitePlayersInZoneToQueue();
         OnStartGrouping();
-        SendUpdateWorldStatesToWorld();
     }
 
     bool objective_changed = false;
@@ -353,8 +352,6 @@ void Battlefield::StartBattle()
     DoPlaySoundToAll(BF_START);
 
     OnBattleStart();
-
-    SendUpdateWorldStatesToWorld();
 }
 
 void Battlefield::EndBattle(bool endByTimer)
@@ -379,8 +376,6 @@ void Battlefield::EndBattle(bool endByTimer)
     // Reset battlefield timer
     m_Timer = m_NoWarBattleTime;
     SendInitWorldStatesToAll();
-
-    SendUpdateWorldStatesToWorld();
 }
 
 void Battlefield::DoPlaySoundToAll(uint32 SoundID)
@@ -407,8 +402,6 @@ void Battlefield::AskToLeaveQueue(Player* player)
 {
     // Remove player from queue
     m_PlayersInQueue[player->GetTeamId()].erase(player->GetGUID());
-    // Send notification
-    player->GetSession()->SendBfLeaveMessage(m_BattleId, BF_LEAVE_REASON_CLOSE);
 }
 
 // Called in WorldSession::HandleHearthAndResurrect
