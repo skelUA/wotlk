@@ -427,8 +427,8 @@ std::wstring GetMainPartOfName(std::wstring const& wname, uint32_t declension)
     static std::array<std::array<std::wstring const*, 11>, 6> const dropEnds = { {
             // ка         ко         а           е           я           у         є          і           ь          й          о
             { &ka_End,  &ko_End,   &a_End,     &e_End,    &ya_End,    &u_End,     &ye_End,   &i_End,     &y_end,    &j_End,    &o_End },  // 1-й відмінок (називний)
-            //  ки         а          и           ї           я 
-            { &ky_End,   &a_End,   &i_end,    &yi_End,    &ya_End,    nullptr,    nullptr,   nullptr,   nullptr,   nullptr,   nullptr },  // 2-й відмінок (родовий)
+            //  ки         а          и          і           ї           я 
+            { &ky_End,   &a_End,   &i_end,    &i_End,     &yi_End,    &ya_End,    nullptr,   nullptr,   nullptr,   nullptr,   nullptr },  // 2-й відмінок (родовий)
             //  еві         єві        ові        ці        зі           ю          у          і          ї
             { &evi_End, &ievi_End, &ovi_End,   &tsi_End,   &zyi_End,  &yu_End,    &u_End,    &i_End,    &yi_End,   nullptr,   nullptr },  // 3-й відмінок (давальний)
             //  ку           я          ю         а          у   
