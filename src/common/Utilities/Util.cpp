@@ -423,6 +423,8 @@ std::wstring GetMainPartOfName(std::wstring const& wname, uint32_t declension)
     static std::wstring const tsi_End = L"\u0446\u0456";  // -ці
     static std::wstring const tsy_End = L"\u0446\u044E";  // -цю
     static std::wstring const tsya_End = L"\u0446\u044F"; // -ця
+    static std::wstring const yaty_end = L"\u044F\u0442\u0438"; // -яти
+    static std::wstring const yati_End = L"\u044F\u0442\u0456"; // -яті
     static std::wstring const tsey_End = L"\u0446\u0435\u044E"; // -цею
     static std::wstring const koyu_End = L"\u043A\u043E\u044E"; // -кою
     static std::wstring const evi_End = L"\u0435\u0432\u0456";  // -еві
@@ -433,18 +435,18 @@ std::wstring GetMainPartOfName(std::wstring const& wname, uint32_t declension)
 
     // Масив закінчень для кожного відмінка
     static std::array<std::array<std::wstring const*, 13>, 6> const dropEnds = { {
-            //   ця         ий        ка         ко          а         е         я         у         є        і         ь       й          о
-            { &tsya_End, &ij_End,   &ka_End,   &ko_End,   &a_End,   &e_End,   &ya_End,  &u_End,   &ye_End,  &i_End,  &y_end,  &j_End,  &o_End  },  // 1-й відмінок (називний)
-            //   ого        ці        ки         ої          а         и         і         ї         я 
-            { &ogo_End,  &tsi_End,  &ky_End,   &oi_End,   &a_End,   &i_end,   &i_End,   &yi_End,  &ya_End,  nullptr, nullptr, nullptr, nullptr },  // 2-й відмінок (родовий)
-            //   ому       еві       єві        ові         ій        ці        зі         ю         у        і         ї
-            { &omu_End,  &evi_End,  &ievi_End, &ovi_End,  &ij_end,  &tsi_End, &zyi_End, &yu_End,  &u_End,   &i_End,  &yi_End, nullptr, nullptr },  // 3-й відмінок (давальний)
+            //   ця         ий        ка         ко          а         е         я         у         є         і        ь        й         о
+            { &tsya_End, &ij_End,   &ka_End,   &ko_End,   &a_End,    &e_End,   &ya_End,  &u_End,   &ye_End,  &i_End,  &y_end,  &j_End,  &o_End  },  // 1-й відмінок (називний)
+            //  ого         яти       ці        ки          ої         а         и         і         ї         я 
+            { &ogo_End,  &yaty_end, &tsi_End,  &ky_End,   &oi_End,   &a_End,   &i_end,   &i_End,   &yi_End,  &ya_End, nullptr, nullptr, nullptr },  // 2-й відмінок (родовий)
+            //  ому        еві       єві        ові         яті        ій        ці        зі         ю        у        і         ї
+            { &omu_End,  &evi_End,  &ievi_End, &ovi_End,  &yati_End, &ij_end,  &tsi_End, &zyi_End, &yu_End,  &u_End,  &i_End,  &yi_End, nullptr },  // 3-й відмінок (давальний)
             //  ого         цю        ку          я          ю         а         у         о
-            {  &ogo_End,  &tsy_End,  &ku_End,   &ya_End,   &yu_End,  &a_End,  &u_End,   &o_End,   nullptr,  nullptr, nullptr, nullptr, nullptr },  // 4-й відмінок (знахідний)
-            //   цею       кою        ом         ем         ею        єю        єм        ою         ям      им         ю
-            { &tsey_End, &koyu_End, &om_End,   &em_End,   &eyu_End, &iey_End, &yem_End, &oyu_End, &yam_End, &im_End, &yu_End, nullptr, nullptr },  // 5-й відмінок (орудний)
-            //   ому       еві       ові        єві         ій        ці         і         ї         ю        у 
-            { &omu_End,  &evi_End,  &ovi_End,  &ievi_End, &ij_end,  &tsi_End, &i_End,   &yi_End,  &yu_End,  &u_End,  nullptr, nullptr, nullptr }   // 6-й відмінок (місцевий)
+            { &ogo_End,  &tsy_End,  &ku_End,   &ya_End,   &yu_End,   &a_End,   &u_End,   &o_End,   nullptr,  nullptr, nullptr, nullptr, nullptr },  // 4-й відмінок (знахідний)
+            //  цею        кою        ом         ем         ею        єю        єм        ою         ям        им       ю
+            { &tsey_End, &koyu_End, &om_End,   &em_End,   &eyu_End,  &iey_End, &yem_End, &oyu_End, &yam_End, &im_End, &yu_End, nullptr, nullptr },  // 5-й відмінок (орудний)
+            //  ому        еві       ові        єві         яті       ій        ці         і         ї          ю       у 
+            { &omu_End,  &evi_End,  &ovi_End,  &ievi_End, &yati_End, &ij_end,  &tsi_End, &i_End,   &yi_End,  &yu_End, &u_End,  nullptr, nullptr }   // 6-й відмінок (місцевий)
         } };
 
     std::size_t const thisLen = wname.length();
