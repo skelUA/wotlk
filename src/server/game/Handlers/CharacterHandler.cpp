@@ -1479,12 +1479,15 @@ bool WorldSession::HandleCharRenameByQuest(std::shared_ptr<CharacterRenameInfo> 
 
 void WorldSession::HandleSetPlayerDeclinedNames(WorldPacket& recvData)
 {
-    // pussywizard:
-    if (!sWorld->getBoolConfig(CONFIG_DECLINED_NAMES_USED))
-        return;
-
     ObjectGuid guid;
     recvData >> guid;
+
+    // pussywizard:
+    if (!sWorld->getBoolConfig(CONFIG_DECLINED_NAMES_USED))
+    {
+        SendSetPlayerDeclinedNamesResult(DECLINED_NAMES_RESULT_SUCCESS, guid);
+        return;
+    }
 
     // not accept declined names for unsupported languages
     std::string name;
