@@ -412,7 +412,7 @@ std::wstring GetMainPartOfName(std::wstring const& wname, uint32_t declension)
     static std::wstring const im_End = L"\u0438\u043C";   // -им
     static std::wstring const zyi_End = L"\u0437\u0456"; // -зі
     static std::wstring const oyu_End = L"\u043E\u044E";  // -ою
-    static std::wstring const eyu_End = L"\u0454\u044E";  // -ею
+    static std::wstring const eyu_End = L"\u0435\u044E";  // -ею
     static std::wstring const ka_End = L"\u043A\u0430";  // -ка
     static std::wstring const ky_End = L"\u043A\u0438";  // -ки
     static std::wstring const ko_End = L"\u043A\u043E";  // -ко
