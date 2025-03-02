@@ -439,8 +439,8 @@ std::wstring GetMainPartOfName(std::wstring const& wname, uint32_t declension)
             { &ogo_End,  &tsi_End,  &ky_End,   &oi_End,   &a_End,   &i_end,   &i_End,   &yi_End,  &ya_End,  nullptr, nullptr, nullptr, nullptr },  // 2-й відмінок (родовий)
             //   ому       еві       єві        ові         ій        ці        зі         ю         у        і         ї
             { &omu_End,  &evi_End,  &ievi_End, &ovi_End,  &ij_end,  &tsi_End, &zyi_End, &yu_End,  &u_End,   &i_End,  &yi_End, nullptr, nullptr },  // 3-й відмінок (давальний)
-            //  ого         цю        ку          я          ю         а         у   
-            {  &ogo_End,  &tsy_End,  &ku_End,   &ya_End,   &yu_End,  &a_End,  &u_End,   nullptr,  nullptr,  nullptr, nullptr, nullptr, nullptr },  // 4-й відмінок (знахідний)
+            //  ого         цю        ку          я          ю         а         у         о
+            {  &ogo_End,  &tsy_End,  &ku_End,   &ya_End,   &yu_End,  &a_End,  &u_End,   &o_End,   nullptr,  nullptr, nullptr, nullptr, nullptr },  // 4-й відмінок (знахідний)
             //   цею       кою        ом         ем         ею        єю        єм        ою         ям      им         ю
             { &tsey_End, &koyu_End, &om_End,   &em_End,   &eyu_End, &iey_End, &yem_End, &oyu_End, &yam_End, &im_End, &yu_End, nullptr, nullptr },  // 5-й відмінок (орудний)
             //   ому       еві       ові        єві         ій        ці         і         ї         ю        у 
