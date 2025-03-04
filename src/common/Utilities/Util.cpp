@@ -393,17 +393,19 @@ std::wstring GetMainPartOfName(std::wstring const& wname, uint32_t declension)
 
     // Important: end length must be <= MAX_INTERNAL_PLAYER_NAME-MAX_PLAYER_NAME (3 currently)
     static std::wstring const a_End = L"\u0430";  // -а
-    static std::wstring const e_End = L"\u0435";  // -е
-    static std::wstring const ya_End = L"\u044F"; // -я
-    static std::wstring const u_End = L"\u0443";  // -у
-    static std::wstring const ye_End = L"\u0454"; // -є
-    static std::wstring const i_End = L"\u0456";  // -і
-    static std::wstring const i_end = L"\u0438";  // -и
     static std::wstring const o_End = L"\u043E";  // -о
-    static std::wstring const j_End = L"\u0439";  // -й
-    static std::wstring const y_end = L"\u044C";  // -ь
+    static std::wstring const u_End = L"\u0443";  // -у
+    static std::wstring const e_End = L"\u0435";  // -е
+    static std::wstring const i_end = L"\u0438";  // -и
+    static std::wstring const i_End = L"\u0456";  // -і
     static std::wstring const yi_End = L"\u0457"; // -ї 
+    static std::wstring const j_End = L"\u0439";  // -й
+    static std::wstring const ye_End = L"\u0454"; // -є
+    static std::wstring const ya_End = L"\u044F"; // -я
     static std::wstring const yu_End = L"\u044E"; // -ю
+    static std::wstring const y_end = L"\u044C";  // -ь
+    static std::wstring const k_End = L"\u043A";  // -к
+    static std::wstring const r_End = L"\u0440";  // -р
     static std::wstring const oi_End = L"\u043E\u0457";   // -ої 
     static std::wstring const om_End = L"\u043E\u043C";   // -ом
     static std::wstring const oyu_End = L"\u043E\u044E";  // -ою
@@ -424,6 +426,7 @@ std::wstring GetMainPartOfName(std::wstring const& wname, uint32_t declension)
     static std::wstring const ko_End = L"\u043A\u043E";   // -ко
     static std::wstring const ku_End = L"\u043A\u0443";   // -ку
     static std::wstring const tsi_End = L"\u0446\u0456";  // -ці
+    static std::wstring const tse_End = L"\u0446\u0435";  // -це
     static std::wstring const tsy_End = L"\u0446\u044E";  // -цю
     static std::wstring const tsya_End = L"\u0446\u044F"; // -ця
     static std::wstring const ga_End = L"\u0433\u0430";   // -га
@@ -432,11 +435,21 @@ std::wstring GetMainPartOfName(std::wstring const& wname, uint32_t declension)
     static std::wstring const gha_End = L"\u0491\u0430";   // -ґа
     static std::wstring const ghy_End = L"\u0491\u0438";   // -ґи
     static std::wstring const ghu_End = L"\u0491\u0443";   // -ґу
+    static std::wstring const er_End = L"\u0435\u0440";   // -ер
+    static std::wstring const ra_End = L"\u0440\u0430";   // -ра
+    static std::wstring const ry_End = L"\u0440\u0438";   // -ри
+    static std::wstring const ru_End = L"\u0440\u0443";   // -ру
+    static std::wstring const ri_End = L"\u0440\u0456";   // -рі
+    static std::wstring const ram_End = L"\u0440\u0430\u043C";  // -рам
+    static std::wstring const rah_End = L"\u0440\u0430\u0445";  // -рах
+    static std::wstring const rom_End = L"\u0440\u043E\u043C";  // -ром
+    static std::wstring const royu_End = L"\u0440\u043E\u044E"; // -рою
     static std::wstring const goyu_End = L"\u0433\u043E\u044E"; // -гою
     static std::wstring const ghoyu_End = L"\u0491\u043E\u044E";// -ґою
     static std::wstring const yaty_end = L"\u044F\u0442\u0438"; // -яти
     static std::wstring const yati_End = L"\u044F\u0442\u0456"; // -яті
     static std::wstring const tsey_End = L"\u0446\u0435\u044E"; // -цею
+    static std::wstring const tsem_End = L"\u0446\u0435\u043C"; // -цем
     static std::wstring const kom_End = L"\u043A\u043E\u043C";  // -ком
     static std::wstring const koyu_End = L"\u043A\u043E\u044E"; // -кою
     static std::wstring const evi_End = L"\u0435\u0432\u0456";  // -еві
@@ -447,30 +460,33 @@ std::wstring GetMainPartOfName(std::wstring const& wname, uint32_t declension)
     static std::wstring const ola_End = L"\u043E\u043B\u0430";  // -ола
     static std::wstring const olu_End = L"\u043E\u043B\u0443";  // -олу
     static std::wstring const oli_End = L"\u043E\u043B\u0456";  // -олі
+    static std::wstring const oly_End = L"\u043E\u043B\u0438";  // -оли
     static std::wstring const ozha_End = L"\u043E\u0436\u0430"; // -ожа
     static std::wstring const ozhu_End = L"\u043E\u0436\u0443"; // -ожу
     static std::wstring const ozhi_End = L"\u043E\u0436\u0456"; // -ожі
     static std::wstring const ozhem_End = L"\u043E\u0436\u0435\u043C"; // -ожем
     static std::wstring const olom_End = L"\u043E\u043B\u043E\u043C";  // -олом
+    static std::wstring const oloyu_End = L"\u043E\u043B\u043E\u044E"; // -олою
+    static std::wstring const ramy_End = L"\u0440\u0430\u043C\u0438";  // -рами
 
     // Масив закінчень для кожного відмінка
-    static std::array<std::array<std::wstring const*, 18>, 6> const dropEnds = { {
-            //  ця          га         ґа         ий          ка         ко         ок         іж         іл        а         е         я         у         є         і        ь        й        о
-            { &tsya_End,  &ga_End,   &gha_End,  &ii_End,    &ka_End,   &ko_End,   &ok_End,   &izh_End,  &il_End, &a_End,   &e_End,   &ya_End,  &u_End,   &ye_End,  &i_End,  &y_end,  &j_End,  &o_End  }, // 1-й відмінок (називний)
-            //  ожа         ола        ого        яти         ги         ґи         ці         ка         ки        ої        а         и         і         ї         я 
-            { &ozha_End,  &ola_End,  &ogo_End,  &yaty_end,  &gy_End,   &ghy_End,  &tsi_End,  &ka_End,   &ky_End, &oi_End,  &a_End,   &i_end,   &i_End,   &yi_End,  &ya_End, nullptr, nullptr, nullptr }, // 2-й відмінок (родовий)
-            //  ожу         олу        ому        еві         єві        ові        яті         ку        ій        ці        зі        ю         у         і         ї
-            { &ozhu_End,  &olu_End,  &omu_End,  &evi_End,   &ievi_End, &ovi_End,  &yati_End, &ku_End,   &ij_End, &tsi_End, &zi_End,  &yu_End,  &u_End,   &i_End,   &yi_End, nullptr, nullptr, nullptr }, // 3-й відмінок (давальний)
-            //  ожа         ола        ого        гу          ґу         цю         ка         ко         ку        я         ю         а         у         о
-            { &ozha_End,  &ola_End,  &ogo_End,  &gu_End,    &ghu_End,  &tsy_End,  &ka_End,   &ko_End,   &ku_End, &ya_End,  &yu_End,  &a_End,   &u_End,   &o_End,   nullptr, nullptr, nullptr, nullptr }, // 4-й відмінок (знахідний)
-            //  ожем        олом       гою        ґою         цею        ком        кою        ом         ем        ею        єю        єм        ою        ям        им       ю
-            { &ozhem_End, &olom_End, &goyu_End, &ghoyu_End, &tsey_End, &kom_End,  &koyu_End, &om_End,   &em_End, &eyu_End, &iey_End, &yem_End, &oyu_End, &yam_End, &im_End, &yu_End, nullptr, nullptr }, // 5-й відмінок (орудний)
-            //  ожі         ому        еві        ові         єві        яті        олі        ку        ій        зі         ці        і         ї         ю         у 
-            { &ozhi_End,  &omu_End,  &evi_End,  &ovi_End,   &ievi_End, &yati_End, &oli_End,  &ku_End,  &ij_End,  &zi_End,  &tsi_End, &i_End,   &yi_End,  &yu_End,  &u_End,  nullptr, nullptr, nullptr }  // 6-й відмінок (місцевий)
+    static std::array<std::array<std::wstring const*, 24>, 6> const dropEnds = { {
+            //  ола         це         ця         га          ґа          ий         ка         ко         ок         іж         іл        ер         ра        ру        к         а         е         я         у         є         і        ь        й        о
+            { &ola_End,   &tse_End,  &tsya_End, &ga_End,    &gha_End,  &ii_End,    &ka_End,   &ko_End,   &ok_End,   &izh_End,  &il_End,  &er_End,   &ra_End,  &ru_End,  &k_End,   &a_End,   &e_End,   &ya_End,  &u_End,   &ye_End,  &i_End,  &y_end,  &j_End,  &o_End  }, // 1-й відмінок (називний)
+            //  оли         ожа        ола         ого        яти         ги         ґи         ця         ці         ка         ки        ої         ра        ру        ри        а         и         і         ї         я         р
+            { &oly_End,   &ozha_End, &ola_End,   &ogo_End,  &yaty_end, &gy_End,    &ghy_End,  &tsya_End, &tsi_End,  &ka_End,   &ky_End,  &oi_End,   &ra_End,  &ru_End,  &ry_End,  &a_End,   &i_end,   &i_End,   &yi_End,  &ya_End,  &r_End,  nullptr, nullptr, nullptr }, // 2-й відмінок (родовий)
+            //  ожу         олі        олу         ому        еві         єві        ові        яті        рам        ій         ці        цю         зі        ку        ру        рі        е         ю         у         і         ї
+            { &ozhu_End,  &oli_End,  &olu_End,   &omu_End,  &evi_End,  &ievi_End,  &ovi_End,  &yati_End, &ram_End,  &ij_End,   &tsi_End, &tsy_End,  &zi_End,  &ku_End,  &ru_End,  &ri_End,  &e_End,   &yu_End,  &u_End,   &i_End,   &yi_End, nullptr, nullptr, nullptr }, // 3-й відмінок (давальний)
+            //  ожа         ола        олу         ого        гу          ґу         це         цю         ка         ко         ку        ра         ру        іл        а         е         я         ю         у         о
+            { &ozha_End,  &ola_End,  &olu_End,   &ogo_End,  &gu_End,   &ghu_End,   &tse_End,  &tsy_End,  &ka_End,   &ko_End,   &ku_End,  &ra_End,   &ru_End,  &il_End,  &a_End,   &e_End,   &ya_End,  &yu_End,  &u_End,   &o_End,   nullptr, nullptr, nullptr, nullptr }, // 4-й відмінок (знахідний)
+            //  ожем        олом       олою        рами       гою         ґою        цею        цем        кою        ком        ром       рою        ру        ом        ем        ею        єю        єм        ою        ям        им       ю
+            { &ozhem_End, &olom_End, &oloyu_End, &ramy_End, &goyu_End, &ghoyu_End, &tsey_End, &tsem_End, &kom_End,  &koyu_End, &rom_End, &royu_End, &ru_End,  &om_End,  &em_End,  &eyu_End, &iey_End, &yem_End, &oyu_End, &yam_End, &im_End, &yu_End, nullptr, nullptr }, // 5-й відмінок (орудний)
+            //  ожі         ому        еві         ові        єві         яті        олі        рах        ру         рі         ку        ій         зі        ці        і         ї         ю         у 
+            { &ozhi_End,  &omu_End,  &evi_End,   &ovi_End,  &ievi_End, &yati_End,  &oli_End,  &rah_End,  &ru_End,   &ri_End,   &ku_End,  &ij_End,  &zi_End,   &tsi_End, &i_End,   &yi_End,  &yu_End,  &u_End,   nullptr,  nullptr,  nullptr, nullptr, nullptr, nullptr }  // 6-й відмінок (місцевий)
         } };
 
     std::size_t const thisLen = wname.length();
-    std::array<std::wstring const*, 18> const& endings = dropEnds[declension];
+    std::array<std::wstring const*, 24> const& endings = dropEnds[declension];
     for (const std::wstring* endingPtr : endings)
     {
         if (endingPtr == nullptr)
