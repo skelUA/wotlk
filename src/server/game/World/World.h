@@ -299,6 +299,17 @@ public:
         return index < INT_CONFIG_VALUE_COUNT ? _int_configs[index] : 0;
     }
 
+    void setStringConfig(WorldStringConfig index, std::string value) override
+    {
+        if (index < STRING_CONFIG_VALUE_COUNT)
+            _string_configs[index] = value;
+    }
+
+    [[nodiscard]] std::string getStringConfig(WorldStringConfig index) const override
+    {
+        return index < STRING_CONFIG_VALUE_COUNT ? _string_configs[index] : "";
+    }
+
     void setWorldState(uint32 index, uint64 value) override;
     [[nodiscard]] uint64 getWorldState(uint32 index) const override;
     void LoadWorldStates() override;
@@ -390,6 +401,7 @@ private:
     uint32 _int_configs[INT_CONFIG_VALUE_COUNT];
     bool _bool_configs[BOOL_CONFIG_VALUE_COUNT];
     float _float_configs[FLOAT_CONFIG_VALUE_COUNT];
+    std::string _string_configs[STRING_CONFIG_VALUE_COUNT];
     typedef std::map<uint32, uint64> WorldStatesMap;
     WorldStatesMap _worldstates;
     uint32 _playerLimit;

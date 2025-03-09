@@ -222,7 +222,10 @@ foreach(SOURCE_MODULE ${MODULES_MODULE_LIST})
     # Create the script module project
     add_library(${MODULE_SOURCE_PROJECT_NAME} SHARED
       ${MODULE_SOURCE_PRIVATE_SOURCES}
-      ${SCRIPT_MODULE_PRIVATE_SCRIPTLOADER})
+      ${SCRIPT_MODULE_PRIVATE_SCRIPTLOADER}
+            ../src/server/game/EventHandler/data/LoginEvent.h
+            ../src/server/game/EventHandler/data/Event.h
+            ../src/server/game/EventHandler/data/WintergraspRemainingEvent.h)
 
     target_link_libraries(${MODULE_SOURCE_PROJECT_NAME}
       PRIVATE
@@ -275,7 +278,10 @@ endif()
 add_library(modules STATIC
     ModulesScriptLoader.h
     ${SCRIPT_MODULE_PRIVATE_SCRIPTLOADER}
-    ${PRIVATE_SOURCES_MODULES})
+    ${PRIVATE_SOURCES_MODULES}
+        ../src/server/game/EventHandler/EventsHandler.h
+        ../src/server/game/EventHandler/EventSerializer.cpp
+)
 
 if (MOD_ELUNA_FOUND)
     target_link_libraries(modules PUBLIC lualib)

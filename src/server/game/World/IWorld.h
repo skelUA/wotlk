@@ -183,6 +183,8 @@ enum WorldBoolConfigs
     CONFIG_MUNCHING_BLIZZLIKE,
     CONFIG_ENABLE_DAZE,
     CONFIG_SPELL_QUEUE_ENABLED,
+    CONFIG_EVENTS_HANDLER_ENABLED,
+    CONFIG_EVENTS_HANDLER_USE_SSL,
     BOOL_CONFIG_VALUE_COUNT
 };
 
@@ -420,7 +422,14 @@ enum WorldIntConfigs
     CONFIG_AUCTIONHOUSE_WORKERTHREADS,
     CONFIG_SUNSREACH_COUNTER_MAX,
     CONFIG_SPELL_QUEUE_WINDOW,
+    CONFIG_EVENTS_HANDLER_PORT,
     INT_CONFIG_VALUE_COUNT
+};
+
+enum WorldStringConfig
+{
+    CONFIG_EVENTS_HANDLER_HOST,
+    STRING_CONFIG_VALUE_COUNT
 };
 
 /// Server rates
@@ -587,6 +596,8 @@ public:
     [[nodiscard]] virtual float getFloatConfig(WorldFloatConfigs index) const = 0;
     virtual void setIntConfig(WorldIntConfigs index, uint32 value) = 0;
     [[nodiscard]] virtual uint32 getIntConfig(WorldIntConfigs index) const = 0;
+    virtual void setStringConfig(WorldStringConfig index, std::string value) = 0;
+    [[nodiscard]] virtual std::string getStringConfig(WorldStringConfig index) const = 0;
     virtual void setWorldState(uint32 index, uint64 value) = 0;
     [[nodiscard]] virtual uint64 getWorldState(uint32 index) const = 0;
     virtual void LoadWorldStates() = 0;
