@@ -1115,6 +1115,9 @@ void World::LoadConfigSettings(bool reload)
     _bool_configs[CONFIG_DECLINED_NAMES_USED] =
         (_int_configs[CONFIG_REALM_ZONE] == REALM_ZONE_RUSSIAN) ? true : sConfigMgr->GetOption<bool>("DeclinedNames", false);
 
+    //bypass Declined names check
+    _bool_configs[CONFIG_DECLINED_NAMES_USED_BYPASS] = sConfigMgr->GetOption<bool>("DeclinedNamesBypass", false);
+
     _float_configs[CONFIG_LISTEN_RANGE_SAY]       = sConfigMgr->GetOption<float>("ListenRange.Say", 25.0f);
     _float_configs[CONFIG_LISTEN_RANGE_TEXTEMOTE] = sConfigMgr->GetOption<float>("ListenRange.TextEmote", 25.0f);
     _float_configs[CONFIG_LISTEN_RANGE_YELL]      = sConfigMgr->GetOption<float>("ListenRange.Yell", 300.0f);
