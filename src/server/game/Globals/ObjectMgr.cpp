@@ -8860,6 +8860,13 @@ bool ObjectMgr::CheckDeclinedNames(std::wstring w_ownname, DeclinedName const& n
         if (w_ownname != wname)
             y = false;
     }
+
+    if (sWorld->getBoolConfig(CONFIG_DECLINED_NAMES_USED_BYPASS))
+    {
+        x = true;
+        y = true;
+    }
+
     return (x || y);
 }
 
