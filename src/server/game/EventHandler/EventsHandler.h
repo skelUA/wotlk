@@ -12,6 +12,7 @@ public:
     static EventsHandler* instance();
     void Init();
     void Process();
+    [[nodiscard]] bool IsEnabled() const;
 
     template <typename EventType>
     void Send(EventType&& event)

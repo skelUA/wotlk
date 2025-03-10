@@ -10,7 +10,7 @@ public:
     // Test
     void OnLogin(Player* player) override
     {
-        if (sWorld->getBoolConfig(CONFIG_EVENTS_HANDLER_ENABLED))
+        if (sEventsHandler->IsEnabled())
             sEventsHandler->Send(LoginEvent(player->GetGUID().GetCounter(), player->GetName()));
     }
 };
@@ -22,7 +22,7 @@ public:
 
     void OnStartup() override
     {
-        if (!sWorld->getBoolConfig(CONFIG_EVENTS_HANDLER_ENABLED))
+        if (!sEventsHandler->IsEnabled())
             return;
 
         sEventsHandler->Init();

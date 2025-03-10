@@ -13,6 +13,11 @@ void EventsHandler::Init()
     _thread = std::thread(&EventsHandler::Process, this);
 }
 
+bool EventsHandler::IsEnabled() const
+{
+    return sWorld->getBoolConfig(CONFIG_EVENTS_HANDLER_ENABLED);
+}
+
 void EventsHandler::Process()
 {
     while (true)
