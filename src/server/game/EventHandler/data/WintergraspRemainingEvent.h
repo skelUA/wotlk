@@ -15,10 +15,11 @@ class WintergraspRemainingEvent : public Event
 {
     uint32 time;
     uint8_t remaining_type;
+    uint8_t team;
 
 public:
-    explicit WintergraspRemainingEvent(const uint32 time, const uint8_t remaining_type)
-        : time(time), remaining_type(remaining_type)
+    explicit WintergraspRemainingEvent(const uint32 time, const uint8_t remaining_type, const uint8_t team)
+        : time(time), remaining_type(remaining_type), team(team)
     {}
 
     [[nodiscard]] std::vector<uint8_t> Serialize() const override
@@ -26,6 +27,7 @@ public:
         EventSerializer serializer;
         serializer.Write(time);
         serializer.Write(remaining_type);
+        serializer.Write(team);
         return serializer.GetBuffer();
     }
 

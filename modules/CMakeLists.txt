@@ -223,7 +223,6 @@ foreach(SOURCE_MODULE ${MODULES_MODULE_LIST})
     add_library(${MODULE_SOURCE_PROJECT_NAME} SHARED
       ${MODULE_SOURCE_PRIVATE_SOURCES}
       ${SCRIPT_MODULE_PRIVATE_SCRIPTLOADER}
-            ../src/server/game/EventHandler/data/LoginEvent.h
             ../src/server/game/EventHandler/data/Event.h
             ../src/server/game/EventHandler/data/WintergraspRemainingEvent.h)
 

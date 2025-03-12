@@ -210,17 +210,17 @@ bool BattlefieldWG::Update(uint32 diff)
         if (!m_15MinNotified && m_Timer <= 15 * MINUTE * IN_MILLISECONDS)
         {
             m_15MinNotified = true;
-            sEventsHandler->Send(WintergraspRemainingEvent(m_Timer, EVENT_HANDLER_WINTERGRASP_REMAINING_15MIN));
+            sEventsHandler->Send(WintergraspRemainingEvent(m_Timer, EVENT_HANDLER_WINTERGRASP_REMAINING_15MIN, m_DefenderTeam));
         }
         else if (!m_10MinNotified && m_Timer <= 10 * MINUTE * IN_MILLISECONDS)
         {
             m_10MinNotified = true;
-            sEventsHandler->Send(WintergraspRemainingEvent(m_Timer, EVENT_HANDLER_WINTERGRASP_REMAINING_10MIN));
+            sEventsHandler->Send(WintergraspRemainingEvent(m_Timer, EVENT_HANDLER_WINTERGRASP_REMAINING_10MIN, m_DefenderTeam));
         }
         else if (!m_5MinNotified && m_Timer <= 5 * MINUTE * IN_MILLISECONDS)
         {
             m_5MinNotified = true;
-            sEventsHandler->Send(WintergraspRemainingEvent(m_Timer, EVENT_HANDLER_WINTERGRASP_REMAINING_5MIN));
+            sEventsHandler->Send(WintergraspRemainingEvent(m_Timer, EVENT_HANDLER_WINTERGRASP_REMAINING_5MIN, m_DefenderTeam));
         }
     }
 
@@ -330,7 +330,7 @@ void BattlefieldWG::OnBattleStart()
         ChatHandler(nullptr).SendWorldText(BATTLEFIELD_WG_WORLD_START_MESSAGE);
 
     if (sEventsHandler->IsEnabled())
-        sEventsHandler->Send(WintergraspStartEvent(m_BattleTime));
+        sEventsHandler->Send(WintergraspStartEvent(m_BattleTime, m_DefenderTeam));
 }
 
 void BattlefieldWG::UpdateCounterVehicle(bool init)
@@ -544,7 +544,7 @@ void BattlefieldWG::OnBattleEnd(bool endByTimer)
 
     if (sEventsHandler->IsEnabled())
     {
-        sEventsHandler->Send(WintergraspEndEvent(m_NoWarBattleTime));
+        sEventsHandler->Send(WintergraspEndEvent(m_NoWarBattleTime, m_DefenderTeam));
         m_5MinNotified = m_10MinNotified = m_15MinNotified = false;
     }
 }
