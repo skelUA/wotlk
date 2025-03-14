@@ -293,21 +293,9 @@ void CalendarMgr::RemoveAllPlayerEventsAndInvites(ObjectGuid guid)
 
 void CalendarMgr::RemovePlayerGuildEventsAndSignups(ObjectGuid guid, uint32 guildId)
 {
-//    for (CalendarEventStore::const_iterator itr = _events.begin(); itr != _events.end(); ++itr)
-//        if ((*itr)->GetCreatorGUID() == guid && ((*itr)->IsGuildEvent() || (*itr)->IsGuildAnnouncement()))
-//            RemoveEvent((*itr)->GetEventId(), guid);
-
-    std::vector<uint32> eventsToRemove; // Спочатку збираємо ID подій
-
-    for (const auto& event : _events)
-        if (event->GetCreatorGUID() == guid && (event->IsGuildEvent() || event->IsGuildAnnouncement()))
-            eventsToRemove.push_back(event->GetEventId());
-
-    // Тепер видаляємо події (окремо від ітерації)
-    for (uint32 eventId : eventsToRemove)
-        RemoveEvent(eventId, guid);
-
-
+    for (CalendarEventStore::const_iterator itr = _events.begin(); itr != _events.end(); ++itr)
+        if ((*itr)->GetCreatorGUID() == guid && ((*itr)->IsGuildEvent() || (*itr)->IsGuildAnnouncement()))
+            RemoveEvent((*itr)->GetEventId(), guid);
 
     CalendarInviteStore playerInvites = GetPlayerInvites(guid);
     for (CalendarInviteStore::const_iterator itr = playerInvites.begin(); itr != playerInvites.end(); ++itr)
