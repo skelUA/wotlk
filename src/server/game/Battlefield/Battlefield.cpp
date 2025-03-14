@@ -31,6 +31,7 @@
 #include "ObjectMgr.h"
 #include "Transport.h"
 #include "WorldPacket.h"
+#include "WorldSessionMgr.h"
 
 /// @todo: this import is not necessary for compilation and marked as unused by the IDE
 //  however, for some reasons removing it would cause a damn linking issue
@@ -143,7 +144,7 @@ bool Battlefield::Update(uint32 diff)
 {
     if (m_Timer <= diff)
     {
-        if (!IsEnabled() || (!IsWarTime() && sWorld->GetActiveSessionCount() > 3500)) // if WG is disabled or there is more than 3500 connections, switch automaticly
+        if (!IsEnabled() || (!IsWarTime() && sWorldSessionMgr->GetActiveSessionCount() > 3500)) // if WG is disabled or there is more than 3500 connections, switch automaticly
         {
             m_isActive = true;
             EndBattle(false);
@@ -167,7 +168,7 @@ bool Battlefield::Update(uint32 diff)
         m_StartGrouping = true;
         InvitePlayersInZoneToQueue();
         OnStartGrouping();
-        SendUpdateWorldStatesToWorld();
+        SendUpdateWorldStates();
     }
 
     bool objective_changed = false;
@@ -354,7 +355,7 @@ void Battlefield::StartBattle()
 
     OnBattleStart();
 
-    SendUpdateWorldStatesToWorld();
+    SendUpdateWorldStates();
 }
 
 void Battlefield::EndBattle(bool endByTimer)
@@ -379,8 +380,7 @@ void Battlefield::EndBattle(bool endByTimer)
     // Reset battlefield timer
     m_Timer = m_NoWarBattleTime;
     SendInitWorldStatesToAll();
-
-    SendUpdateWorldStatesToWorld();
+    SendUpdateWorldStates();
 }
 
 void Battlefield::DoPlaySoundToAll(uint32 SoundID)
@@ -414,9 +414,8 @@ void Battlefield::AskToLeaveQueue(Player* player)
 // Called in WorldSession::HandleHearthAndResurrect
 void Battlefield::PlayerAskToLeave(Player* player)
 {
-    // Player leaving Wintergrasp, trigger Hearthstone spell.
-    player->Dismount();
-    player->CastSpell(player, 8690, true);
+    // Player leaving Wintergrasp, teleport to homebind possition.
+    player->TeleportTo(player->m_homebindMapId, player->m_homebindX, player->m_homebindY, player->m_homebindZ, player->GetOrientation());
 }
 
 // Called in WorldSession::HandleBfEntryInviteResponse

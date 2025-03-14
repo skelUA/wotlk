@@ -109,6 +109,6 @@ DELETE FROM `gameobject_questender` WHERE (`quest` = 8743);
 INSERT INTO `gameobject_questender` (`id`, `quest`) VALUES
 (180717, 8743);
 
-UPDATE `gameobject` SET `id` = '180717' WHERE (`guid` = '49451');
--- revert
+UPDATE `gameobject` SET `id` = '180717' WHERE (`guid` = '180718');
+-- revert (no quest)
 -- UPDATE `gameobject` SET `id` = '180718' WHERE (`guid` = '49451');
