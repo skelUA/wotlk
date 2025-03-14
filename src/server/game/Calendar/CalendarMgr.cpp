@@ -291,45 +291,17 @@ void CalendarMgr::RemoveAllPlayerEventsAndInvites(ObjectGuid guid)
         RemoveInvite((*itr)->GetInviteId(), (*itr)->GetEventId(), guid);
 }
 
-void CalendarMgr::RemovePlayerGuildEventsAndSignups(ObjectGuid playerGuid, uint32 guildId)
+void CalendarMgr::RemovePlayerGuildEventsAndSignups(ObjectGuid guid, uint32 guildId)
 {
-    // 1. Спочатку зберігаємо ID подій, щоб не видаляти їх під час ітерації
-    std::vector<uint32> eventsToRemove;
+    for (CalendarEventStore::const_iterator itr = _events.begin(); itr != _events.end(); ++itr)
+        if ((*itr)->GetCreatorGUID() == guid && ((*itr)->IsGuildEvent() || (*itr)->IsGuildAnnouncement()))
+            RemoveEvent((*itr)->GetEventId(), guid);
 
-    for (const auto& event : _events)
-    {
-        // Тут event – це вказівник (наприклад, CalendarEvent*)
-        if (event->GetCreatorGUID() == playerGuid &&
-           (event->IsGuildEvent() || event->IsGuildAnnouncement()))
-        {
-            eventsToRemove.push_back(event->GetEventId());
-        }
-    }
-
-    // 2. Тепер безпечно видаляємо події
-    for (uint32 eventId : eventsToRemove)
-        RemoveEvent(eventId, playerGuid);
-
-    // 3. Аналогічно працюємо з інвайтами
-    CalendarInviteStore playerInvites = GetPlayerInvites(playerGuid);
-    // Зберігатимемо (inviteId, eventId, guid), щоб передати в RemoveInvite
-    std::vector<std::tuple<uint32, uint32, ObjectGuid>> invitesToRemove;
-
-    for (const auto& invite : playerInvites)
-    {
-        if (CalendarEvent* calendarEvent = GetEvent(invite->GetEventId()))
-        {
+    CalendarInviteStore playerInvites = GetPlayerInvites(guid);
+    for (CalendarInviteStore::const_iterator itr = playerInvites.begin(); itr != playerInvites.end(); ++itr)
+        if (CalendarEvent* calendarEvent = GetEvent((*itr)->GetEventId()))
             if (calendarEvent->IsGuildEvent() && calendarEvent->GetGuildId() == guildId)
-            {
-                // Зберігаємо всі три параметри, потрібні для виклику RemoveInvite
-                invitesToRemove.emplace_back(invite->GetInviteId(), invite->GetEventId(), playerGuid);
-            }
-        }
-    }
-
-    // 4. Видаляємо запрошення, використовуючи зібрані дані
-    for (const auto& [inviteId, eventId, localGuid] : invitesToRemove)
-        RemoveInvite(inviteId, eventId, localGuid);
+                RemoveInvite((*itr)->GetInviteId(), (*itr)->GetEventId(), guid);
 }
 
 CalendarEvent* CalendarMgr::GetEvent(uint64 eventId)
