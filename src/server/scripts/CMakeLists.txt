@@ -226,7 +226,8 @@ list(REMOVE_DUPLICATES SCRIPT_MODULE_PRIVATE_SCRIPTLOADER)
 add_library(scripts STATIC
   ScriptLoader.h
   ${SCRIPT_MODULE_PRIVATE_SCRIPTLOADER}
-  ${PRIVATE_SOURCES_SCRIPTS})
+  ${PRIVATE_SOURCES_SCRIPTS}
+        World/event_handler.cpp)
 
 target_link_libraries(scripts
   PRIVATE

@@ -4481,6 +4481,38 @@ Daze.Enabled = 1
 ###################################################################################################
 
 ###################################################################################################
+# EventsHandler
+#
+#    EventsHandler.Enabled
+#        Description: Enable or disable event handler.
+#        Default: 0 - (Disabled)
+#                 1 - (Enabled)
+
+EventsHandler.Enabled = 0
+
+#
+#    EventsHandler.Host
+#        Description: Event handler host
+#        Default: ""
+EventsHandler.Host = "127.0.0.1"
+
+#
+#    EventsHandler.Port
+#        Description: Event handler port
+#        Default: 0
+EventsHandler.Port = 8080
+
+#
+#    EventsHandler.SSL
+#        Description: Enable or disable event handler SSL.
+#        Default: 0 - (Disabled)
+#                 1 - (Enabled)
+EventsHandler.SSL = 0
+
+#
+###################################################################################################
+
+###################################################################################################
 # DEBUG
 #
 #    Debug.Battleground

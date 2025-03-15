@@ -512,6 +512,10 @@ protected:
     uint32 m_saveTimer;
 
     ObjectGuid m_titansRelic;
+
+    bool m_15MinNotified = false;
+    bool m_10MinNotified = false;
+    bool m_5MinNotified = false;
 };
 
 const uint8 WG_MAX_OBJ = 32;

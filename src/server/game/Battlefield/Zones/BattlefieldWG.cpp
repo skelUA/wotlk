@@ -21,6 +21,7 @@
 
 #include "BattlefieldWG.h"
 #include "Chat.h"
+#include "EventsHandler.h"
 #include "GameTime.h"
 #include "MapMgr.h"
 #include "Opcodes.h"
@@ -28,6 +29,9 @@
 #include "SpellAuras.h"
 #include "TemporarySummon.h"
 #include "Vehicle.h"
+#include "WintergraspEndEvent.h"
+#include "WintergraspRemainingEvent.h"
+#include "WintergraspStartEvent.h"
 #include "WorldSession.h"
 #include "WorldSessionMgr.h"
 #include "WorldStatePackets.h"
@@ -202,6 +206,25 @@ bool BattlefieldWG::Update(uint32 diff)
     else
         m_saveTimer -= diff;
 
+    if (sEventsHandler->IsEnabled() && !m_isActive)
+    {
+        if (!m_15MinNotified && m_Timer <= 15 * MINUTE * IN_MILLISECONDS)
+        {
+            m_15MinNotified = true;
+            sEventsHandler->Send(WintergraspRemainingEvent(m_Timer, EVENT_HANDLER_WINTERGRASP_REMAINING_15MIN, m_DefenderTeam));
+        }
+        else if (!m_10MinNotified && m_Timer <= 10 * MINUTE * IN_MILLISECONDS)
+        {
+            m_10MinNotified = true;
+            sEventsHandler->Send(WintergraspRemainingEvent(m_Timer, EVENT_HANDLER_WINTERGRASP_REMAINING_10MIN, m_DefenderTeam));
+        }
+        else if (!m_5MinNotified && m_Timer <= 5 * MINUTE * IN_MILLISECONDS)
+        {
+            m_5MinNotified = true;
+            sEventsHandler->Send(WintergraspRemainingEvent(m_Timer, EVENT_HANDLER_WINTERGRASP_REMAINING_5MIN, m_DefenderTeam));
+        }
+    }
+
     // Update Tenacity
     if (IsWarTime())
     {
@@ -306,6 +329,9 @@ void BattlefieldWG::OnBattleStart()
 
     if (sWorld->getBoolConfig(CONFIG_BATTLEGROUND_QUEUE_ANNOUNCER_ENABLE))
         ChatHandler(nullptr).SendWorldText(BATTLEFIELD_WG_WORLD_START_MESSAGE);
+
+    if (sEventsHandler->IsEnabled())
+        sEventsHandler->Send(WintergraspStartEvent(m_BattleTime, m_DefenderTeam));
 }
 
 void BattlefieldWG::UpdateCounterVehicle(bool init)
@@ -515,6 +541,12 @@ void BattlefieldWG::OnBattleEnd(bool endByTimer)
         sWorld->setWorldState(worldStateId, sWorld->getWorldState(worldStateId) + 1);
 
         SendWarning((GetDefenderTeam() == TEAM_ALLIANCE) ? BATTLEFIELD_WG_TEXT_DEFEND_KEEP : (BATTLEFIELD_WG_TEXT_DEFEND_KEEP + 2));
+    }
+
+    if (sEventsHandler->IsEnabled())
+    {
+        sEventsHandler->Send(WintergraspEndEvent(m_NoWarBattleTime, m_DefenderTeam));
+        m_5MinNotified = m_10MinNotified = m_15MinNotified = false;
     }
 }
 

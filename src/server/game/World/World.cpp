@@ -1266,6 +1266,12 @@ void World::LoadConfigSettings(bool reload)
     _bool_configs[CONFIG_SPELL_QUEUE_ENABLED] = sConfigMgr->GetOption<bool>("SpellQueue.Enabled", true);
     _int_configs[CONFIG_SPELL_QUEUE_WINDOW] = sConfigMgr->GetOption<uint32>("SpellQueue.Window", 400);
 
+    // EventsHandler
+    _bool_configs[CONFIG_EVENTS_HANDLER_ENABLED] = sConfigMgr->GetOption<bool>("EventsHandler.Enabled", false);
+    _string_configs[CONFIG_EVENTS_HANDLER_HOST] = sConfigMgr->GetOption<std::string>("EventsHandler.Host", "");
+    _int_configs[CONFIG_EVENTS_HANDLER_PORT] = sConfigMgr->GetOption<int>("EventsHandler.Port", 0);
+    _bool_configs[CONFIG_EVENTS_HANDLER_USE_SSL] = sConfigMgr->GetOption<bool>("EventsHandler.SSL", false);
+
     // call ScriptMgr if we're reloading the configuration
     sScriptMgr->OnAfterConfigLoad(reload);
 }
