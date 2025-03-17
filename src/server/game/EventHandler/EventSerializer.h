@@ -1,5 +1,7 @@
 #ifndef EVENTSERIALIZER_H
 #define EVENTSERIALIZER_H
+
+#include <cstring>
 #include <string>
 #include <vector>
 
