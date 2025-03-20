@@ -1369,8 +1369,12 @@ public:
             target = PlayerIdentifier::FromTargetOrSelf(handler);
         }
 
-        if (!target || !target->IsConnected())
+        if (!target)
+            return false;
+
+        if (!target->IsConnected())
         {
+            handler->SendErrorMessage(LANG_NO_PLAYER_CONNECTED);
             return false;
         }
 

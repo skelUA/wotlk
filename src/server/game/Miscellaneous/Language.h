@@ -1333,6 +1333,9 @@ enum AcoreStrings
     // 30087-30095 reserved for passive anticheat
 
     LANG_DEBUG_LFG_ON                             = 30096,
-    LANG_DEBUG_LFG_OFF                            = 30097
+    LANG_DEBUG_LFG_OFF                            = 30097,
+
+    // 50000+ freedom-wow
+    LANG_NO_PLAYER_CONNECTED                      = 50000,
 };
 #endif
