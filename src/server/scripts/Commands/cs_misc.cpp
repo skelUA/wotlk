@@ -1370,7 +1370,10 @@ public:
         }
 
         if (!target)
+        {
+            handler->SendErrorMessage(LANG_NO_PLAYER_FOUND);
             return false;
+        }
 
         if (!target->IsConnected())
         {
