@@ -8841,7 +8841,7 @@ void ObjectMgr::ChangeFishingBaseSkillLevel(uint32 entry, int32 skill)
 
 bool ObjectMgr::CheckDeclinedNames(std::wstring w_ownname, DeclinedName const& names)
 {
-    bool bypass = sWorld->getBoolConfig(CONFIG_DECLINED_NAMES_USED_BYPASS));
+    bool bypass = sWorld->getBoolConfig(CONFIG_DECLINED_NAMES_USED_BYPASS);
 
     // get main part of the name
     std::wstring mainpart = GetMainPartOfName(w_ownname, 0);
