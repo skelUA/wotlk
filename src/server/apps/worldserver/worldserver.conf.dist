@@ -1814,6 +1814,15 @@ MinPetName = 2
 DeclinedNames = 0
 
 #
+#    DeclinedNamesBypass
+#        Description: Skip declined Names endings cheks
+#        Alert: Users will be able to specify anything in the case options
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+
+DeclinedNamesBypass = 0
+
+#
 #   StrictNames.Reserved
 #       Description: Use the Reserved Filter from DBC.
 #                    Prevents Player, Pet & Charter names from containing reserved names.
