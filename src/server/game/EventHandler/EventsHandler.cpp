@@ -22,23 +22,40 @@ void EventsHandler::Process()
 {
     while (true)
     {
-        std::unique_ptr<Event> data;
+        std::unique_lock<std::mutex> lock(_queueMutex);
+        if (_queue.empty())
         {
-            std::unique_lock lock(_queueMutex);
-            _cond.wait(lock, [this]
-            {
-                return !_queue.empty();
-            });
-
-            data = std::move(_queue.front());
-            _queue.pop();
+            _cond.wait(lock);
         }
+        else
+        {
+            auto now = std::chrono::steady_clock::now();
+            const auto& next_event = _queue.top();
+            if (next_event.next_attempt > now)
+            {
+                _cond.wait_until(lock, next_event.next_attempt);
+            }
+            else
+            {
+                DelayedEvent delayed_event = std::move(_queue.mutable_top());
+                _queue.pop();
+                lock.unlock();
 
-        SendData(data.get());
+                bool success = SendData(delayed_event.event.get());
+                if (!success)
+                {
+                    std::unique_lock retry_lock(_queueMutex);
+                    auto new_time = now + std::chrono::minutes(1);
+                    _queue.emplace(new_time, std::move(delayed_event.event));
+                    retry_lock.unlock();
+                    _cond.notify_one();
+                }
+            }
+        }
     }
 }
 
-void EventsHandler::SendData(const Event* event) const
+bool EventsHandler::SendData(const Event* event) const
 {
     try
     {
@@ -75,11 +92,21 @@ void EventsHandler::SendData(const Event* event) const
             write(socket, boost::asio::buffer(buffer));
             read_until(socket, response, "\r\n");
         }
+        return true;
     }
     catch (const std::exception& e)
     {
         std::ostringstream ss;
         ss << "Error: " << e.what() << std::endl;
         LOG_ERROR("server.worldserver", ss.str());
+        return false;
     }
+}
+
+void EventsHandler::EnqueueEvent(std::unique_ptr<Event> event)
+{
+    std::unique_lock lock(_queueMutex);
+    _queue.emplace(std::chrono::steady_clock::now(), std::move(event));
+    lock.unlock();
+    _cond.notify_one();
 }
