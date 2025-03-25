@@ -18,22 +18,44 @@ public:
     void Send(EventType&& event)
     {
         static_assert(std::is_base_of_v<Event, std::decay_t<EventType>>, "EventType must derive from Event");
-        {
-            std::lock_guard lock(_queueMutex);
-            _queue.push(std::make_unique<std::decay_t<EventType>>(std::forward<EventType>(event)));
-        }
-        _cond.notify_one();
+        EnqueueEvent(std::make_unique<std::decay_t<EventType>>(std::forward<EventType>(event)));
     }
 
 private:
+    struct DelayedEvent
+    {
+        std::chrono::steady_clock::time_point next_attempt;
+        std::unique_ptr<Event> event;
+
+        DelayedEvent(std::chrono::steady_clock::time_point t, std::unique_ptr<Event> e)
+            : next_attempt(t), event(std::move(e)) {}
+    };
+
+    struct CompareDelayedEvent
+    {
+        bool operator()(const DelayedEvent& a, const DelayedEvent& b) const
+        {
+            return a.next_attempt > b.next_attempt;
+        }
+    };
+
+    class MutablePriorityQueue : public std::priority_queue<DelayedEvent, std::vector<DelayedEvent>, CompareDelayedEvent>
+    {
+    public:
+        DelayedEvent& mutable_top() {
+            return const_cast<DelayedEvent&>(this->top());
+        }
+    };
+
     std::thread _thread;
     std::condition_variable _cond;
     std::mutex _queueMutex;
-    std::queue<std::unique_ptr<Event>> _queue;
+    MutablePriorityQueue _queue;
     std::string _host;
     uint32 _port = 0;
 
-    void SendData(const Event* event) const;
+    bool SendData(const Event* event) const;
+    void EnqueueEvent(std::unique_ptr<Event> event);
 };
 
 #define sEventsHandler EventsHandler::instance()
