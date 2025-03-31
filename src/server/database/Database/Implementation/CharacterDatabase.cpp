@@ -621,6 +621,9 @@ void CharacterDatabaseConnection::DoPrepareStatements()
         "ON DUPLICATE KEY UPDATE state = VALUES(state)", CONNECTION_ASYNC);
     PrepareStatement(CHAR_DELETE_INSTANCE_SAVED_DATA, "DELETE FROM instance_saved_go_state_data WHERE id = ?", CONNECTION_ASYNC);
     PrepareStatement(CHAR_SANITIZE_INSTANCE_SAVED_DATA, "DELETE FROM instance_saved_go_state_data WHERE id NOT IN (SELECT instance.id FROM instance)", CONNECTION_ASYNC);
+
+    PrepareStatement(CHAR_SEL_CROSS_FACTION_BATTLEGROUNDS, "SELECT enabled FROM cross_faction_battlegrounds WHERE guid = ?", CONNECTION_SYNCH);
+    PrepareStatement(CHAR_REP_CROSS_FACTION_BATTLEGROUNDS, "REPLACE INTO cross_faction_battlegrounds (guid, enabled) VALUES (?, ?)", CONNECTION_ASYNC);
 }
 
 CharacterDatabaseConnection::CharacterDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo)

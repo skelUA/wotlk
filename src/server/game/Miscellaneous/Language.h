@@ -1338,5 +1338,9 @@ enum AcoreStrings
     // 50000+ freedom-wow
     LANG_NO_PLAYER_CONNECTED                      = 50000,
     LANG_NO_PLAYER_FOUND                          = 50001,
+    LANG_CROSS_FACTION_ENABLED                    = 50002,
+    LANG_CROSS_FACTION_ALREADY_ENABLED            = 50003,
+    LANG_CROSS_FACTION_DISABLED                   = 50004,
+    LANG_CROSS_FACTION_ALREADY_DISABLED           = 50005,
 };
 #endif
