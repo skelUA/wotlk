@@ -261,17 +261,21 @@ BanReturn BanMgr::BanCharacter(std::string const& CharacterName, std::string con
     else
         TargetGUID = target->GetGUID();
 
+    CharacterDatabaseTransaction trans = CharacterDatabase.BeginTransaction();
+
     // make sure there is only one active ban
     CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPD_CHARACTER_BAN);
     stmt->SetData(0, TargetGUID.GetCounter());
-    CharacterDatabase.Query(stmt);
+    trans->Append(stmt);
 
     stmt = CharacterDatabase.GetPreparedStatement(CHAR_INS_CHARACTER_BAN);
     stmt->SetData(0, TargetGUID.GetCounter());
     stmt->SetData(1, DurationSecs);
     stmt->SetData(2, Author);
     stmt->SetData(3, Reason);
-    CharacterDatabase.Execute(stmt);
+    trans->Append(stmt);
+
+    CharacterDatabase.CommitTransaction(trans);
 
     if (target)
         target->GetSession()->KickPlayer("Ban");
