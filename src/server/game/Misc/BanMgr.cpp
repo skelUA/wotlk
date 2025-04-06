@@ -264,7 +264,7 @@ BanReturn BanMgr::BanCharacter(std::string const& CharacterName, std::string con
     // make sure there is only one active ban
     CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPD_CHARACTER_BAN);
     stmt->SetData(0, TargetGUID.GetCounter());
-    CharacterDatabase.Execute(stmt);
+    CharacterDatabase.Query(stmt);
 
     stmt = CharacterDatabase.GetPreparedStatement(CHAR_INS_CHARACTER_BAN);
     stmt->SetData(0, TargetGUID.GetCounter());
