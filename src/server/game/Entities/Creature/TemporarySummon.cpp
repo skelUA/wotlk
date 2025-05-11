@@ -23,6 +23,7 @@
 #include "Pet.h"
 #include "Player.h"
 #include "ScriptMgr.h"
+#include "SpellMgr.h"
 
 TempSummon::TempSummon(SummonPropertiesEntry const* properties, ObjectGuid owner, bool isWorldObject) :
     Creature(isWorldObject), m_Properties(properties), m_type(TEMPSUMMON_MANUAL_DESPAWN),
@@ -271,6 +272,22 @@ void TempSummon::InitSummon()
 
         if (IsAIEnabled)
             AI()->IsSummonedBy(owner);
+
+        // Shaman Spirit Wolf
+        if (GetEntry() == 29264 && owner->IsPlayer() && GetMapId() == 631 && FindMap() && FindMap()->ToInstanceMap()
+            && FindMap()->ToInstanceMap()->GetInstanceScript()
+            && FindMap()->ToInstanceMap()->GetInstanceScript()->GetData(251))
+        {
+            if (Player* player = owner->ToPlayer())
+            {
+                auto saBounds = sSpellMgr->GetSpellAreaForAreaMapBounds(4812);
+                for (auto itr = saBounds.first; itr != saBounds.second; ++itr)
+                    if (itr->second->raceMask & player->getRaceMask() && !HasAura(itr->second->spellId))
+                        if (SpellInfo const* si = sSpellMgr->GetSpellInfo(itr->second->spellId))
+                            if (si->HasAura(SPELL_AURA_MOD_INCREASE_HEALTH_PERCENT))
+                                AddAura(itr->second->spellId, this);
+            }
+        }
     }
 }
 
