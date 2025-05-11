@@ -2403,7 +2403,7 @@ public:
 
     struct npc_valkyr_shadowguardAI : public NullCreatureAI
     {
-        npc_valkyr_shadowguardAI(Creature* creature) : NullCreatureAI(creature), didbelow50pct(false), dropped(false), _instance(creature->GetInstanceScript())
+        npc_valkyr_shadowguardAI(Creature* creature) : NullCreatureAI(creature), didbelow50pct(false), dropped(false), grabbed(false), _instance(creature->GetInstanceScript())
         {
             me->SetReactState(REACT_PASSIVE);
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
