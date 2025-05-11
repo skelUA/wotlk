@@ -211,7 +211,7 @@ public:
             PutricideEventProgress = 0;
             LichKingHeroicAvailable = true;
             LichKingRandomWhisperTimer = 120 * IN_MILLISECONDS;
-            DarkwhisperElevatorTimer = 3000;
+            DarkwhisperElevatorTimer = 10000;
 
             SetHeaders(DataHeader);
             SetBossNumber(MAX_ENCOUNTERS);
@@ -1667,7 +1667,7 @@ public:
 
             if (DarkwhisperElevatorTimer <= diff)
             {
-                DarkwhisperElevatorTimer = 3000;
+                DarkwhisperElevatorTimer = 10000;
                 if (GetBossState(DATA_LADY_DEATHWHISPER) == DONE)
                     if (GameObject* elevator = instance->GetGameObject(LadyDeathwisperElevatorGUID))
                         if (StaticTransport* trans = elevator->ToStaticTransport())
