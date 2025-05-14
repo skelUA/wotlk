@@ -658,9 +658,6 @@ enum WintergardeGryphon
 
     QUEST_FLIGHT_OF_THE_WINTERGARDE_DEFENDER    = 12237,
     GO_TEMP_GRYPHON_STATION                     = 188679,
-    AREA_WINTERGARDE_KEEP                       = 4177,
-    AREA_THE_CARRION_FIELDS                     = 4188,
-    AREA_WINTERGARDE_MINE                       = 4178
     GO_TEMP_GRYPHON_STATION                     = 188679
 };
 
