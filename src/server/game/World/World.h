@@ -252,10 +252,6 @@ public:
         return index < STRING_CONFIG_VALUE_COUNT ? _string_configs[index] : "";
     }
 
-    void setWorldState(uint32 index, uint64 value) override;
-    [[nodiscard]] uint64 getWorldState(uint32 index) const override;
-    void LoadWorldStates() override;
-
     /// Are we on a "Player versus Player" server?
     [[nodiscard]] bool IsPvPRealm() const override;
     [[nodiscard]] bool IsFFAPvPRealm() const override;

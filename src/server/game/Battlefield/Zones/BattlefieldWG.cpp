@@ -37,6 +37,7 @@
 #include "WorldSessionMgr.h"
 #include "WorldStateDefines.h"
 #include "WorldStatePackets.h"
+#include "WorldState.h"
 
 BattlefieldWG::~BattlefieldWG()
 {
@@ -1359,17 +1360,17 @@ TugOfWarWG::TugOfWarWG(BattlefieldWG* WG)
 {
     m_WG = WG;
 
-    if (!sWorld->getWorldState(TUG_OF_WAR_SCALE))
+    if (!sWorldState->getWorldState(TUG_OF_WAR_SCALE))
     {
-        sWorld->setWorldState(TUG_OF_WAR_SCALE, uint64(0));
+        sWorldState->setWorldState(TUG_OF_WAR_SCALE, uint64(0));
     }
-    if (!sWorld->getWorldState(TUG_OF_WAR_DEFENSE_STREAK))
+    if (!sWorldState->getWorldState(TUG_OF_WAR_DEFENSE_STREAK))
     {
-        sWorld->setWorldState(TUG_OF_WAR_DEFENSE_STREAK, uint64(0));
+        sWorldState->setWorldState(TUG_OF_WAR_DEFENSE_STREAK, uint64(0));
     }
 
-    m_Scale = sWorld->getWorldState(TUG_OF_WAR_SCALE);
-    m_DefenseStreak = sWorld->getWorldState(TUG_OF_WAR_DEFENSE_STREAK);
+    m_Scale = sWorldState->getWorldState(TUG_OF_WAR_SCALE);
+    m_DefenseStreak = sWorldState->getWorldState(TUG_OF_WAR_DEFENSE_STREAK);
     m_FastCorporal = false;
     m_FastLieutenant = false;
 }
@@ -1395,26 +1396,26 @@ void TugOfWarWG::OnBattleEnd(bool endByTimer)
     if (endByTimer)
     {
         m_DefenseStreak++;
-        sWorld->setWorldState(TUG_OF_WAR_DEFENSE_STREAK, uint64(m_DefenseStreak));
+        sWorldState->setWorldState(TUG_OF_WAR_DEFENSE_STREAK, uint64(m_DefenseStreak));
 
         if (m_DefenseStreak >= 2)
         {
             if ((team == TEAM_ALLIANCE && m_Scale >= -600) || (team == TEAM_HORDE && m_Scale <= 600))
             {
                 m_Scale += (team == TEAM_ALLIANCE ? -100 : 100);
-                sWorld->setWorldState(TUG_OF_WAR_SCALE, uint64(m_Scale));
+                sWorldState->setWorldState(TUG_OF_WAR_SCALE, uint64(m_Scale));
             }
         }
     }
     else
     {
         m_DefenseStreak = 0;
-        sWorld->setWorldState(TUG_OF_WAR_DEFENSE_STREAK, uint64(m_DefenseStreak));
+        sWorldState->setWorldState(TUG_OF_WAR_DEFENSE_STREAK, uint64(m_DefenseStreak));
 
         if ((team == TEAM_ALLIANCE && m_Scale >= 400) || (team == TEAM_HORDE && m_Scale <= -400))
         {
             m_Scale += (team == TEAM_ALLIANCE ? -100 : 100);
-            sWorld->setWorldState(TUG_OF_WAR_SCALE, uint64(m_Scale));
+            sWorldState->setWorldState(TUG_OF_WAR_SCALE, uint64(m_Scale));
         }
     }
 
