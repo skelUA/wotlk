@@ -329,7 +329,6 @@ private:
     uint32 _int_configs[INT_CONFIG_VALUE_COUNT];
     bool _bool_configs[BOOL_CONFIG_VALUE_COUNT];
     float _float_configs[FLOAT_CONFIG_VALUE_COUNT];
-    std::string _string_configs[STRING_CONFIG_VALUE_COUNT];
     typedef std::map<uint32, uint64> WorldStatesMap;
     WorldStatesMap _worldstates;
     AccountTypes _allowedSecurityLevel;

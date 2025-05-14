@@ -15,6 +15,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "AreaDefines.h"
 #include "AreaTriggerScript.h"
 #include "CellImpl.h"
 #include "Chat.h"
@@ -660,6 +661,7 @@ enum WintergardeGryphon
     AREA_WINTERGARDE_KEEP                       = 4177,
     AREA_THE_CARRION_FIELDS                     = 4188,
     AREA_WINTERGARDE_MINE                       = 4178
+    GO_TEMP_GRYPHON_STATION                     = 188679
 };
 
 class npc_wintergarde_gryphon : public VehicleAI
