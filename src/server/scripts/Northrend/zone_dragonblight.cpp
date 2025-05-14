@@ -658,7 +658,6 @@ enum WintergardeGryphon
 
     QUEST_FLIGHT_OF_THE_WINTERGARDE_DEFENDER    = 12237,
     GO_TEMP_GRYPHON_STATION                     = 188679,
-    GO_TEMP_GRYPHON_STATION                     = 188679
 };
 
 class npc_wintergarde_gryphon : public VehicleAI
