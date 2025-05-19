@@ -273,8 +273,9 @@ void TempSummon::InitSummon()
         if (IsAIEnabled)
             AI()->IsSummonedBy(owner);
 
-        // Shaman Spirit Wolf
-        if (GetEntry() == 29264 && owner->IsPlayer() && GetMapId() == 631 && FindMap() && FindMap()->ToInstanceMap()
+        // ICC buff
+        // 24207 - Army of the Dead
+        if (GetEntry() != 24207 && owner->IsPlayer() && GetMapId() == 631 && FindMap() && FindMap()->ToInstanceMap()
             && FindMap()->ToInstanceMap()->GetInstanceScript()
             && FindMap()->ToInstanceMap()->GetInstanceScript()->GetData(251))
         {
