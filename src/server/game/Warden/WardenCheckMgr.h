@@ -75,6 +75,7 @@ public:
     uint16 GetMaxValidCheckId() const { return static_cast<uint16>(CheckStore.size()); }
     WardenCheck const* GetWardenDataById(uint16 Id);
     WardenCheckResult const* GetWardenResultById(uint16 Id);
+    bool MpqIsBlocked(uint16 id) const;
 
     std::vector<uint16> CheckIdPool[MAX_WARDEN_CHECK_TYPES];
 
@@ -84,6 +85,7 @@ public:
 private:
     std::vector<WardenCheck> CheckStore;
     std::map<uint32, WardenCheckResult> CheckResultStore;
+    std::set<uint32> BlockedMpq;
 };
 
 #define sWardenCheckMgr WardenCheckMgr::instance()

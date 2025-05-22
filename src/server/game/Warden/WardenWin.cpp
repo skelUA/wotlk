@@ -732,7 +732,14 @@ void WardenWin::HandleData(ByteBuffer& buff)
             }
 
             WardenCheckResult const* rs = sWardenCheckMgr->GetWardenResultById(checkId);
-            if (CRYPTO_memcmp(buff.contents() + buff.rpos(), rs->Result.ToByteArray<20>(false).data(), Acore::Crypto::Constants::SHA1_DIGEST_LENGTH_BYTES) == 0)
+            bool isBlocked = sWardenCheckMgr->MpqIsBlocked(checkId);
+            bool cmpEqual = CRYPTO_memcmp(
+                buff.contents() + buff.rpos(),
+                rs->Result.ToByteArray<20>(false).data(),
+                Acore::Crypto::Constants::SHA1_DIGEST_LENGTH_BYTES
+            ) == 0;
+
+            if ((isBlocked && cmpEqual) || (!isBlocked && !cmpEqual))
             {
                 LOG_DEBUG("warden", "RESULT MPQ_CHECK fail, CheckId {} account Id {}", checkId, _session->GetAccountId());
                 checkFailed = checkId;
