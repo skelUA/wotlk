@@ -724,15 +724,16 @@ void WardenWin::HandleData(ByteBuffer& buff)
             uint8 Mpq_Result;
             buff >> Mpq_Result;
 
+            bool isBlocked = sWardenCheckMgr->MpqIsBlocked(checkId);
             if (Mpq_Result != 0)
             {
                 LOG_DEBUG("warden", "RESULT MPQ_CHECK not 0x00 account id {}", _session->GetAccountId());
-                checkFailed = checkId;
+                if (!isBlocked)
+                    checkFailed = checkId;
                 continue;
             }
 
             WardenCheckResult const* rs = sWardenCheckMgr->GetWardenResultById(checkId);
-            bool isBlocked = sWardenCheckMgr->MpqIsBlocked(checkId);
             bool cmpEqual = CRYPTO_memcmp(
                 buff.contents() + buff.rpos(),
                 rs->Result.ToByteArray<20>(false).data(),
