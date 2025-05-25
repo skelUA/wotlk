@@ -71,6 +71,22 @@ private:
     uint32 m_lifetime;
     ObjectGuid m_summonerGUID;
     bool _visibleBySummonerOnly;
+
+    static bool IsPlayerTempSummonEntry(uint32 entry)
+    {
+        return s_PlayerTempSummonEntries.contains(entry);
+    }
+
+    inline static const std::set<uint32> s_PlayerTempSummonEntries = {
+        29264, // Ghost Wolf
+        89,    // Inferno
+        1964,  // Force of Nature
+        15438, // Summon Fire Elemental
+        510,   // Summon Water Elemental
+        27829, // Summon Gargoyle
+        31216, // Mirror Image
+        19668  // Shadowfiend
+    };
 };
 
 class Minion : public TempSummon
