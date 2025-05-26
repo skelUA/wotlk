@@ -3054,7 +3054,7 @@ void SpellMgr::LoadSpellInfoCustomAttributes()
                                 continue;
                             [[fallthrough]]; /// @todo: Not sure whether the fallthrough was a mistake (forgetting a break) or intended. This should be double-checked.
                         default:
-                            if (spellInfo->Mechanic == MECHANIC_POLYMORPH && spellInfo->SpellFamilyName == SPELLFAMILY_MAGE)
+                            if (spellInfo->Mechanic == MECHANIC_POLYMORPH && (spellInfo->SpellFamilyName == SPELLFAMILY_MAGE || spellInfo->SpellFamilyName == SPELLFAMILY_SHAMAN))
                             {
                                 spellInfo->AttributesCu |= SPELL_ATTR0_CU_BINARY_SPELL;
                                 break;

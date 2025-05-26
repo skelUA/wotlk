@@ -274,8 +274,7 @@ void TempSummon::InitSummon()
             AI()->IsSummonedBy(owner);
 
         // ICC buff
-        // 24207 - Army of the Dead
-        if (GetEntry() != 24207 && owner->IsPlayer() && GetMapId() == 631 && FindMap() && FindMap()->ToInstanceMap()
+        if (IsPlayerTempSummonEntry(GetEntry()) && owner->IsPlayer() && GetMapId() == 631 && FindMap() && FindMap()->ToInstanceMap()
             && FindMap()->ToInstanceMap()->GetInstanceScript()
             && FindMap()->ToInstanceMap()->GetInstanceScript()->GetData(251))
         {

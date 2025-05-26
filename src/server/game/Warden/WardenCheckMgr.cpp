@@ -63,7 +63,7 @@ void WardenCheckMgr::LoadWardenChecks()
     CheckStore.resize(maxCheckId + 1);
 
     //                                    0    1     2     3        4       5      6      7
-    result = WorldDatabase.Query("SELECT id, type, data, result, address, length, str, comment FROM warden_checks ORDER BY id ASC");
+    result = WorldDatabase.Query("SELECT id, type, data, result, address, length, str, comment, mpq_blocked FROM warden_checks ORDER BY id ASC");
 
     uint32 count = 0;
     do
@@ -85,6 +85,7 @@ void WardenCheckMgr::LoadWardenChecks()
         uint8 length            = fields[5].Get<uint8>();
         std::string str         = fields[6].Get<std::string>();
         std::string comment     = fields[7].Get<std::string>();
+        bool mpqBlocked         = fields[8].Get<bool>();
 
         WardenCheck &wardenCheck = CheckStore.at(id);
         wardenCheck.Type = checkType;
@@ -115,6 +116,9 @@ void WardenCheckMgr::LoadWardenChecks()
             wr.Result.SetHexStr(checkResult.c_str());
             CheckResultStore[id] = wr;
         }
+
+        if (checkType == MPQ_CHECK && mpqBlocked)
+            BlockedMpq.insert(id);
 
         if (comment.empty())
             wardenCheck.Comment = "Undocumented Check";
@@ -225,4 +229,9 @@ WardenCheckResult const* WardenCheckMgr::GetWardenResultById(uint16 Id)
     }
 
     return nullptr;
+}
+
+bool WardenCheckMgr::MpqIsBlocked(uint16 id) const
+{
+    return BlockedMpq.contains(id);
 }
