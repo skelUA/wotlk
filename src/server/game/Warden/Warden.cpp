@@ -201,7 +201,10 @@ void Warden::ApplyPenalty(uint16 checkId, std::string const& reason)
     std::string causeMsg;
     if (checkId && checkData)
     {
-        action = checkData->Action;
+        if (checkData->Type == MPQ_CHECK)
+            action = WARDEN_ACTION_LOG;
+        else
+            action = checkData->Action;
 
         if (checkData->Comment.empty())
         {

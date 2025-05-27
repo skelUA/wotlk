@@ -77,6 +77,14 @@ public:
     WardenCheckResult const* GetWardenResultById(uint16 Id);
     bool MpqIsBlocked(uint16 id) const;
 
+    std::vector<WardenCheck*> GetMpqChecksByFilename(const std::string& filename) const
+    {
+        auto itr = _mpqChecks.find(filename);
+        if (itr != _mpqChecks.end())
+            return itr->second;
+        return {};
+    }
+
     std::vector<uint16> CheckIdPool[MAX_WARDEN_CHECK_TYPES];
 
     void LoadWardenChecks();
@@ -86,6 +94,7 @@ private:
     std::vector<WardenCheck> CheckStore;
     std::map<uint32, WardenCheckResult> CheckResultStore;
     std::set<uint32> BlockedMpq;
+    std::unordered_map<std::string, std::vector<WardenCheck*>> _mpqChecks;
 };
 
 #define sWardenCheckMgr WardenCheckMgr::instance()
