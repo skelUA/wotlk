@@ -21,6 +21,7 @@
 #include "ByteBuffer.h"
 #include "Warden.h"
 #include <list>
+#include <iomanip>
 
 #if defined(__GNUC__)
 #pragma pack(1)
