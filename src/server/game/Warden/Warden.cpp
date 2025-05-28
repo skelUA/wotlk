@@ -130,13 +130,13 @@ void Warden::Update(uint32 const diff)
         }
     }
 
-    if (_mpqChecksFailed)
+    /*if (_mpqChecksFailed)
     {
         if (diff >= _timeToKick)
             _session->KickPlayer("Warden: MpqChecksFailed");
         else
             _timeToKick -= diff;
-    }
+    }*/
 }
 
 void Warden::DecryptData(uint8* buffer, uint32 length)
