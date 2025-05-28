@@ -272,7 +272,6 @@ void Warden::ApplyPenalty(uint16 checkId, std::string const& reason)
         }
     }
 
-    reportMsg = "Warden: " + reportMsg;
     LOG_INFO("warden", "> Warden: {}", reportMsg);
 }
 
