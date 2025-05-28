@@ -110,15 +110,24 @@ void WardenCheckMgr::LoadWardenChecks()
             wardenCheck.Str = str;
         }
 
-        if (checkType == MPQ_CHECK || checkType == MEM_CHECK)
+        if (checkType == MEM_CHECK)
         {
             WardenCheckResult wr;
             wr.Result.SetHexStr(checkResult.c_str());
             CheckResultStore[id] = wr;
         }
 
-        if (checkType == MPQ_CHECK && mpqBlocked)
-            BlockedMpq.insert(id);
+        if (checkType == MPQ_CHECK)
+        {
+            _mpqChecks[str].push_back(&wardenCheck);
+
+            if (mpqBlocked)
+                BlockedMpq.insert(id);
+
+            WardenCheckResult wr;
+            wr.Result.SetHexStr(checkResult.c_str());
+            CheckResultStore[id] = wr;
+        }
 
         if (comment.empty())
             wardenCheck.Comment = "Undocumented Check";

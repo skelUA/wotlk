@@ -3060,9 +3060,9 @@ void SpellMgr::LoadSpellInfoCustomAttributes()
                                 break;
                             }
 
-                            if (!spellInfo->Effects[j].CalcValue() &&
-                                !(spellInfo->Effects[j].Effect == SPELL_EFFECT_INTERRUPT_CAST || spellInfo->HasAttribute(SPELL_ATTR0_CU_DONT_BREAK_STEALTH)) ||
-                                spellInfo->HasAttribute(SPELL_ATTR0_NO_IMMUNITIES))
+                            if ((!spellInfo->Effects[j].CalcValue()
+                                 && !(spellInfo->Effects[j].Effect == SPELL_EFFECT_INTERRUPT_CAST || spellInfo->HasAttribute(SPELL_ATTR0_CU_DONT_BREAK_STEALTH)))
+                                 || spellInfo->HasAttribute(SPELL_ATTR0_NO_IMMUNITIES))
                                 continue;
 
                             if (spellInfo->Id == 69649 || spellInfo->Id == 71056 || spellInfo->Id == 71057 || spellInfo->Id == 71058 ||
