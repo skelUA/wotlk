@@ -791,9 +791,6 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPacket& recvData)
     {
         HandlePlayerLoginFromDB(static_cast<LoginQueryHolder const&>(holder));
     });
-
-    if (_warden->IsMpqChecksFailed())
-        ChatHandler(this).PSendSysMessage(LANG_GAME_CLIENT_INVALID_WARNING);
 }
 
 void WorldSession::HandlePlayerLoginFromDB(LoginQueryHolder const& holder)
@@ -1125,6 +1122,9 @@ void WorldSession::HandlePlayerLoginFromDB(LoginQueryHolder const& holder)
     }
 
     sScriptMgr->OnPlayerLogin(pCurrChar);
+
+    if (_warden->IsMpqChecksFailed())
+        ChatHandler(this).PSendSysMessage(LANG_GAME_CLIENT_INVALID_WARNING);
 
     if (pCurrChar->HasAtLoginFlag(AT_LOGIN_FIRST))
     {
