@@ -134,6 +134,8 @@ public:
 
     WardenPayloadMgr* GetPayloadMgr();
 
+    [[nodiscard]] bool IsMpqChecksFailed() const { return _mpqChecksFailed; }
+
 private:
     WorldSession* _session;
     WardenPayloadMgr _payloadMgr;
@@ -150,6 +152,9 @@ private:
     bool _interrupted;
     bool _checkInProgress;
     uint32 _interruptCounter = 0;
+
+    bool _mpqChecksFailed;
+    uint32 _timeToKick;
 };
 
 #endif

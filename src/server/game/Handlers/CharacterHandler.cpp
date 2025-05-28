@@ -55,6 +55,7 @@
 #include "Tokenize.h"
 #include "Transport.h"
 #include "Util.h"
+#include "Warden.h"
 #include "World.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
@@ -790,6 +791,9 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPacket& recvData)
     {
         HandlePlayerLoginFromDB(static_cast<LoginQueryHolder const&>(holder));
     });
+
+    if (_warden->IsMpqChecksFailed())
+        ChatHandler(this).PSendSysMessage(LANG_GAME_CLIENT_INVALID_WARNING);
 }
 
 void WorldSession::HandlePlayerLoginFromDB(LoginQueryHolder const& holder)

@@ -1342,5 +1342,6 @@ enum AcoreStrings
     LANG_CROSS_FACTION_ALREADY_ENABLED            = 50003,
     LANG_CROSS_FACTION_DISABLED                   = 50004,
     LANG_CROSS_FACTION_ALREADY_DISABLED           = 50005,
+    LANG_GAME_CLIENT_INVALID_WARNING              = 50006,
 };
 #endif
