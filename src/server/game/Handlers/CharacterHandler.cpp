@@ -1123,7 +1123,7 @@ void WorldSession::HandlePlayerLoginFromDB(LoginQueryHolder const& holder)
 
     sScriptMgr->OnPlayerLogin(pCurrChar);
 
-    if (_warden->IsMpqChecksFailed())
+    if (_warden && _warden->IsMpqChecksFailed())
         ChatHandler(this).PSendSysMessage(LANG_GAME_CLIENT_INVALID_WARNING);
 
     if (pCurrChar->HasAtLoginFlag(AT_LOGIN_FIRST))
