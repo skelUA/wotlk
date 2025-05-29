@@ -201,7 +201,14 @@ class spell_dru_omen_of_clarity : public AuraScript
         47180, // Nurturing Instinct
         48420, // Master Shapeshifter
         34123, // Tree of Life
+        53691, // Tree of Life
         48422, // Master Shapeshifter
+        48418, // Master Shapeshifter
+    };
+
+    inline static std::set<uint32> FurorSet =
+    {
+        17056, 17057, 17058, 17059, 17060, 17061, 17099
     };
 
     bool CheckProc(ProcEventInfo& eventInfo)
@@ -246,6 +253,10 @@ class spell_dru_omen_of_clarity : public AuraScript
         {
             return false;
         }
+
+        // Furor
+        if (FurorSet.contains(spellInfo->Id))
+            return false;
 
         return true;
     }
