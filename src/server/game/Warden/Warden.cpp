@@ -19,6 +19,7 @@
 #include "AccountMgr.h"
 #include "BanMgr.h"
 #include "ByteBuffer.h"
+#include "Chat.h"
 #include "CryptoHash.h"
 #include "Log.h"
 #include "Opcodes.h"
@@ -34,6 +35,9 @@ Warden::Warden() : _session(nullptr), _checkTimer(10000/*10 sec*/), _clientRespo
     memset(_inputKey, 0, sizeof(_inputKey));
     memset(_outputKey, 0, sizeof(_outputKey));
     memset(_seed, 0, sizeof(_seed));
+
+    _mpqChecksFailed = false;
+    _timeToKick = 60000;
 }
 
 Warden::~Warden()
@@ -125,6 +129,14 @@ void Warden::Update(uint32 const diff)
             _checkTimer -= diff;
         }
     }
+
+    /*if (_mpqChecksFailed)
+    {
+        if (diff >= _timeToKick)
+            _session->KickPlayer("Warden: MpqChecksFailed");
+        else
+            _timeToKick -= diff;
+    }*/
 }
 
 void Warden::DecryptData(uint8* buffer, uint32 length)
@@ -245,12 +257,18 @@ void Warden::ApplyPenalty(uint16 checkId, std::string const& reason)
     std::string reportMsg;
     if (checkId)
     {
+        if (checkData->Type == MPQ_CHECK)
+            _mpqChecksFailed = true;
+
         if (Player const* plr = _session->GetPlayer())
         {
             std::string const reportFormat = "Player {} (guid {}, account id: {}) failed warden {} check ({}). Action: {}";
             reportMsg = Acore::StringFormat(reportFormat, plr->GetName(), plr->GetGUID().GetCounter(), _session->GetAccountId(),
                                            checkId, ((checkData && !checkData->Comment.empty()) ? checkData->Comment : "<warden comment is not set>"),
                                            GetWardenActionStr(action));
+
+            if (checkData->Type == MPQ_CHECK)
+                ChatHandler(plr->GetSession()).PSendSysMessage(LANG_GAME_CLIENT_INVALID_WARNING);
         }
         else
         {
@@ -272,7 +290,6 @@ void Warden::ApplyPenalty(uint16 checkId, std::string const& reason)
         }
     }
 
-    reportMsg = "Warden: " + reportMsg;
     LOG_INFO("warden", "> Warden: {}", reportMsg);
 }
 

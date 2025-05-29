@@ -21,6 +21,7 @@
 #include "ByteBuffer.h"
 #include "Warden.h"
 #include <list>
+#include <iomanip>
 
 #if defined(__GNUC__)
 #pragma pack(1)
@@ -82,6 +83,17 @@ public:
     bool IsCheckInProgress() override;
     void ForceChecks() override;
     void HandleData(ByteBuffer& buff) override;
+
+    static std::string AsHex(const uint8* data, size_t length)
+    {
+        std::stringstream ss;
+        ss << std::hex << std::uppercase;
+        for (size_t i = 0; i < length; ++i)
+        {
+            ss << std::setw(2) << std::setfill('0') << std::hex << static_cast<int>(data[i]);
+        }
+        return ss.str();
+    }
 
 private:
     uint32 _serverTicks;
