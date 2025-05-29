@@ -192,6 +192,18 @@ class spell_dru_omen_of_clarity : public AuraScript
 {
     PrepareAuraScript(spell_dru_omen_of_clarity);
 
+    inline static std::set<uint32> ShapeShiftingBuffs =
+    {
+        24907, // Moonkin Aura
+        48421, // Master Shapeshifter
+        24932, // Leader of the Pack
+        24864, // Feral Swiftness Passive 2a
+        47180, // Nurturing Instinct
+        48420, // Master Shapeshifter
+        34123, // Tree of Life
+        48422, // Master Shapeshifter
+    };
+
     bool CheckProc(ProcEventInfo& eventInfo)
     {
         SpellInfo const* spellInfo = eventInfo.GetSpellInfo();
@@ -223,7 +235,7 @@ class spell_dru_omen_of_clarity : public AuraScript
             if (spellInfo->SpellFamilyName == SPELLFAMILY_DRUID)
             {
                 // Exclude shapeshifting
-                return !spellInfo->HasAura(SPELL_AURA_MOD_SHAPESHIFT);
+                return !spellInfo->HasAura(SPELL_AURA_MOD_SHAPESHIFT) && !ShapeShiftingBuffs.contains(spellInfo->Id);
             }
 
             return false;
