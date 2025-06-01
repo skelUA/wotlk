@@ -571,13 +571,31 @@ void BattlegroundSA::TeleportToEntrancePosition(Player* player)
     }
     else
     {
-        if (!ShipsStarted)
+        auto boat = urand(0, 1) ? BG_SA_BOAT_ONE : BG_SA_BOAT_TWO;
+        if (GameObject* ship = GetBGObject(boat))
         {
-            player->CastSpell(player, 12438, true);//Without this player falls before boat loads...
-            if (urand(0, 1))
-                player->TeleportTo(MAP_STRAND_OF_THE_ANCIENTS, 2682.936f, -830.368f, 15.0f, 2.895f, 0);
-            else
-                player->TeleportTo(MAP_STRAND_OF_THE_ANCIENTS, 2577.003f, 980.261f, 15.0f, 0.807f, 0);
+            auto isHorde = Attackers == TEAM_HORDE;
+
+            float sx = ship->GetPositionX();
+            float sy = ship->GetPositionY();
+            float sz = ship->GetPositionZ();
+            float so = ship->GetOrientation();
+
+            const std::vector<float>& offset = boat == BG_SA_BOAT_ONE
+                ? (isHorde ? BoatOneHordeSpawnOffset : BoatOneAllianceSpawnOffset)
+                : (isHorde ? BoatTwoHordeSpawnOffset : BoatTwoAllianceSpawnOffset);
+
+            float ox = offset[0];
+            float oy = offset[1];
+            float oz = offset[2];
+
+            float x = sx + ox;
+            float y = sy + oy;
+            float z = sz + oz;
+            float o = so + static_cast<float>(M_PI);
+
+            player->CastSpell(player, SPELL_SLOW_FALL, true); // Prevents falling through the ship
+            player->TeleportTo(MAP_STRAND_OF_THE_ANCIENTS, x, y, z, o, 0);
         }
         else
             player->TeleportTo(MAP_STRAND_OF_THE_ANCIENTS, 1600.381f, -106.263f, 8.8745f, 3.78f, 0);
