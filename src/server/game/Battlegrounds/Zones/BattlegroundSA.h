@@ -21,6 +21,7 @@
 #include "Battleground.h"
 #include "BattlegroundScore.h"
 #include "WorldStateDefines.h"
+#include <vector>
 
 #define BG_SA_FLAG_AMOUNT           3
 #define BG_SA_DEMOLISHER_AMOUNT     4
@@ -381,6 +382,17 @@ struct BG_SA_RoundScore
     TeamId winner;
     Milliseconds time;
 };
+
+enum BG_SA_Spells
+{
+    SPELL_SLOW_FALL = 12438
+};
+
+static const std::vector BoatOneAllianceSpawnOffset = { 4.5087863f, -1.5003743f, 10.f };
+static const std::vector BoatTwoAllianceSpawnOffset = { 3.840327f, -0.1873524f, 10.f };
+
+static const std::vector BoatOneHordeSpawnOffset = { 9.9345f, -5.42526f, 15.f };
+static const std::vector BoatTwoHordeSpawnOffset = { 7.4392f, 7.8973f, 15.f };
 
 const float SOTADefPortalDest[5][4] =
 {
