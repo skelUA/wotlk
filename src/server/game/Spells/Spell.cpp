@@ -5695,7 +5695,7 @@ SpellCastResult Spell::CheckCast(bool strict)
 
             if (!HasTriggeredCastFlag(TRIGGERED_IGNORE_SPELL_AND_CATEGORY_CD) && m_caster->ToPlayer()->HasSpellCooldown(m_spellInfo->Id))
             {
-                if (m_triggeredByAuraSpell)
+                if (m_triggeredByAuraSpell || m_spellInfo->IsCooldownStartedOnEvent())
                     return SPELL_FAILED_DONT_REPORT;
                 else
                     return SPELL_FAILED_NOT_READY;
