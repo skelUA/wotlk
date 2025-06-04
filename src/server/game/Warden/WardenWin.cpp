@@ -770,7 +770,7 @@ void WardenWin::HandleData(ByteBuffer& buff)
                     if (!hashMatched)
                     {
                         LOG_DEBUG("warden", "MPQ check failed - hash not found in whitelist");
-                        LOG_INFO("warden", "> Warden: (acc_id: {}, check_id: {}) Hash not found in whitelist: {}",
+                        LOG_INFO("warden", "> Warden: Account id: {}, Check id: {} Hash not found in whitelist: {}",
                             _session->GetAccountId(),
                             checkId,
                             AsHex(buff.contents() + buff.rpos(), Acore::Crypto::Constants::SHA1_DIGEST_LENGTH_BYTES));
