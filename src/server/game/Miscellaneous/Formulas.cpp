@@ -28,21 +28,25 @@ uint32 Acore::XP::BaseGain(uint8 pl_level, uint8 mob_level, ContentLevels conten
     uint32 baseGain;
     uint32 nBaseExp;
 
+    uint8 diff = 0;
+    if (mob_level > pl_level)
+        diff = mob_level - pl_level;
+
     switch (content)
     {
-    case CONTENT_1_60:
-        nBaseExp = 45;
-        break;
-    case CONTENT_61_70:
-        nBaseExp = 235;
-        break;
-    case CONTENT_71_80:
-        nBaseExp = 580;
-        break;
-    default:
-        LOG_ERROR("misc", "BaseGain: Unsupported content level {}", content);
-        nBaseExp = 45;
-        break;
+        case CONTENT_1_60:
+            nBaseExp = 45;
+            break;
+        case CONTENT_61_70:
+            nBaseExp = diff > 5 && pl_level <= 57 ? 45 : 235;
+            break;
+        case CONTENT_71_80:
+            nBaseExp = diff > 5 && pl_level <= 67 ? 45 : 580;
+            break;
+        default:
+            LOG_ERROR("misc", "BaseGain: Unsupported content level {}", content);
+            nBaseExp = 45;
+            break;
     }
 
     if (mob_level >= pl_level)
