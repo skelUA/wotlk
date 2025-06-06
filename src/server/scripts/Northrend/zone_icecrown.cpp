@@ -30,7 +30,6 @@
 #include "SpellScriptLoader.h"
 #include "Vehicle.h"
 
-// Ours
 enum eBKG
 {
     QUEST_BLACK_KNIGHT_CURSE            = 14016,
@@ -1463,7 +1462,6 @@ class spell_deliver_gryphon : public SpellScript
     }
 };
 
-// Theirs
 /*######
 ## npc_guardian_pavilion
 ######*/

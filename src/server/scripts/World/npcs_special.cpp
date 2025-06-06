@@ -431,7 +431,6 @@ public:
     }
 };
 
-// Theirs
 /*########
 # npc_air_force_bots
 #########*/
@@ -2844,14 +2843,11 @@ public:
 
 void AddSC_npcs_special()
 {
-    // Ours
     new npc_elder_clearwater();
     new npc_riggle_bassbait();
     new npc_target_dummy();
     new npc_training_dummy();
     new npc_venomhide_hatchling();
-
-    // Theirs
     new npc_air_force_bots();
     new npc_chicken_cluck();
     new npc_dancing_flames();

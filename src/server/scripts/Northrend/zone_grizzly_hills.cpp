@@ -26,8 +26,6 @@
 #include "SpellScript.h"
 #include "SpellScriptLoader.h"
 
- // Theirs
-
  /*######
  ## Quest 12027: Mr. Floppy's Perilous Adventure
  ######*/
@@ -1265,7 +1263,6 @@ class spell_frog_kiss : public SpellScript
 
 void AddSC_grizzly_hills()
 {
-    // Theirs
     new npc_emily();
     new npc_mrfloppy();
     new npc_ravenous_worg();
